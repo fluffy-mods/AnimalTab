@@ -6,5 +6,8 @@
 	<targetVersion>Alpha 12d</targetVersion>
 	<description>Features:
 	- Gender and lifestage icons on the animals tab. Easily keep track of your chickenfarm!
+	- Butchery designation right from the animals tab.
+	- Sort by name, gender, lifestage/age, and bodysize (meat).
+	- Rename (named) pets. Don't like the name Buttercup for your Warg? Change it!
 	</description>
 </ModMetaData>
