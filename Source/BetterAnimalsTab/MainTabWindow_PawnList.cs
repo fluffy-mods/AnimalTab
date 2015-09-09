@@ -18,19 +18,6 @@ namespace Fluffy
 
         protected List<Pawn> pawns = new List<Pawn>();
 
-        protected enum orders
-        {
-            Default,
-            Name,
-            Gender,
-            LifeStage,
-            Slaughter
-        }
-
-        protected orders order = orders.Default;
-
-        protected bool asc = false;
-
         protected int PawnsCount
         {
             get
@@ -97,7 +84,7 @@ namespace Fluffy
         private void PreDrawPawnRow(Rect rect, Pawn p)
         {
             Rect rect2 = new Rect(0f, rect.y, rect.width, 30f);
-            if (Mouse.IsOver(rect2))
+            if (Mouse.IsOver(rect2) || MainTabWindow_Work.copied == p)
             {
                 GUI.DrawTexture(rect2, TexUI.HighlightTex);
             }

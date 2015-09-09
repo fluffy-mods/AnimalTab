@@ -50,6 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WidgetsWork.cs" />
+    <Compile Include="MainTabWindow_Work.cs" />
     <Compile Include="MainTabWindow_PawnList.cs" />
     <Compile Include="Dialog_RenamePet.cs" />
     <Compile Include="MainTabWindow_Animals.cs" />

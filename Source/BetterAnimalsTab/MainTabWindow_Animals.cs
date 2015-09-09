@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
@@ -16,6 +15,19 @@ namespace Fluffy
         private const float MasterWidth = 90f;
 
         private const float AreaAllowedWidth = 350f;
+
+        private enum orders
+        {
+            Default,
+            Name,
+            Gender,
+            LifeStage,
+            Slaughter
+        }
+
+        private orders order = orders.Default;
+
+        private bool asc = false;
 
         public override Vector2 RequestedTabSize
         {
@@ -105,22 +117,40 @@ namespace Fluffy
             GUI.BeginGroup(position);
             float num = 175f;
             Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.LowerCenter;
+            Rect rectname = new Rect(0f, 0f, num, position.height + 3f);
+            Widgets.Label(rectname, "Name");
+            if (Widgets.InvisibleButton(rectname))
+            {
+                if (order == orders.Name)
+                {
+                    asc = !asc;
+                }
+                else
+                {
+                    order = orders.Name;
+                    asc = false;
+                }
+                BuildPawnList();
+            }
+            TooltipHandler.TipRegion(rectname, "Click to sort by name.");
+
             Text.Anchor = TextAnchor.LowerLeft;
             Rect rect = new Rect(num, 0f, 90f, position.height + 3f);
             Widgets.Label(rect, "Master".Translate());
             if(Widgets.InvisibleButton(rect)){
-                if (this.order == MainTabWindow_PawnList.orders.Name)
+                if (order == orders.Default)
                 {
-                    this.asc = !this.asc;
+                    asc = !asc;
                 }
                 else
                 {
-                    this.order = MainTabWindow_PawnList.orders.Name;
-                    this.asc = false;
+                    order = orders.Default;
+                    asc = false;
                 }
                 this.BuildPawnList();
             }
-            TooltipHandler.TipRegion(rect, "Click to sort by name.");
+            TooltipHandler.TipRegion(rect, "Click to sort by petness (Default).");
             num += 90f;
 
             float x = 16f;
@@ -136,14 +166,14 @@ namespace Fluffy
 
             if (Widgets.InvisibleButton(recta))
             {
-                if (this.order == MainTabWindow_PawnList.orders.Gender)
+                if (order == orders.Gender)
                 {
-                    this.asc = !this.asc;
+                    asc = !asc;
                 }
                 else
                 {
-                    this.order = MainTabWindow_PawnList.orders.Gender;
-                    this.asc = false;
+                    order = orders.Gender;
+                    asc = false;
                 }
                 this.BuildPawnList();
             }
@@ -164,14 +194,14 @@ namespace Fluffy
 
             if (Widgets.InvisibleButton(rectb))
             {
-                if (this.order == MainTabWindow_PawnList.orders.LifeStage)
+                if (order == orders.LifeStage)
                 {
-                    this.asc = !this.asc;
+                    asc = !asc;
                 }
                 else
                 {
-                    this.order = MainTabWindow_PawnList.orders.LifeStage;
-                    this.asc = false;
+                    order = orders.LifeStage;
+                    asc = false;
                 }
                 this.BuildPawnList();
             }
@@ -183,14 +213,14 @@ namespace Fluffy
 
             if (Widgets.InvisibleButton(rectc1))
             {
-                if (this.order == MainTabWindow_PawnList.orders.Slaughter)
+                if (order == orders.Slaughter)
                 {
-                    this.asc = !this.asc;
+                    asc = !asc;
                 }
                 else
                 {
-                    this.order = MainTabWindow_PawnList.orders.Slaughter;
-                    this.asc = false;
+                    order = orders.Slaughter;
+                    asc = false;
                 }
                 this.BuildPawnList();
             }
@@ -255,7 +285,7 @@ namespace Fluffy
             {
                 labelAge = LifeStageTextures[p.ageTracker.CurLifeStageIndex];
             }
-            TipSignal tipAge = p.ageTracker.CurKindLifeStage.ToString();
+            TipSignal tipAge = p.ageTracker.CurLifeStage.LabelCap;
             GUI.DrawTexture(rectb, labelAge);
             TooltipHandler.TipRegion(rectb, tipAge);
             num += 50f;
