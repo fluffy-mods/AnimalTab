@@ -18,9 +18,9 @@ namespace Fluffy
 
         private static List<WorkTypeDef> VisibleWorkTypeDefsInPriorityOrder;
 
-        private static readonly Texture2D copyTex = ContentFinder<Texture2D>.Get("UI/copy", true);
-        private static readonly Texture2D pasteTex = ContentFinder<Texture2D>.Get("UI/paste", true);
-        private static readonly Texture2D cancelTex = ContentFinder<Texture2D>.Get("UI/cancel", true);
+        private static readonly Texture2D copyTex = ContentFinder<Texture2D>.Get("UI/Buttons/Copy", true);
+        private static readonly Texture2D pasteTex = ContentFinder<Texture2D>.Get("UI/Buttons/Paste", true);
+        private static readonly Texture2D cancelTex = ContentFinder<Texture2D>.Get("UI/Buttons/cancel", true);
 
         private WorkTypeDef order;
 

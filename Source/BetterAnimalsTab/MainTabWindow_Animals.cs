@@ -53,7 +53,7 @@ namespace Fluffy
         };
 
         private static readonly Texture2D WorkBoxCheckTex = ContentFinder<Texture2D>.Get("UI/Widgets/WorkBoxCheck", true);
-        private static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get("UI/slaughter", true);
+        private static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get("UI/Buttons/slaughter", true);
 
         protected override void BuildPawnList()
         {
@@ -75,7 +75,7 @@ namespace Fluffy
                 case orders.Gender:
                     sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
-                             orderby p.gender
+                             orderby p.KindLabel, p.gender
                              select p;
                     break;
                 case orders.LifeStage:
