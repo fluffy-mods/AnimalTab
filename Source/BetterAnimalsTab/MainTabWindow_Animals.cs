@@ -37,14 +37,16 @@ namespace Fluffy
             }
         }
 
-        private static readonly Texture2D[] GenderTextures = new Texture2D[]
+        public static bool isDirty = false;
+
+        public static readonly Texture2D[] GenderTextures = new Texture2D[]
         {
             ContentFinder<Texture2D>.Get("UI/Gender/none", true),
             ContentFinder<Texture2D>.Get("UI/Gender/male", true),
             ContentFinder<Texture2D>.Get("UI/Gender/female", true)
         };
 
-        private static readonly Texture2D[] LifeStageTextures = new Texture2D[]
+        public static readonly Texture2D[] LifeStageTextures = new Texture2D[]
         {
             ContentFinder<Texture2D>.Get("UI/LifeStage/1", true),
             ContentFinder<Texture2D>.Get("UI/LifeStage/2", true),
@@ -52,8 +54,8 @@ namespace Fluffy
             ContentFinder<Texture2D>.Get("UI/LifeStage/unknown", true)
         };
 
-        private static readonly Texture2D WorkBoxCheckTex = ContentFinder<Texture2D>.Get("UI/Widgets/WorkBoxCheck", true);
-        private static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get("UI/Buttons/slaughter", true);
+        public static readonly Texture2D WorkBoxCheckTex = ContentFinder<Texture2D>.Get("UI/Widgets/WorkBoxCheck", true);
+        public static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get("UI/Buttons/slaughter", true);
 
         protected override void BuildPawnList()
         {
@@ -99,15 +101,18 @@ namespace Fluffy
             }
 
             this.pawns = sorted.ToList<Pawn>();
+
+            if (Filter_Animals.filter)
+            {
+                this.pawns = Filter_Animals.FilterAnimals(this.pawns);
+            }
+
             if (asc && this.pawns.Count() > 1)
             {
                 this.pawns.Reverse();
-                SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
             }
-            else
-            {
-                SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
-            }
+            
+            isDirty = false;
         }
 
         public override void DoWindowContents(Rect fillRect)
@@ -115,6 +120,10 @@ namespace Fluffy
             base.DoWindowContents(fillRect);
             Rect position = new Rect(0f, 0f, fillRect.width, 65f);
             GUI.BeginGroup(position);
+
+            // ARRRGGHHH!!!
+            if (isDirty) BuildPawnList();
+
             float num = 175f;
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerCenter;
@@ -131,14 +140,20 @@ namespace Fluffy
                     order = orders.Name;
                     asc = false;
                 }
+                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 BuildPawnList();
             }
-            TooltipHandler.TipRegion(rectname, "Click to sort by name.");
-
-            Text.Anchor = TextAnchor.LowerLeft;
-            Rect rect = new Rect(num, 0f, 90f, position.height + 3f);
+            Rect highlightName = new Rect(0f, rectname.height - 30f, rectname.width, 30);
+            TooltipHandler.TipRegion(highlightName, "Click to sort by name.");
+            if (Mouse.IsOver(highlightName))
+            {
+                GUI.DrawTexture(highlightName, TexUI.HighlightTex);
+            }
+            
+            Rect rect = new Rect(num, rectname.height - 30f, 90f, 30);
             Widgets.Label(rect, "Master".Translate());
             if(Widgets.InvisibleButton(rect)){
+                    SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
                 if (order == orders.Default)
                 {
                     asc = !asc;
@@ -148,14 +163,19 @@ namespace Fluffy
                     order = orders.Default;
                     asc = false;
                 }
+                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 this.BuildPawnList();
             }
             TooltipHandler.TipRegion(rect, "Click to sort by petness (Default).");
+            if (Mouse.IsOver(rect))
+            {
+                GUI.DrawTexture(rect, TexUI.HighlightTex);
+            }
             num += 90f;
 
             float x = 16f;
 
-            Rect recta = new Rect(num, 48f, 50f, x);
+            Rect recta = new Rect(num, rectname.height - 30f, 50f, 30f);
             Rect recta1 = new Rect(num + 9, 48f, x, x);
             GUI.DrawTexture(recta1, GenderTextures[1]);
             num += 25f;
@@ -175,11 +195,16 @@ namespace Fluffy
                     order = orders.Gender;
                     asc = false;
                 }
+                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 this.BuildPawnList();
             }
             TooltipHandler.TipRegion(recta, "Click to sort by gender.");
+            if (Mouse.IsOver(recta))
+            {
+                GUI.DrawTexture(recta, TexUI.HighlightTex);
+            }
 
-            Rect rectb = new Rect(num, 48f, 50f, x);
+            Rect rectb = new Rect(num, rectname.height - 30f, 50f, 30f);
             Rect rectb1 = new Rect(num + 1, 48f, x, x);
             GUI.DrawTexture(rectb1, LifeStageTextures[0]);
             num += 17f;
@@ -203,11 +228,17 @@ namespace Fluffy
                     order = orders.LifeStage;
                     asc = false;
                 }
+                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 this.BuildPawnList();
             }
             TooltipHandler.TipRegion(rectb, "Click to sort by lifestage and age.");
+            if (Mouse.IsOver(rectb))
+            {
+                GUI.DrawTexture(rectb, TexUI.HighlightTex);
+            }
 
-            Rect rectc1 = new Rect(num + 13f, 48f, x, x);
+            Rect rectc = new Rect(num, rectname.height - 30f, 42f, 30f);
+            Rect rectc1 = new Rect(num + 13f, 48f, 16f, 16f);
             GUI.DrawTexture(rectc1, SlaughterTex);
             num += 50f;
 
@@ -222,20 +253,26 @@ namespace Fluffy
                     order = orders.Slaughter;
                     asc = false;
                 }
+                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 this.BuildPawnList();
             }
-            TooltipHandler.TipRegion(rectc1, "Click to sort by slaughter designation and bodysize.");
+            TooltipHandler.TipRegion(rectc, "Click to sort by slaughter designation and bodysize.");
+            if (Mouse.IsOver(rectc))
+            {
+                GUI.DrawTexture(rectc, TexUI.HighlightTex);
+            }
 
             Rect rect2 = new Rect(num, 0f, 350f, Mathf.Round(position.height / 2f));
             Text.Font = GameFont.Small;
             if (Widgets.TextButton(rect2, "ManageAreas".Translate(), true, false))
             {
-                Find.WindowStack.Add(new Dialog_ManageAreas());
+                //Find.WindowStack.Add(new Dialog_ManageAreas());
+                Find.WindowStack.Add(new Dialog_FilterAnimals());
             }
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerCenter;
-            Rect rect3 = new Rect(num, 0f, 350f, position.height + 3f);
-            Widgets.Label(rect3, "AllowedArea".Translate());
+            Rect rect3 = new Rect(num, position.height - 27f, 350f, 30f);
+            AllowedAreaWidgets.DoAllowedAreaHeaders(rect3, pawns, AllowedAreaMode.Animal);
             num += 350f;
             GUI.EndGroup();
             Text.Font = GameFont.Small;
