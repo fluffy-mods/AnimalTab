@@ -84,6 +84,19 @@ namespace Fluffy
                 .Select(x => x.kindDef).Distinct().ToList();
         }
 
+        public static void filterAllPawnKinds()
+        {
+            filterPawnKind = new List<PawnKindDef>();
+        }
+
+        public static void quickFilterPawnKind(PawnKindDef def)
+        {
+            resetFilter();
+            filterAllPawnKinds();
+            filterPawnKind.Add(def);
+            enableFilter();
+        }
+
         public static List<Pawn> FilterAnimals(List<Pawn> pawns)
         {
             pawns = pawns.Where(p => filterPawnKind.Contains(p.kindDef) &&

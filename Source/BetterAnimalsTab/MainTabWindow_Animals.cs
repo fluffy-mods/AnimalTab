@@ -132,8 +132,27 @@ namespace Fluffy
             Text.Font = GameFont.Small;
             if (Widgets.TextButton(filterButton, "Filter", true, false))
             {
-                Find.WindowStack.Add(new Dialog_FilterAnimals());
+                if (Event.current.button == 0)
+                {
+                    Find.WindowStack.Add(new Dialog_FilterAnimals());
+                } else if (Event.current.button == 1)
+                {
+                    List<PawnKindDef> list = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(p => p.RaceProps.Animal)
+                                                 .Select(p => p.kindDef).Distinct().OrderBy(p => p.LabelCap).ToList();
+
+                    if (list.Count > 0)
+                    {
+                        List<FloatMenuOption> list2 = new List<FloatMenuOption>();
+                        list2.AddRange(list.ConvertAll<FloatMenuOption>((PawnKindDef p) => new FloatMenuOption(p.LabelCap, delegate
+                        {
+                            Filter_Animals.quickFilterPawnKind(p);
+                            isDirty = true;
+                        }, MenuOptionPriority.Medium, null, null)));
+                        Find.WindowStack.Add(new FloatMenu(list2, false));
+                    }
+                }
             }
+            TooltipHandler.TipRegion(filterButton, "Left click to set a filter.\nRight click to set a quick filter.");
             Rect filterIcon = new Rect(205f, (filterButton.height - 24f) / 2f, 24f, 24f);
             if (Filter_Animals.filter)
             {
@@ -275,19 +294,26 @@ namespace Fluffy
 
             if (Widgets.InvisibleButton(rectc1))
             {
-                if (order == orders.Slaughter)
+                if (Event.current.shift)
                 {
-                    asc = !asc;
+                    WidgetsAnimals.SlaughterAllAnimals(pawns);
                 }
                 else
                 {
-                    order = orders.Slaughter;
-                    asc = false;
+                    if (order == orders.Slaughter)
+                    {
+                        asc = !asc;
+                    }
+                    else
+                    {
+                        order = orders.Slaughter;
+                        asc = false;
+                    }
+                    SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
+                    this.BuildPawnList();
                 }
-                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                this.BuildPawnList();
             }
-            TooltipHandler.TipRegion(rectc, "Click to sort by slaughter designation and bodysize.");
+            TooltipHandler.TipRegion(rectc, "Click to sort by slaughter designation and bodysize.\nShift-click to toggle slaughter for all.");
             if (Mouse.IsOver(rectc))
             {
                 GUI.DrawTexture(rectc, TexUI.HighlightTex);
@@ -302,7 +328,7 @@ namespace Fluffy
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerCenter;
             Rect rect3 = new Rect(num, position.height - 27f, 350f, 30f);
-            AllowedAreaWidgets.DoAllowedAreaHeaders(rect3, pawns, AllowedAreaMode.Animal);
+            WidgetsAnimals.DoAllowedAreaHeaders(rect3, pawns, AllowedAreaMode.Animal);
             num += 350f;
             GUI.EndGroup();
             Text.Font = GameFont.Small;
@@ -372,12 +398,12 @@ namespace Fluffy
             {
                 if (Slaughter)
                 {
-                    Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter).Delete();
+                    WidgetsAnimals.UnSlaughterAnimal(p);
                     SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                 }
                 else
                 {
-                    Find.DesignationManager.AddDesignation(new Designation(p, DesignationDefOf.Slaughter));
+                    WidgetsAnimals.SlaughterAnimal(p);
                     SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 }
             }

@@ -9,8 +9,37 @@ using UnityEngine;
 
 namespace Fluffy
 {
-    public static class AllowedAreaWidgets
+    public static class WidgetsAnimals
     {
+        public static void SlaughterAnimal(Pawn pawn)
+        {
+            Find.DesignationManager.AddDesignation(new Designation(pawn, DesignationDefOf.Slaughter));
+        }
+
+        public static void UnSlaughterAnimal(Pawn pawn)
+        {
+            Find.DesignationManager.DesignationOn(pawn, DesignationDefOf.Slaughter).Delete();
+        }
+
+        public static void SlaughterAllAnimals(List<Pawn> pawns)
+        {
+            if (pawns.All(p => Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter) != null))
+            { 
+                SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    UnSlaughterAnimal(pawns[i]);
+                }
+            } else
+            {
+                SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    if (Find.DesignationManager.DesignationOn(pawns[i], DesignationDefOf.Slaughter) == null) SlaughterAnimal(pawns[i]);
+                }
+            }
+        }
+
         public static void DoAllowedAreaHeaders(Rect rect, List<Pawn> pawns, AllowedAreaMode mode)
         {
             List<Area> allAreas = Find.AreaManager.AllAreas;
