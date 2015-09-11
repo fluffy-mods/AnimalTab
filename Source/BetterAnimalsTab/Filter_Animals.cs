@@ -9,7 +9,8 @@ namespace Fluffy
 {
     public static class Filter_Animals
     {
-        public static List<PawnKindDef> filterPawnKind = new List<PawnKindDef>();
+        public static List<PawnKindDef> filterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+                .Select(x => x.kindDef).Distinct().ToList();
 
         public enum filterType
         {
@@ -20,6 +21,8 @@ namespace Fluffy
 
         public static filterType bump(filterType current)
         {
+            filterPossible = true;
+            if (!filter) enableFilter();
             int next = (int)current + 1;
             if (next > 2)
             {
@@ -39,6 +42,8 @@ namespace Fluffy
 
         public static bool filter = false;
 
+        public static bool filterPossible = false;
+
         public static void togglePawnKindFilter(PawnKindDef pawnKind, bool remove = true)
         {
             if (remove)
@@ -47,10 +52,11 @@ namespace Fluffy
             }
             else
             {
-                if (filterPawnKind == null) filterPawnKind = new List<PawnKindDef>();
+                if (filterPawnKind == null) resetPawnKindFilter();
                 filterPawnKind.Add(pawnKind);
             }
             if (!filter) enableFilter();
+            filterPossible = true;
         }
 
         public static void enableFilter()
@@ -65,10 +71,17 @@ namespace Fluffy
 
         public static void resetFilter()
         {
-            filterPawnKind = new List<PawnKindDef>();
+            resetPawnKindFilter();
             filterGender = filterType.None;
             filterTamed = filterType.None;
             filterReproductive = filterType.None;
+            filterPossible = false;
+        }
+
+        public static void resetPawnKindFilter()
+        {
+            filterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+                .Select(x => x.kindDef).Distinct().ToList();
         }
 
         public static List<Pawn> FilterAnimals(List<Pawn> pawns)

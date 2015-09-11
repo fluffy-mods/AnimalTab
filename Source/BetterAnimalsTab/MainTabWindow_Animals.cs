@@ -56,6 +56,9 @@ namespace Fluffy
 
         public static readonly Texture2D WorkBoxCheckTex = ContentFinder<Texture2D>.Get("UI/Widgets/WorkBoxCheck", true);
         public static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get("UI/Buttons/slaughter", true);
+        private static readonly Texture2D filterTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_large", true);
+        private static readonly Texture2D filterOffTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_off_large", true);
+
 
         protected override void BuildPawnList()
         {
@@ -123,6 +126,34 @@ namespace Fluffy
 
             // ARRRGGHHH!!!
             if (isDirty) BuildPawnList();
+
+
+            Rect filterButton = new Rect(0f, 0f, 200f, Mathf.Round(position.height / 2f));
+            Text.Font = GameFont.Small;
+            if (Widgets.TextButton(filterButton, "Filter", true, false))
+            {
+                Find.WindowStack.Add(new Dialog_FilterAnimals());
+            }
+            Rect filterIcon = new Rect(205f, (filterButton.height - 24f) / 2f, 24f, 24f);
+            if (Filter_Animals.filter)
+            {
+                if(Widgets.ImageButton(filterIcon, filterOffTex))
+                {
+                    Filter_Animals.disableFilter();
+                    BuildPawnList();
+                    SoundDefOf.ClickReject.PlayOneShotOnCamera();
+                }
+                TooltipHandler.TipRegion(filterIcon, "Disable filter");
+            } else if (Filter_Animals.filterPossible)
+            {
+                if (Widgets.ImageButton(filterIcon, filterTex))
+                {
+                    Filter_Animals.enableFilter();
+                    BuildPawnList();
+                    SoundDefOf.Click.PlayOneShotOnCamera();
+                }
+                TooltipHandler.TipRegion(filterIcon, "Enable filter");
+            }
 
             float num = 175f;
             Text.Font = GameFont.Tiny;
@@ -266,8 +297,7 @@ namespace Fluffy
             Text.Font = GameFont.Small;
             if (Widgets.TextButton(rect2, "ManageAreas".Translate(), true, false))
             {
-                //Find.WindowStack.Add(new Dialog_ManageAreas());
-                Find.WindowStack.Add(new Dialog_FilterAnimals());
+                Find.WindowStack.Add(new Dialog_ManageAreas());
             }
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerCenter;

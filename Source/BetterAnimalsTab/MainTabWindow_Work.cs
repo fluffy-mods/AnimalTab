@@ -334,7 +334,7 @@ namespace Fluffy
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     ClearCopied();
                 }
-                TooltipHandler.TipRegion(rectCancel, "Clear cached copy of work priorities.");
+                TooltipHandler.TipRegion(rectCancel, "Clear copy");
             } else
             {
                 Rect rectCopy = new Rect(num + 6f, rect.y + 6f, 16f, 16f);
@@ -343,7 +343,7 @@ namespace Fluffy
                     SoundDefOf.Click.PlayOneShotOnCamera();
                     Copy(p);
                 }
-                TooltipHandler.TipRegion(rectCopy, "Copy work priorities to cache.");
+                TooltipHandler.TipRegion(rectCopy, "Copy");
             }
             if (copy != null && copied != p)
             {
@@ -353,7 +353,7 @@ namespace Fluffy
                     SoundDefOf.Click.PlayOneShotOnCamera();
                     Paste(p);
                 }
-                TooltipHandler.TipRegion(rectPaste, "Paste cached work priorities.");
+                TooltipHandler.TipRegion(rectPaste, "Paste");
             }
         }
     }

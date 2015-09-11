@@ -48,3 +48,4 @@ Temporary Items
 *.txt
 Source/BetterAnimalsTab/obj/Debug/BetterAnimalsTab.pdb
 *.cache
+*.pxd

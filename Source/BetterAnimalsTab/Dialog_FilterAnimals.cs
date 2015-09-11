@@ -12,6 +12,28 @@ namespace Fluffy
     {
         public List<PawnKindDef> pawnKinds;
 
+        public static readonly Texture2D[] GenderTextures = new Texture2D[]
+        {
+            ContentFinder<Texture2D>.Get("UI/Gender/female", true),
+            ContentFinder<Texture2D>.Get("UI/Gender/male", true),
+            ContentFinder<Texture2D>.Get("UI/Buttons/all_large", true)
+        };
+
+        public static readonly Texture2D[] ReproTextures = new Texture2D[]
+        {
+            ContentFinder<Texture2D>.Get("UI/LifeStage/reproductive_large", true),
+            ContentFinder<Texture2D>.Get("UI/LifeStage/not_reproductive_large", true),
+            ContentFinder<Texture2D>.Get("UI/Buttons/all_large", true)
+        };
+
+        public static readonly Texture2D[] TrainingTextures = new Texture2D[]
+        {
+            ContentFinder<Texture2D>.Get("UI/Training/obedience_large", true),
+            ContentFinder<Texture2D>.Get("UI/Training/not_obedience_large", true),
+            ContentFinder<Texture2D>.Get("UI/Buttons/all_large", true)
+        };
+
+
         public override Vector2 InitialWindowSize
         {
             get
@@ -28,28 +50,54 @@ namespace Fluffy
                 .Select(x => x.kindDef).Distinct().OrderBy(x => x.LabelCap).ToList();
             this.forcePause = true;
             this.closeOnEscapeKey = true;
-            this.absorbInputAroundWindow = true;
+            this.absorbInputAroundWindow = false;
+            this.draggable = true;
         }
 
         public override void DoWindowContents(Rect inRect)
         {
-            Text.Font = GameFont.Small;
-            // Pawnkinds on the left.
-            float num = 35f;
-            float x = 5f;
-            float colWidth = (inRect.width / 2f) - 60f;
-            float x2 = colWidth + 5f;
+            // Close if animals tab closed
+            if (Find.WindowStack.WindowOfType<MainTabWindow_Animals>() == null)
+            {
+                Find.WindowStack.TryRemove(this, true);
+            }
 
-            Rect rect = new Rect(5f, 5f, colWidth, 30f);
-            Widgets.Label(rect, "Filter by race");
+            Text.Font = GameFont.Small;
+            
+
+            // Pawnkinds on the left.
+            float x = 5f;
+            float y = 5f;
+            float colWidth = (inRect.width / 2f) - 10f;
+            float x2 = colWidth - 45f;
+            float rowHeight = 30f;
+            float iconSize = 24f;
+            float labWidth = colWidth - 50f;
+            float iconWidthOffset = (50f - 24f) / 2f;
+            float iconHeightOffset = (rowHeight - iconSize) / 2f;
+            
+
+            Rect rect = new Rect(x, y, colWidth, rowHeight);
+            Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerLeft;
+            Widgets.Label(rect, "Filter by race");
+
+
+            y += 30f;
+            Text.Font = GameFont.Small;
             for (int i = 0; i < pawnKinds.Count; i++)
             {
-                Rect recta = new Rect(x, num, colWidth, 30f);
-                Widgets.Label(recta, pawnKinds[i].LabelCap);
-                Rect rectb = new Rect(x2, num, 30f, 30f);
-                bool inList = Filter_Animals.filterPawnKind == null || Filter_Animals.filterPawnKind.Contains(pawnKinds[i]);
-                if (Widgets.ImageButton(rectb, inList ? Widgets.CheckboxOnTex : Widgets.CheckboxOffTex))
+                Rect rectRow = new Rect(x, y, colWidth, rowHeight);
+                Rect rectLabel = new Rect(x, y, labWidth, rowHeight);
+                Widgets.Label(rectLabel, pawnKinds[i].LabelCap);
+                Rect rectIcon = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                bool inList = Filter_Animals.filterPawnKind.Contains(pawnKinds[i]);
+                GUI.DrawTexture(rectIcon, inList ? Widgets.CheckboxOnTex : Widgets.CheckboxOffTex);
+                if (Mouse.IsOver(rectRow))
+                {
+                    GUI.DrawTexture(rectRow, TexUI.HighlightTex);
+                }
+                if (Widgets.InvisibleButton(rectRow))
                 {
                     if (inList)
                     {
@@ -62,126 +110,164 @@ namespace Fluffy
                     Filter_Animals.togglePawnKindFilter(pawnKinds[i], inList);
                     MainTabWindow_Animals.isDirty = true;
                 }
-                num += 30;
+                y += 30;
             }
 
             // specials on the right.
             x = inRect.width / 2f + 5f;
-            x2 = inRect.width / 2f + 205f;
-            num = 35f;
+            x2 = inRect.width / 2f + colWidth - 45f;
+            y = 5f;
 
-
-            Rect rectAttributes = new Rect(x, 5f, colWidth, 30f);
+            Text.Font = GameFont.Tiny;
+            Rect rectAttributes = new Rect(x, 5f, colWidth, rowHeight);
             Widgets.Label(rectAttributes, "Filter by attributes");
-            // gender
-            Filter_Animals.filterType gender = Filter_Animals.filterGender;
+            Text.Font = GameFont.Small;
+
+            y += 30f;
+
+
+            // Gender
             string genderLabel = "Gender ";
-            Texture2D genderTex;
-            switch (gender)
+            Rect rectGender = new Rect(x, y, colWidth, rowHeight);
+            Rect rectGenderLabel = new Rect(x, y, labWidth, rowHeight);
+            switch (Filter_Animals.filterGender)
             {
                 case Filter_Animals.filterType.True:
-                    genderTex = MainTabWindow_Animals.GenderTextures[2];
+                    Rect GenderIconFemale = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(GenderIconFemale, GenderTextures[0]);
                     genderLabel += "(female)";
                     break;
                 case Filter_Animals.filterType.False:
-                    genderTex = MainTabWindow_Animals.GenderTextures[1];
+                    Rect GenderIconMale = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(GenderIconMale, GenderTextures[1]);
                     genderLabel += "(male)";
                     break;
                 case Filter_Animals.filterType.None:
                 default:
-                    genderTex = Widgets.CheckboxPartialTex;
-                    genderLabel += "(all)";
+                    Rect GenderIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(GenderIconBoth, GenderTextures[2]);
+                    genderLabel += "(both)";
                     break;
             }
-
-            Rect rectGender1 = new Rect(x, num, colWidth, 30f);
-            Widgets.Label(rectGender1, genderLabel);
-            Rect rectGender2 = new Rect(x2, num, 30f, 30f);
-            if (Widgets.ImageButton(rectGender2, genderTex))
+            Widgets.Label(rectGenderLabel, genderLabel);
+            if (Widgets.InvisibleButton(rectGender))
             {
                 Filter_Animals.filterGender = Filter_Animals.bump(Filter_Animals.filterGender);
                 Log.Message(Filter_Animals.filterGender.ToString());
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 MainTabWindow_Animals.isDirty = true;
             }
-            num += 30;
+            if (Mouse.IsOver(rectGender))
+            {
+                GUI.DrawTexture(rectGender, TexUI.HighlightTex);
+            }
+            y += 30;
 
-            // reproductive
-            Filter_Animals.filterType repro = Filter_Animals.filterReproductive;
-            string reproLabel = "Reproductive ";
-            Texture2D reproTex;
-            switch (repro)
+            // Reproductive
+            string reproLabel = "Lifestage ";
+            Rect rectRepro = new Rect(x, y, colWidth, rowHeight);
+            Rect rectReproLabel = new Rect(x, y, labWidth, rowHeight);
+            switch (Filter_Animals.filterReproductive)
             {
                 case Filter_Animals.filterType.True:
-                    reproTex = MainTabWindow_Animals.GenderTextures[2];
+                    Rect ReproIconTrue = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(ReproIconTrue, ReproTextures[0]);
                     reproLabel += "(reproductive)";
                     break;
                 case Filter_Animals.filterType.False:
-                    reproTex = MainTabWindow_Animals.GenderTextures[1];
+                    Rect ReproIconFalse = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(ReproIconFalse, ReproTextures[1]);
                     reproLabel += "(not reproductive)";
                     break;
                 case Filter_Animals.filterType.None:
                 default:
-                    reproTex = Widgets.CheckboxPartialTex;
-                    reproLabel += "(all)";
+                    Rect ReproIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(ReproIconBoth, ReproTextures[2]);
+                    reproLabel += "(both)";
                     break;
             }
-
-            Rect rectrepro1 = new Rect(x, num, colWidth, 30f);
-            Widgets.Label(rectrepro1, reproLabel);
-            Rect rectrepro2 = new Rect(x2, num, 30f, 30f);
-            if (Widgets.ImageButton(rectrepro2, reproTex))
+            Widgets.Label(rectReproLabel, reproLabel);
+            if (Widgets.InvisibleButton(rectRepro))
             {
                 Filter_Animals.filterReproductive = Filter_Animals.bump(Filter_Animals.filterReproductive);
-                Log.Message(Filter_Animals.filterReproductive.ToString());
+                //Log.Message(Filter_Animals.filterReproductive.ToString());
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 MainTabWindow_Animals.isDirty = true;
             }
-            num += 30f;
+            if (Mouse.IsOver(rectRepro))
+            {
+                GUI.DrawTexture(rectRepro, TexUI.HighlightTex);
+            }
+            y += 30;
 
-            // Trained
-            Filter_Animals.filterType tamed = Filter_Animals.filterTamed;
-            string tamedLabel = "Filter by obedience ";
-            Texture2D tamedTex;
-            switch (tamed)
+            // Training
+            string trainingLabel = "Training ";
+            Rect rectTrained = new Rect(x, y, colWidth, rowHeight);
+            Rect rectTrainedLabel = new Rect(x, y, labWidth, rowHeight);
+            switch (Filter_Animals.filterTamed)
             {
                 case Filter_Animals.filterType.True:
-                    tamedTex = MainTabWindow_Animals.GenderTextures[2];
-                    tamedLabel += "(trained)";
+                    Rect TrainedIconTrue = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(TrainedIconTrue, TrainingTextures[0]);
+                    trainingLabel += "(obedience trained)";
                     break;
                 case Filter_Animals.filterType.False:
-                    tamedTex = MainTabWindow_Animals.GenderTextures[1];
-                    tamedLabel += "(not trained)";
+                    Rect TrainedIconFalse = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(TrainedIconFalse, TrainingTextures[1]);
+                    trainingLabel += "(not obedience trained)";
                     break;
                 case Filter_Animals.filterType.None:
                 default:
-                    tamedTex = Widgets.CheckboxPartialTex;
-                    tamedLabel += "(both)";
+                    Rect TrainedIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(TrainedIconBoth, TrainingTextures[2]);
+                    trainingLabel += "(both)";
                     break;
             }
-
-            Rect recttamed1 = new Rect(x, num, colWidth, 30f);
-            Widgets.Label(recttamed1, tamedLabel);
-            Rect recttamed2 = new Rect(x2, num, 30f, 30f);
-            if (Widgets.ImageButton(recttamed2, tamedTex))
+            Widgets.Label(rectTrainedLabel, trainingLabel);
+            if (Widgets.InvisibleButton(rectTrained))
             {
                 Filter_Animals.filterTamed = Filter_Animals.bump(Filter_Animals.filterTamed);
                 Log.Message(Filter_Animals.filterTamed.ToString());
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 MainTabWindow_Animals.isDirty = true;
             }
-
-
-            if (Widgets.TextButton(new Rect(20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), "Cancel".Translate(), true, false))
+            if (Mouse.IsOver(rectTrained))
             {
+                GUI.DrawTexture(rectTrained, TexUI.HighlightTex);
+            }
+            y += 30;
+
+
+            if (Widgets.TextButton(new Rect(inRect.width / 4f + 5f, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "Clear", true, false))
+            {
+                Filter_Animals.resetFilter();
                 Filter_Animals.disableFilter();
-                Find.WindowStack.TryRemove(this, true);
+                MainTabWindow_Animals.isDirty = true;
                 Event.current.Use();
             }
 
-            if (Widgets.TextButton(new Rect(inRect.width / 2f + 20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), "OK".Translate(), true, false))
+            if (!Filter_Animals.filter)
             {
-                Find.WindowStack.WindowOfType<MainTabWindow_Animals>().WindowUpdate();
+                if (Widgets.TextButton(new Rect(x, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "Enable", true, false))
+                {
+                    Filter_Animals.enableFilter();
+                    MainTabWindow_Animals.isDirty = true;
+                    Event.current.Use();
+                }
+            }
+            else
+            {
+                if (Widgets.TextButton(new Rect(x, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "Disable", true, false))
+                {
+                    Filter_Animals.disableFilter();
+                    MainTabWindow_Animals.isDirty = true;
+                    Event.current.Use();
+                }
+            }
+
+
+            if (Widgets.TextButton(new Rect(x + inRect.width / 4, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "OK".Translate(), true, false))
+            {
                 Find.WindowStack.TryRemove(this, true);
                 Event.current.Use();
             }
