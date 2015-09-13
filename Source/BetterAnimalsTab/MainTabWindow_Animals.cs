@@ -287,11 +287,9 @@ namespace Fluffy
                 GUI.DrawTexture(rectb, TexUI.HighlightTex);
             }
 
-            Rect rectc = new Rect(num, rectname.height - 30f, 42f, 30f);
-            Rect rectc1 = new Rect(num + 13f, 48f, 16f, 16f);
+            Rect rectc = new Rect(num, rectname.height - 30f, 50f, 30f);
+            Rect rectc1 = new Rect(num + 17f, 48f, 16f, 16f);
             GUI.DrawTexture(rectc1, SlaughterTex);
-            num += 50f;
-
             if (Widgets.InvisibleButton(rectc1))
             {
                 if (Event.current.shift)
@@ -318,6 +316,12 @@ namespace Fluffy
             {
                 GUI.DrawTexture(rectc, TexUI.HighlightTex);
             }
+
+            num += 50f;
+            Rect headers = new Rect(num, rectname.height - 30f, 80f, 30f);
+            WidgetsAnimals.DoTrainingHeaders(headers, pawns);
+
+            num += 90f;
 
             Rect rect2 = new Rect(num, 0f, 350f, Mathf.Round(position.height / 2f));
             Text.Font = GameFont.Small;
@@ -383,12 +387,13 @@ namespace Fluffy
             TooltipHandler.TipRegion(rectb, tipAge);
             num += 50f;
 
-            Rect rectc = new Rect(num + 13f, heightOffset, x, x);
+            Rect rectc = new Rect(num, 0f, 50f, 30f);
+            Rect rectc1 = new Rect(num + 17f, heightOffset, x, x);
             bool Slaughter = Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter) != null;
 
             if (Slaughter)
             {
-                GUI.DrawTexture(rectc, WorkBoxCheckTex);
+                GUI.DrawTexture(rectc1, WorkBoxCheckTex);
                 TooltipHandler.TipRegion(rectc, "save from the butcher's block");
             } else
             {
@@ -409,10 +414,15 @@ namespace Fluffy
             }
             if (Mouse.IsOver(rectc))
             {
-                GUI.DrawTexture(rectc, TexUI.HighlightTex);
+                GUI.DrawTexture(rectc1, TexUI.HighlightTex);
             }
 
-            num += 50;
+            num += 50f;
+
+            Rect trainingRect = new Rect(num, 0f, 80f, 30f);
+            WidgetsAnimals.DoTrainingRow(trainingRect, p);
+
+            num += 90f;
 
             Rect rect4 = new Rect(num, 0f, 350f, rect.height);
             AreaAllowedGUI.DoAllowedAreaSelectors(rect4, p, AllowedAreaMode.Animal);

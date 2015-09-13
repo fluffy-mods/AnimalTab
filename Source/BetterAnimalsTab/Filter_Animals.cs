@@ -40,6 +40,10 @@ namespace Fluffy
 
         public static filterType filterGender = filterType.None;
 
+        public static filterType filterShearable = filterType.None;
+
+        public static filterType filterMilkable = filterType.None;
+
         public static bool filter = false;
 
         public static bool filterPossible = false;
@@ -102,7 +106,9 @@ namespace Fluffy
             pawns = pawns.Where(p => filterPawnKind.Contains(p.kindDef) &&
                                      genderFilter(p.gender) &&
                                      reproductiveFilter(p.ageTracker.CurLifeStage.reproductive) &&
-                                     tamedFilter(p.training.IsCompleted(TrainableDefOf.Obedience))).ToList();
+                                     tamedFilter(p.training.IsCompleted(TrainableDefOf.Obedience)) &&
+                                     milkableFilter(p) &&
+                                     shearableFilter(p)).ToList();
             return pawns;
         }
 
@@ -129,5 +135,24 @@ namespace Fluffy
             if (filterTamed == filterType.False && !tamed) return true;
             return false;
         }
+
+        public static bool milkableFilter(Pawn p)
+        {
+            bool milkable = p.ageTracker.CurLifeStage.milkable && p.GetComp<CompMilkable>() != null && p.gender == Gender.Female;
+            if (filterMilkable == filterType.None) return true;
+            if (filterMilkable == filterType.True && milkable) return true;
+            if (filterMilkable == filterType.False && !milkable) return true;
+            return false;
+        }
+
+        public static bool shearableFilter(Pawn p)
+        {
+            bool shearable = p.ageTracker.CurLifeStage.shearable && p.GetComp<CompShearable>() != null;
+            if (filterShearable == filterType.None) return true;
+            if (filterShearable == filterType.True && shearable) return true;
+            if (filterShearable == filterType.False && !shearable) return true;
+            return false;
+        }
+        
     }
 }

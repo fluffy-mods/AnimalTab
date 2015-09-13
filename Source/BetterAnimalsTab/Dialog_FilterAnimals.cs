@@ -33,6 +33,20 @@ namespace Fluffy
             ContentFinder<Texture2D>.Get("UI/Buttons/all_large", true)
         };
 
+        public static readonly Texture2D[] MilkableTextures = new Texture2D[]
+        {
+            ContentFinder<Texture2D>.Get("UI/LifeStage/milkable_large", true),
+            ContentFinder<Texture2D>.Get("UI/LifeStage/not_milkable_large", true),
+            ContentFinder<Texture2D>.Get("UI/Buttons/all_large", true)
+        };
+
+        public static readonly Texture2D[] ShearableTextures = new Texture2D[]
+        {
+            ContentFinder<Texture2D>.Get("UI/LifeStage/shearable_large", true),
+            ContentFinder<Texture2D>.Get("UI/LifeStage/not_shearable_large", true),
+            ContentFinder<Texture2D>.Get("UI/Buttons/all_large", true)
+        };
+
 
         public override Vector2 InitialWindowSize
         {
@@ -153,7 +167,6 @@ namespace Fluffy
             if (Widgets.InvisibleButton(rectGender))
             {
                 Filter_Animals.filterGender = Filter_Animals.bump(Filter_Animals.filterGender);
-                Log.Message(Filter_Animals.filterGender.ToString());
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 MainTabWindow_Animals.isDirty = true;
             }
@@ -190,7 +203,6 @@ namespace Fluffy
             if (Widgets.InvisibleButton(rectRepro))
             {
                 Filter_Animals.filterReproductive = Filter_Animals.bump(Filter_Animals.filterReproductive);
-                //Log.Message(Filter_Animals.filterReproductive.ToString());
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 MainTabWindow_Animals.isDirty = true;
             }
@@ -227,7 +239,6 @@ namespace Fluffy
             if (Widgets.InvisibleButton(rectTrained))
             {
                 Filter_Animals.filterTamed = Filter_Animals.bump(Filter_Animals.filterTamed);
-                Log.Message(Filter_Animals.filterTamed.ToString());
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 MainTabWindow_Animals.isDirty = true;
             }
@@ -237,7 +248,81 @@ namespace Fluffy
             }
             y += 30;
 
+            // Milkable
+            string milkableLabel = "Milkable ";
+            Rect rectMilkable = new Rect(x, y, colWidth, rowHeight);
+            Rect rectMilkableLabel = new Rect(x, y, labWidth, rowHeight);
+            switch (Filter_Animals.filterMilkable)
+            {
+                case Filter_Animals.filterType.True:
+                    Rect MilkableIconTrue = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(MilkableIconTrue, MilkableTextures[0]);
+                    milkableLabel += "(yes)";
+                    break;
+                case Filter_Animals.filterType.False:
+                    Rect MilkableIconFalse = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(MilkableIconFalse, MilkableTextures[1]);
+                    milkableLabel += "(no)";
+                    break;
+                case Filter_Animals.filterType.None:
+                default:
+                    Rect MilkableIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(MilkableIconBoth, MilkableTextures[2]);
+                    milkableLabel += "(both)";
+                    break;
+            }
+            Widgets.Label(rectMilkableLabel, milkableLabel);
+            if (Widgets.InvisibleButton(rectMilkable))
+            {
+                Filter_Animals.filterMilkable = Filter_Animals.bump(Filter_Animals.filterMilkable);
+                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
+                MainTabWindow_Animals.isDirty = true;
+            }
+            if (Mouse.IsOver(rectMilkable))
+            {
+                GUI.DrawTexture(rectMilkable, TexUI.HighlightTex);
+            }
+            y += 30;
 
+            // Shearable
+            string shearableLabel = "Shearable ";
+            Rect rectShearable = new Rect(x, y, colWidth, rowHeight);
+            Rect rectShearableLabel = new Rect(x, y, labWidth, rowHeight);
+            switch (Filter_Animals.filterShearable)
+            {
+                case Filter_Animals.filterType.True:
+                    Rect ShearableIconTrue = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(ShearableIconTrue, ShearableTextures[0]);
+                    shearableLabel += "(yes)";
+                    break;
+                case Filter_Animals.filterType.False:
+                    Rect ShearableIconFalse = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(ShearableIconFalse, ShearableTextures[1]);
+                    shearableLabel += "(no)";
+                    break;
+                case Filter_Animals.filterType.None:
+                default:
+                    Rect ShearableIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+                    GUI.DrawTexture(ShearableIconBoth, ShearableTextures[2]);
+                    shearableLabel += "(both)";
+                    break;
+            }
+            Widgets.Label(rectShearableLabel, shearableLabel);
+            if (Widgets.InvisibleButton(rectShearable))
+            {
+                Filter_Animals.filterShearable = Filter_Animals.bump(Filter_Animals.filterShearable);
+                SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
+                MainTabWindow_Animals.isDirty = true;
+            }
+            if (Mouse.IsOver(rectShearable))
+            {
+                GUI.DrawTexture(rectShearable, TexUI.HighlightTex);
+            }
+            y += 30;
+
+
+
+            // buttons
             if (Widgets.TextButton(new Rect(inRect.width / 4f + 5f, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "Clear", true, false))
             {
                 Filter_Animals.resetFilter();
