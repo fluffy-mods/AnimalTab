@@ -4,6 +4,7 @@ using Verse;
 using Verse.Sound;
 using RimWorld;
 using UnityEngine;
+using System.Reflection;
 
 namespace Fluffy
 {
@@ -141,12 +142,23 @@ namespace Fluffy
                 {
                     if (!Event.current.shift)
                     {
-                        // sort by trainable[i]
+                        if (MainTabWindow_Animals.order == MainTabWindow_Animals.orders.Training && MainTabWindow_Animals.trainingOrder == trainables[i])
+                        {
+                            MainTabWindow_Animals.asc = !MainTabWindow_Animals.asc;
+                        }
+                        else
+                        {
+                            MainTabWindow_Animals.order = MainTabWindow_Animals.orders.Training;
+                            MainTabWindow_Animals.asc = false;
+                            MainTabWindow_Animals.trainingOrder = trainables[i];
+                        }
                     } 
-                    else
+                    else if (Event.current.shift)
                     {
                         ToggleAllTraining(trainables[i], pawns);
                     }
+                    SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
+                    MainTabWindow_Animals.isDirty = true;
                 }
             }
         }

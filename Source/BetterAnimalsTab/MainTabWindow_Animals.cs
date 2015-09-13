@@ -16,18 +16,21 @@ namespace Fluffy
 
         private const float AreaAllowedWidth = 350f;
 
-        private enum orders
+        public enum orders
         {
             Default,
             Name,
             Gender,
             LifeStage,
-            Slaughter
+            Slaughter,
+            Training
         }
 
-        private orders order = orders.Default;
+        public static orders order = orders.Default;
 
-        private bool asc = false;
+        public static TrainableDef trainingOrder;
+
+        public static bool asc = false;
 
         public override Vector2 RequestedTabSize
         {
@@ -63,6 +66,7 @@ namespace Fluffy
         protected override void BuildPawnList()
         {
             IEnumerable<Pawn> sorted;
+            bool dump;
             switch (order)
             {
                 case orders.Default:
@@ -93,6 +97,12 @@ namespace Fluffy
                     sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter) != null descending, p.BodySize descending
+                             select p;
+                    break;
+                case orders.Training:
+                    sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
+                             where p.RaceProps.Animal
+                             orderby p.training.IsCompleted(trainingOrder) descending, p.training.GetWanted(trainingOrder) descending, p.training.CanAssignToTrain(trainingOrder, out dump).Accepted descending
                              select p;
                     break;
                 default:
