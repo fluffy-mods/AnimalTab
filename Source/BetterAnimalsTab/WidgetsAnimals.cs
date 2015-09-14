@@ -262,15 +262,16 @@ namespace Fluffy
 
         public static void ToggleAllTraining(TrainableDef td, List<Pawn> pawns)
         {
-            bool[] canAssign = new bool[pawns.Count];
+            bool[] visible = new bool[pawns.Count];
+            AcceptanceReport[] canAssign = new AcceptanceReport[pawns.Count];
             bool[] assigned = pawns.Select(p => p.training.GetWanted(td)).ToArray();
             bool[] trained = pawns.Select(p => p.training.IsCompleted(td)).ToArray();
             bool all = true;
 
             for (int i = 0; i < pawns.Count; i++)
             {
-                pawns[i].training.CanAssignToTrain(td, out canAssign[i]);
-                if (!assigned[i] && !trained[i] && canAssign[i]) all = false;
+                pawns[i].training.CanAssignToTrain(td, out visible[i]);
+                if (!assigned[i] && !trained[i] && canAssign[i].Accepted) all = false;
             }
 
             for (int i = 0; i < pawns.Count; i++)
@@ -278,7 +279,7 @@ namespace Fluffy
                 if (all && assigned[i])
                 {
                     SetWantedRecursive(td, pawns[i], false);
-                } else if (!assigned[i] && canAssign[i] && !trained[i])
+                } else if (!assigned[i] && canAssign[i].Accepted && !trained[i])
                 {
                     SetWantedRecursive(td, pawns[i], true);
                 }
