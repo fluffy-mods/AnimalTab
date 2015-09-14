@@ -270,7 +270,7 @@ namespace Fluffy
 
             for (int i = 0; i < pawns.Count; i++)
             {
-                pawns[i].training.CanAssignToTrain(td, out visible[i]);
+                canAssign[i] = pawns[i].training.CanAssignToTrain(td, out visible[i]);
                 if (!assigned[i] && !trained[i] && canAssign[i].Accepted) all = false;
             }
 
