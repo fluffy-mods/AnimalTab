@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Verse;
 using RimWorld;
@@ -57,22 +58,28 @@ namespace Fluffy
                    select p.story.WorkTypeIsDisabled(def) ? -1 : p.workSettings.GetPriority(def)).ToList<int>();
             copied = p;
 
-            string temp = "Priorities: ";
+#if DEBUG
+            var temp = "Priorities: ";
             for (int i = 0; i < copy.Count; i++)
             {
                 temp += ", " + copy[i].ToString();
             }
             Log.Message(temp);
+#endif
         }
 
         protected void Paste(Pawn p)
         {
             for (int i = 0; i < VisibleWorkTypeDefsInPriorityOrder.Count; i++)
             {
+#if DEBUG
                 Log.Message("Attempting paste...");
+#endif
                 if (p.story != null && !p.story.WorkTypeIsDisabled(VisibleWorkTypeDefsInPriorityOrder[i]) && copy[i] >= 0)
                 {
+#if DEBUG
                     Log.Message(VisibleWorkTypeDefsInPriorityOrder[i].LabelCap);
+#endif
                     p.workSettings.SetPriority(VisibleWorkTypeDefsInPriorityOrder[i], copy[i]);
                 }
             }
@@ -207,7 +214,7 @@ namespace Fluffy
             Text.Anchor = TextAnchor.LowerCenter;
             GUI.color = Color.white;
             Rect rectname = new Rect(0f, 20f, num3, 33f);
-            Widgets.Label(rectname, "Name");
+            Widgets.Label(rectname, "Fluffy.Name".Translate());
             if (Widgets.InvisibleButton(rectname))
             {
                 if (order == null)
@@ -221,7 +228,7 @@ namespace Fluffy
                 }
                 BuildPawnList();
             }
-            TooltipHandler.TipRegion(rectname, "Click to sort by name.");
+            TooltipHandler.TipRegion(rectname, "Fluffy.SortByName".Translate());
             Text.Anchor = TextAnchor.UpperLeft;
             Rect outRect = new Rect(0f, 50f, position2.width, position2.height - 50f);
             this.workColumnSpacing = (position2.width - 16f - 225f) / (float)MainTabWindow_Work.VisibleWorkTypeDefsInPriorityOrder.Count;
@@ -242,18 +249,19 @@ namespace Fluffy
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Widgets.Label(rect5, current2.labelShort);
                 WorkTypeDef localDef = current2;
-                string tiptext = "";
+                var tiptext = new StringBuilder();
                 if (useWorkPriorities)
                 {
-                    tiptext += "Left click to sort by skill.\n";
-                    tiptext += "Shift left/right click to increase/decrease priority.\n";
+                    tiptext.AppendLine("Fluffy.LeftSortBySkill".Translate());
+                    tiptext.AppendLine("Fluffy.ShiftToChangePriority".Translate());
                 } else
                 {
-                    tiptext += "Click to sort by skill.\n";
-                    tiptext += "Shift click to toggle.\n";
+                    tiptext.AppendLine("Fluffy.SortBySkill".Translate());
+                    tiptext.AppendLine("Fluffy.ShiftToToggle".Translate());
                 }
-                tiptext += "\n" + localDef.gerundLabel + "\n\n" + localDef.description;
-                TooltipHandler.TipRegion(rect5, new TipSignal(() => tiptext, localDef.GetHashCode()));
+                tiptext.AppendLine().AppendLine( localDef.gerundLabel ).
+                        AppendLine().Append( localDef.description );
+                TooltipHandler.TipRegion(rect5, new TipSignal(() => tiptext.ToString(), localDef.GetHashCode()));
                 if (Event.current.type == EventType.MouseDown && Mouse.IsOver(rect5))
                 {
                     if (Event.current.shift)
@@ -334,7 +342,7 @@ namespace Fluffy
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     ClearCopied();
                 }
-                TooltipHandler.TipRegion(rectCancel, "Clear copy");
+                TooltipHandler.TipRegion(rectCancel, "Fluffy.ClearCopy".Translate());
             } else
             {
                 Rect rectCopy = new Rect(num + 6f, rect.y + 6f, 16f, 16f);
@@ -343,7 +351,7 @@ namespace Fluffy
                     SoundDefOf.Click.PlayOneShotOnCamera();
                     Copy(p);
                 }
-                TooltipHandler.TipRegion(rectCopy, "Copy");
+                TooltipHandler.TipRegion(rectCopy, "Fluffy.Copy".Translate());
             }
             if (copy != null && copied != p)
             {
@@ -353,7 +361,7 @@ namespace Fluffy
                     SoundDefOf.Click.PlayOneShotOnCamera();
                     Paste(p);
                 }
-                TooltipHandler.TipRegion(rectPaste, "Paste");
+                TooltipHandler.TipRegion(rectPaste, "Fluffy.Paste".Translate());
             }
         }
     }

@@ -37,19 +37,19 @@ namespace Fluffy
                 flag = true;
                 Event.current.Use();
             }
-            Widgets.Label(new Rect(0f, 0f, inRect.width, inRect.height), "Pet name");
+            Widgets.Label(new Rect(0f, 0f, inRect.width, inRect.height), "Fluffy.PetName".Translate());
             this.curName = Widgets.TextField(new Rect(0f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), this.curName);
-            if (Widgets.TextButton(new Rect(inRect.width / 2f + 20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), "OK".Translate(), true, false) || flag)
+            if (Widgets.TextButton(new Rect(inRect.width / 2f + 20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), "OK".Translate()) || flag)
             {
                 if (this.IsValidName(this.curName))
                 {
                     pet.Name = new NameSingle(this.curName);
-                    Find.WindowStack.TryRemove(this, true);
-                    Messages.Message("pet renamed!", MessageSound.Benefit);
+                    Find.WindowStack.TryRemove(this);
+                    Messages.Message("Fluffy.PetRenamed".Translate(), MessageSound.Benefit);
                 }
                 else
                 {
-                    Messages.Message("invalid name", MessageSound.RejectInput);
+                    Messages.Message("Fluffy.PetInvalidName".Translate(), MessageSound.RejectInput);
                 }
                 Event.current.Use();
             }

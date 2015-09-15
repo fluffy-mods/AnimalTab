@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+<!-- Dialog_FilterAnimals -->
+    <Fluffy.FilterByRace>종류로 필터</Fluffy.FilterByRace>
+    <Fluffy.FilterByAttributes>속성으로 필터</Fluffy.FilterByAttributes>
+
+    <Fluffy.Yes>예</Fluffy.Yes>
+    <Fluffy.No>아니오</Fluffy.No>
+    <Fluffy.Both>모두</Fluffy.Both>
+
+    <Fluffy.Gender>성별</Fluffy.Gender>
+
+    <Fluffy.Lifestage>성장</Fluffy.Lifestage>
+    <Fluffy.LifestageReproductive>번식 가능</Fluffy.LifestageReproductive>
+    <Fluffy.LifestageNotReproductive>번식 불가</Fluffy.LifestageNotReproductive>
+
+    <Fluffy.Training>훈련</Fluffy.Training>
+    <Fluffy.Obedience>복종 훈련됨</Fluffy.Obedience>
+    <Fluffy.NotObedience>복종 훈련 안됨</Fluffy.NotObedience>
+
+    <Fluffy.Milkable>착유</Fluffy.Milkable>
+
+    <Fluffy.Shearable>털 깎기</Fluffy.Shearable>
+
+    <Fluffy.Clear>초기화</Fluffy.Clear>
+    <Fluffy.Enable>활성화</Fluffy.Enable>
+    <Fluffy.Disable>비활성화</Fluffy.Disable>
+
+<!-- Dialog_RenamePet -->
+
+    <Fluffy.PetName>이름</Fluffy.PetName>
+    <Fluffy.PetRenamed>이름이 바뀌었습니다!</Fluffy.PetRenamed>
+    <Fluffy.PetInvalidName>잘못된 이름입니다.</Fluffy.PetInvalidName>
+
+<!-- MainTabWindow_Animals -->
+<!-- MainTabWindow_Work -->
+
+    <Fluffy.Filter>필터</Fluffy.Filter>
+    <Fluffy.FilterTooltip>왼쪽 클릭으로 필터를 설정하세요.\n오른쪽 클릭으로 빠른 필터를 설정할 수 있습니다.</Fluffy.FilterTooltip>
+    <Fluffy.DisableFilter>필터 비활성화</Fluffy.DisableFilter>
+    <Fluffy.EnableFilter>필터 활성화</Fluffy.EnableFilter>
+
+    <Fluffy.Name>이름</Fluffy.Name>
+
+    <Fluffy.SortByName>이름으로 정렬</Fluffy.SortByName>
+    <Fluffy.SortByPetness>애완도로 정렬(기본값)</Fluffy.SortByPetness>
+    <Fluffy.SortByGender>성별로 정렬</Fluffy.SortByGender>
+    <Fluffy.SortByAge>나이로 정렬</Fluffy.SortByAge>
+    <Fluffy.SortByBodysizeSlaughter>신체 크기와 도축 지정 여부로 정렬\n쉬프트 클릭으로 모두 도축 설정 또는 해제</Fluffy.SortByBodysizeSlaughter>
+
+    <Fluffy.StopSlaughter>도축 해제</Fluffy.StopSlaughter>
+    <Fluffy.MarkSlaughter>도축 지정</Fluffy.MarkSlaughter>
+
+    <Fluffy.SortBySkill>기술로 정렬</Fluffy.SortBySkill>
+    <Fluffy.ShiftToChangePriority>쉬프트 왼쪽/오른쪽 클릭으로 우선순위 증가/감소</Fluffy.ShiftToChangePriority>
+    <Fluffy.LeftSortBySkill>기술로 정렬</Fluffy.LeftSortBySkill>
+    <Fluffy.ShiftToToggle>쉬프트 클릭으로 설정</Fluffy.ShiftToToggle>
+
+    <Fluffy.ClearCopy>클립보드 지우기</Fluffy.ClearCopy>
+    <Fluffy.Copy>복사</Fluffy.Copy>
+    <Fluffy.Paste>붙여넣기</Fluffy.Paste>
+
+<!-- MainTabWindow_PawnList -->
+
+    <Fluffy.ClickToJump>클릭하여 이동</Fluffy.ClickToJump>
+    <Fluffy.RightClickToRename>오른쪽 클릭으로 이름 바꾸기</Fluffy.RightClickToRename>
+
+<!-- WidgetsAnimals -->
+
+    <Fluffy.RestrictAllTo>모두 {0}(으)로 제한</Fluffy.RestrictAllTo>
+
+    <Fluffy.SortByTrainables>{0}(으)로 정렬</Fluffy.SortByTrainables>
+    <Fluffy.ShiftToTrainAll>쉬프트 클릭으로 모두 훈련</Fluffy.ShiftToTrainAll>
+
+    <Fluffy.TrainingCompleted>훈련 완료</Fluffy.TrainingCompleted>
+    <Fluffy.NotTraining>훈련 중 아님</Fluffy.NotTraining>
+    <Fluffy.CurrentlyTraining>훈련 중</Fluffy.CurrentlyTraining>
+    <Fluffy.StepsCompleted>{0}/{1} 완료</Fluffy.StepsCompleted>
+
+</LanguageData>
