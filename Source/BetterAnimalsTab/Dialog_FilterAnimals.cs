@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -94,7 +95,7 @@ namespace Fluffy
             Rect rect = new Rect(x, y, colWidth, rowHeight);
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerLeft;
-            Widgets.Label(rect, "Filter by race");
+            Widgets.Label(rect, "Fluffy.FilterByRace".Translate());
 
 
             y += 30f;
@@ -134,14 +135,15 @@ namespace Fluffy
 
             Text.Font = GameFont.Tiny;
             Rect rectAttributes = new Rect(x, 5f, colWidth, rowHeight);
-            Widgets.Label(rectAttributes, "Filter by attributes");
+            Widgets.Label(rectAttributes, "Fluffy.FilterByAttributes".Translate());
             Text.Font = GameFont.Small;
 
             y += 30f;
 
 
             // Gender
-            string genderLabel = "Gender ";
+            var genderLabel = new StringBuilder();
+            genderLabel.Append( "Fluffy.Gender".Translate() ).Append( " " );
             Rect rectGender = new Rect(x, y, colWidth, rowHeight);
             Rect rectGenderLabel = new Rect(x, y, labWidth, rowHeight);
             switch (Filter_Animals.filterGender)
@@ -149,21 +151,20 @@ namespace Fluffy
                 case Filter_Animals.filterType.True:
                     Rect GenderIconFemale = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(GenderIconFemale, GenderTextures[0]);
-                    genderLabel += "(female)";
+                    genderLabel.Append( "(" ).Append( "Female".Translate() ).Append( ")" );
                     break;
                 case Filter_Animals.filterType.False:
                     Rect GenderIconMale = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(GenderIconMale, GenderTextures[1]);
-                    genderLabel += "(male)";
+                    genderLabel.Append("(").Append("Male".Translate()).Append(")");
                     break;
-                case Filter_Animals.filterType.None:
                 default:
                     Rect GenderIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(GenderIconBoth, GenderTextures[2]);
-                    genderLabel += "(both)";
+                    genderLabel.Append("(").Append("Fluffy.Both".Translate()).Append(")");
                     break;
             }
-            Widgets.Label(rectGenderLabel, genderLabel);
+            Widgets.Label(rectGenderLabel, genderLabel.ToString());
             if (Widgets.InvisibleButton(rectGender))
             {
                 Filter_Animals.filterGender = Filter_Animals.bump(Filter_Animals.filterGender);
@@ -177,7 +178,8 @@ namespace Fluffy
             y += 30;
 
             // Reproductive
-            string reproLabel = "Lifestage ";
+            var reproLabel = new StringBuilder();
+            reproLabel.Append("Fluffy.Lifestage".Translate() ).Append( " " );
             Rect rectRepro = new Rect(x, y, colWidth, rowHeight);
             Rect rectReproLabel = new Rect(x, y, labWidth, rowHeight);
             switch (Filter_Animals.filterReproductive)
@@ -185,21 +187,20 @@ namespace Fluffy
                 case Filter_Animals.filterType.True:
                     Rect ReproIconTrue = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(ReproIconTrue, ReproTextures[0]);
-                    reproLabel += "(reproductive)";
+                    reproLabel.Append("(").Append("Fluffy.LifestageReproductive".Translate()).Append(")");
                     break;
                 case Filter_Animals.filterType.False:
                     Rect ReproIconFalse = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(ReproIconFalse, ReproTextures[1]);
-                    reproLabel += "(not reproductive)";
+                    reproLabel.Append("(").Append("Fluffy.LifestageNotReproductive".Translate()).Append(")");
                     break;
-                case Filter_Animals.filterType.None:
                 default:
                     Rect ReproIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(ReproIconBoth, ReproTextures[2]);
-                    reproLabel += "(both)";
+                    reproLabel.Append("(").Append("Fluffy.Both".Translate()).Append(")");
                     break;
             }
-            Widgets.Label(rectReproLabel, reproLabel);
+            Widgets.Label(rectReproLabel, reproLabel.ToString());
             if (Widgets.InvisibleButton(rectRepro))
             {
                 Filter_Animals.filterReproductive = Filter_Animals.bump(Filter_Animals.filterReproductive);
@@ -213,7 +214,8 @@ namespace Fluffy
             y += 30;
 
             // Training
-            string trainingLabel = "Training ";
+            var trainingLabel = new StringBuilder();
+            trainingLabel.Append("Fluffy.Training".Translate()).Append( " " );
             Rect rectTrained = new Rect(x, y, colWidth, rowHeight);
             Rect rectTrainedLabel = new Rect(x, y, labWidth, rowHeight);
             switch (Filter_Animals.filterTamed)
@@ -221,21 +223,20 @@ namespace Fluffy
                 case Filter_Animals.filterType.True:
                     Rect TrainedIconTrue = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(TrainedIconTrue, TrainingTextures[0]);
-                    trainingLabel += "(obedience trained)";
+                    trainingLabel.Append("(").Append("Fluffy.Obedience".Translate()).Append(")");
                     break;
                 case Filter_Animals.filterType.False:
                     Rect TrainedIconFalse = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(TrainedIconFalse, TrainingTextures[1]);
-                    trainingLabel += "(not obedience trained)";
+                    trainingLabel.Append("(").Append("Fluffy.NotObedience".Translate()).Append(")");
                     break;
-                case Filter_Animals.filterType.None:
                 default:
                     Rect TrainedIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(TrainedIconBoth, TrainingTextures[2]);
-                    trainingLabel += "(both)";
+                    trainingLabel.Append("(").Append("Fluffy.Both".Translate()).Append(")");
                     break;
             }
-            Widgets.Label(rectTrainedLabel, trainingLabel);
+            Widgets.Label(rectTrainedLabel, trainingLabel.ToString());
             if (Widgets.InvisibleButton(rectTrained))
             {
                 Filter_Animals.filterTamed = Filter_Animals.bump(Filter_Animals.filterTamed);
@@ -249,7 +250,8 @@ namespace Fluffy
             y += 30;
 
             // Milkable
-            string milkableLabel = "Milkable ";
+            var milkableLabel = new StringBuilder();
+            milkableLabel.Append("Fluffy.Milkable".Translate()).Append( " " );
             Rect rectMilkable = new Rect(x, y, colWidth, rowHeight);
             Rect rectMilkableLabel = new Rect(x, y, labWidth, rowHeight);
             switch (Filter_Animals.filterMilkable)
@@ -257,21 +259,20 @@ namespace Fluffy
                 case Filter_Animals.filterType.True:
                     Rect MilkableIconTrue = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(MilkableIconTrue, MilkableTextures[0]);
-                    milkableLabel += "(yes)";
+                    milkableLabel.Append( "(" ).Append( "Fluffy.Yes".Translate() ).Append( ")" );
                     break;
                 case Filter_Animals.filterType.False:
                     Rect MilkableIconFalse = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(MilkableIconFalse, MilkableTextures[1]);
-                    milkableLabel += "(no)";
+                    milkableLabel.Append("(").Append("Fluffy.No".Translate()).Append(")");
                     break;
-                case Filter_Animals.filterType.None:
                 default:
                     Rect MilkableIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(MilkableIconBoth, MilkableTextures[2]);
-                    milkableLabel += "(both)";
+                    milkableLabel.Append("(").Append("Fluffy.Both".Translate()).Append(")");
                     break;
             }
-            Widgets.Label(rectMilkableLabel, milkableLabel);
+            Widgets.Label(rectMilkableLabel, milkableLabel.ToString());
             if (Widgets.InvisibleButton(rectMilkable))
             {
                 Filter_Animals.filterMilkable = Filter_Animals.bump(Filter_Animals.filterMilkable);
@@ -285,7 +286,8 @@ namespace Fluffy
             y += 30;
 
             // Shearable
-            string shearableLabel = "Shearable ";
+            var shearableLabel = new StringBuilder();
+            shearableLabel.Append("Fluffy.Shearable".Translate()).Append( " " );
             Rect rectShearable = new Rect(x, y, colWidth, rowHeight);
             Rect rectShearableLabel = new Rect(x, y, labWidth, rowHeight);
             switch (Filter_Animals.filterShearable)
@@ -293,21 +295,20 @@ namespace Fluffy
                 case Filter_Animals.filterType.True:
                     Rect ShearableIconTrue = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(ShearableIconTrue, ShearableTextures[0]);
-                    shearableLabel += "(yes)";
+                    shearableLabel.Append("(").Append("Fluffy.Yes".Translate()).Append(")");
                     break;
                 case Filter_Animals.filterType.False:
                     Rect ShearableIconFalse = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(ShearableIconFalse, ShearableTextures[1]);
-                    shearableLabel += "(no)";
+                    shearableLabel.Append("(").Append("Fluffy.No".Translate()).Append(")");
                     break;
-                case Filter_Animals.filterType.None:
                 default:
                     Rect ShearableIconBoth = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
                     GUI.DrawTexture(ShearableIconBoth, ShearableTextures[2]);
-                    shearableLabel += "(both)";
+                    shearableLabel.Append("(").Append("Fluffy.Both".Translate()).Append(")");
                     break;
             }
-            Widgets.Label(rectShearableLabel, shearableLabel);
+            Widgets.Label(rectShearableLabel, shearableLabel.ToString());
             if (Widgets.InvisibleButton(rectShearable))
             {
                 Filter_Animals.filterShearable = Filter_Animals.bump(Filter_Animals.filterShearable);
@@ -323,7 +324,8 @@ namespace Fluffy
 
 
             // buttons
-            if (Widgets.TextButton(new Rect(inRect.width / 4f + 5f, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "Clear", true, false))
+            if (Widgets.TextButton(new Rect(inRect.width / 4f + 5f, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+                                            "Fluffy.Clear".Translate()))
             {
                 Filter_Animals.resetFilter();
                 Filter_Animals.disableFilter();
@@ -333,7 +335,8 @@ namespace Fluffy
 
             if (!Filter_Animals.filter)
             {
-                if (Widgets.TextButton(new Rect(x, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "Enable", true, false))
+                if (Widgets.TextButton(new Rect(x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+                                            "Fluffy.Enable".Translate()))
                 {
                     Filter_Animals.enableFilter();
                     MainTabWindow_Animals.isDirty = true;
@@ -342,7 +345,8 @@ namespace Fluffy
             }
             else
             {
-                if (Widgets.TextButton(new Rect(x, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "Disable", true, false))
+                if (Widgets.TextButton(new Rect(x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+                                            "Fluffy.Disable".Translate()))
                 {
                     Filter_Animals.disableFilter();
                     MainTabWindow_Animals.isDirty = true;
@@ -351,9 +355,10 @@ namespace Fluffy
             }
 
 
-            if (Widgets.TextButton(new Rect(x + inRect.width / 4, inRect.height - 35f, inRect.width / 4f - 10f, 35f), "OK".Translate(), true, false))
+            if (Widgets.TextButton(new Rect(x + inRect.width / 4, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+                                            "OK".Translate()))
             {
-                Find.WindowStack.TryRemove(this, true);
+                Find.WindowStack.TryRemove(this);
                 Event.current.Use();
             }
 

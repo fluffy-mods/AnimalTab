@@ -139,10 +139,10 @@ namespace Fluffy
 
             TipSignal tooltip = p.GetTooltip();
             string temp = tooltip.text;
-            tooltip.text = "Left click to jump to.";
+            tooltip.text = "Fluffy.ClickToJump".Translate();
             if (!p.RaceProps.Humanlike && p.Name != null && !p.Name.Numerical)
             {
-                tooltip.text += "\nRight click to rename.";
+                tooltip.text += "\n" + "Fluffy.RightClickToRename".Translate();
             }
             tooltip.text += "\n\n" + temp;
             TooltipHandler.TipRegion(rect3, tooltip);

@@ -140,7 +140,7 @@ namespace Fluffy
 
             Rect filterButton = new Rect(0f, 0f, 200f, Mathf.Round(position.height / 2f));
             Text.Font = GameFont.Small;
-            if (Widgets.TextButton(filterButton, "Filter", true, false))
+            if (Widgets.TextButton(filterButton, "Fluffy.Filter".Translate()))
             {
                 if (Event.current.button == 0)
                 {
@@ -162,7 +162,7 @@ namespace Fluffy
                     }
                 }
             }
-            TooltipHandler.TipRegion(filterButton, "Left click to set a filter.\nRight click to set a quick filter.");
+            TooltipHandler.TipRegion(filterButton, "Fluffy.FilterTooltip".Translate());
             Rect filterIcon = new Rect(205f, (filterButton.height - 24f) / 2f, 24f, 24f);
             if (Filter_Animals.filter)
             {
@@ -172,7 +172,7 @@ namespace Fluffy
                     BuildPawnList();
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 }
-                TooltipHandler.TipRegion(filterIcon, "Disable filter");
+                TooltipHandler.TipRegion(filterIcon, "Fluffy.DisableFilter".Translate());
             } else if (Filter_Animals.filterPossible)
             {
                 if (Widgets.ImageButton(filterIcon, filterTex))
@@ -181,14 +181,14 @@ namespace Fluffy
                     BuildPawnList();
                     SoundDefOf.Click.PlayOneShotOnCamera();
                 }
-                TooltipHandler.TipRegion(filterIcon, "Enable filter");
+                TooltipHandler.TipRegion(filterIcon, "Fluffy.EnableFilter".Translate());
             }
 
             float num = 175f;
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerCenter;
             Rect rectname = new Rect(0f, 0f, num, position.height + 3f);
-            Widgets.Label(rectname, "Name");
+            Widgets.Label(rectname, "Fluffy.Name".Translate());
             if (Widgets.InvisibleButton(rectname))
             {
                 if (order == orders.Name)
@@ -204,7 +204,7 @@ namespace Fluffy
                 BuildPawnList();
             }
             Rect highlightName = new Rect(0f, rectname.height - 30f, rectname.width, 30);
-            TooltipHandler.TipRegion(highlightName, "Click to sort by name.");
+            TooltipHandler.TipRegion(highlightName, "Fluffy.SortByName".Translate());
             if (Mouse.IsOver(highlightName))
             {
                 GUI.DrawTexture(highlightName, TexUI.HighlightTex);
@@ -226,7 +226,7 @@ namespace Fluffy
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 this.BuildPawnList();
             }
-            TooltipHandler.TipRegion(rect, "Click to sort by petness (Default).");
+            TooltipHandler.TipRegion(rect, "Fluffy.SortByPetness".Translate());
             if (Mouse.IsOver(rect))
             {
                 GUI.DrawTexture(rect, TexUI.HighlightTex);
@@ -258,7 +258,7 @@ namespace Fluffy
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 this.BuildPawnList();
             }
-            TooltipHandler.TipRegion(recta, "Click to sort by gender.");
+            TooltipHandler.TipRegion(recta, "Fluffy.SortByGender".Translate());
             if (Mouse.IsOver(recta))
             {
                 GUI.DrawTexture(recta, TexUI.HighlightTex);
@@ -291,7 +291,7 @@ namespace Fluffy
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 this.BuildPawnList();
             }
-            TooltipHandler.TipRegion(rectb, "Click to sort by lifestage and age.");
+            TooltipHandler.TipRegion(rectb, "Fluffy.SortByAge".Translate());
             if (Mouse.IsOver(rectb))
             {
                 GUI.DrawTexture(rectb, TexUI.HighlightTex);
@@ -321,7 +321,7 @@ namespace Fluffy
                     this.BuildPawnList();
                 }
             }
-            TooltipHandler.TipRegion(rectc, "Click to sort by slaughter designation and bodysize.\nShift-click to toggle slaughter for all.");
+            TooltipHandler.TipRegion(rectc, "Fluffy.SortByBodysizeSlaughter".Translate());
             if (Mouse.IsOver(rectc))
             {
                 GUI.DrawTexture(rectc, TexUI.HighlightTex);
@@ -404,10 +404,10 @@ namespace Fluffy
             if (Slaughter)
             {
                 GUI.DrawTexture(rectc1, WorkBoxCheckTex);
-                TooltipHandler.TipRegion(rectc, "save from the butcher's block");
+                TooltipHandler.TipRegion(rectc, "Fluffy.StopSlaughter".Translate());
             } else
             {
-                TooltipHandler.TipRegion(rectc, "mark for slaughter");
+                TooltipHandler.TipRegion(rectc, "Fluffy.MarkSlaughter".Translate());
             }
             if (Widgets.InvisibleButton(rectc))
             {

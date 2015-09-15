@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+<!-- Dialog_FilterAnimals -->
+    <Fluffy.FilterByRace>Filter by race</Fluffy.FilterByRace>
+    <Fluffy.FilterByAttributes>Filter by attributes</Fluffy.FilterByAttributes>
+
+    <Fluffy.Yes>yes</Fluffy.Yes>
+    <Fluffy.No>no</Fluffy.No>
+    <Fluffy.Both>both</Fluffy.Both>
+
+    <Fluffy.Gender>Gender</Fluffy.Gender>
+
+    <Fluffy.Lifestage>Lifestage</Fluffy.Lifestage>
+    <Fluffy.LifestageReproductive>reproductive</Fluffy.LifestageReproductive>
+    <Fluffy.LifestageNotReproductive>not reproductive</Fluffy.LifestageNotReproductive>
+
+    <Fluffy.Training>Training</Fluffy.Training>
+    <Fluffy.Obedience>obedience trained</Fluffy.Obedience>
+    <Fluffy.NotObedience>not obedience trained</Fluffy.NotObedience>
+
+    <Fluffy.Milkable>Milkable</Fluffy.Milkable>
+
+    <Fluffy.Shearable>Shearable</Fluffy.Shearable>
+
+    <Fluffy.Clear>Clear</Fluffy.Clear>
+    <Fluffy.Enable>Enable</Fluffy.Enable>
+    <Fluffy.Disable>Disable</Fluffy.Disable>
+
+<!-- Dialog_RenamePet -->
+
+    <Fluffy.PetName>Pet name</Fluffy.PetName>
+    <Fluffy.PetRenamed>Pet renamed!</Fluffy.PetRenamed>
+    <Fluffy.PetInvalidName>Invalid name.</Fluffy.PetInvalidName>
+
+<!-- MainTabWindow_Animals -->
+<!-- MainTabWindow_Work -->
+
+    <Fluffy.Filter>Filter</Fluffy.Filter>
+    <Fluffy.FilterTooltip>Left click to set a filter.\nRight click to set a quick filter.</Fluffy.FilterTooltip>
+    <Fluffy.DisableFilter>Disable filter</Fluffy.DisableFilter>
+    <Fluffy.EnableFilter>Enable filter</Fluffy.EnableFilter>
+
+    <Fluffy.Name>Name</Fluffy.Name>
+
+    <Fluffy.SortByName>Click to sort by name.</Fluffy.SortByName>
+    <Fluffy.SortByPetness>Click to sort by petness.(default)</Fluffy.SortByPetness>
+    <Fluffy.SortByGender>Click to sort by gender.</Fluffy.SortByGender>
+    <Fluffy.SortByAge>Click to sort by lifestage and age.</Fluffy.SortByAge>
+    <Fluffy.SortByBodysizeSlaughter>Click to sort by slaughter designation and bodysize.\nShift-click to toggle slaughter for all.</Fluffy.SortByBodysizeSlaughter>
+
+    <Fluffy.StopSlaughter>save from the butcher's block</Fluffy.StopSlaughter>
+    <Fluffy.MarkSlaughter>mark for slaughter</Fluffy.MarkSlaughter>
+
+    <Fluffy.SortBySkill>Click to sort by skill.</Fluffy.SortBySkill>
+    <Fluffy.ShiftToChangePriority>Shift left/right click to increase/decrease priority.</Fluffy.ShiftToChangePriority>
+    <Fluffy.LeftSortBySkill>Left click to sort by skill.</Fluffy.LeftSortBySkill>
+    <Fluffy.ShiftToToggle>Shift click to toggle.</Fluffy.ShiftToToggle>
+
+    <Fluffy.ClearCopy>Clear copy</Fluffy.ClearCopy>
+    <Fluffy.Copy>Copy</Fluffy.Copy>
+    <Fluffy.Paste>Paste</Fluffy.Paste>
+
+<!-- MainTabWindow_PawnList -->
+
+    <Fluffy.ClickToJump>Left click to jump to.</Fluffy.ClickToJump>
+    <Fluffy.RightClickToRename>Right click to rename.</Fluffy.RightClickToRename>
+
+<!-- WidgetsAnimals -->
+
+    <Fluffy.RestrictAllTo>Restrict all to {0}</Fluffy.RestrictAllTo>
+
+    <Fluffy.SortByTrainables>Click to sort by {0}</Fluffy.SortByTrainables>
+    <Fluffy.ShiftToTrainAll>Shift click to train all</Fluffy.ShiftToTrainAll>
+
+    <Fluffy.TrainingCompleted>Training completed.</Fluffy.TrainingCompleted>
+    <Fluffy.NotTraining>Not training.</Fluffy.NotTraining>
+    <Fluffy.CurrentlyTraining>Currently training.</Fluffy.CurrentlyTraining>
+    <Fluffy.StepsCompleted>{0} out of {1} completed.</Fluffy.StepsCompleted>
+
+</LanguageData>

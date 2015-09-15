@@ -5,6 +5,7 @@ using Verse.Sound;
 using RimWorld;
 using UnityEngine;
 using System.Reflection;
+using System.Text;
 
 namespace Fluffy
 {
@@ -105,7 +106,7 @@ namespace Fluffy
                             pawns[i].playerSettings.AreaRestriction = allAreas[j];
                         }
                     }
-                    TooltipHandler.TipRegion(rect3, "Restrict all to " + allAreas[j].Label);
+                    TooltipHandler.TipRegion(rect3, "Fluffy.RestrictAllTo".Translate(allAreas[j].Label));
                     if (Mouse.IsOver(rect3))
                     {
                         GUI.DrawTexture(rect3, TexUI.HighlightTex);
@@ -126,7 +127,7 @@ namespace Fluffy
             float x = rect.xMin;
             float y = rect.yMin;
 
-            for (int i = 0; i < trainables.Count(); i++)
+            for (int i = 0; i < trainables.Count; i++)
             {
                 Rect bg = new Rect(x, y, width, rect.height);
                 Rect icon = new Rect(x + widthOffset, y + heightOffset, iconSize, iconSize);
@@ -134,9 +135,15 @@ namespace Fluffy
                 if (Mouse.IsOver(bg))
                 {
                     GUI.DrawTexture(bg, TexUI.HighlightTex);
+#if DEBUG
                     Log.Message(trainables[i].label);
+#endif
                 }
-                TooltipHandler.TipRegion(bg, "Click to sort by" + trainables[i].LabelCap + "\nShift-click to train all\n\n" + trainables[i].description);
+                var tooltip = new StringBuilder();
+                tooltip.AppendLine( "Fluffy.SortByTrainables".Translate( trainables[i].LabelCap ) );
+                tooltip.AppendLine( "Fluffy.ShiftToTrainAll".Translate() ).AppendLine()
+                       .Append( trainables[i].description );
+                TooltipHandler.TipRegion(bg, tooltip.ToString());
                 GUI.DrawTexture(icon, trainingTextures[i]);
                 if(Widgets.InvisibleButton(bg))
                 {
@@ -219,45 +226,72 @@ namespace Fluffy
                 else if (pawn.training.GetWanted(td))
                 {
                     GUI.DrawTexture(rect, Widgets.CheckboxOnTex);
-                    //due to stupidity in core, this won't work. (pawn.training.GetSteps is internal)
-                    //int steps = td.steps;
-                    //float barHeight = (rect.height / steps) * pawn.training.GetSteps(td);
-                    //Rect bar = new Rect(rect.xMax - 5f, rect.yMax - barHeight, 3f, barHeight);
-                    //GUI.DrawTexture(bar, barBG);
+
+                    // Get method named "GetSteps", which is internal(non-public) and not static(instance)
+                    var getSteps = typeof(Pawn_TrainingTracker).GetMethod( "GetSteps",
+                                                                           BindingFlags.NonPublic |
+                                                                           BindingFlags.Instance );
+                    if (getSteps == null)
+                    {
+#if DEBUG
+                        Log.Error("GetSteps is null!");
+#endif
+                        return;
+                    }
+
+                    // Call "GetSteps" from instance pawn.training, parameter is td.
+                    var curSteps = getSteps.Invoke( pawn.training, new object[] {td} );
+                    int steps = td.steps;
+                    // Return value of Invoke(...) is Object; thus casting into int type.
+                    float barHeight = (rect.height/steps)*(int) curSteps;
+                    Rect bar = new Rect( rect.xMax - 5f, rect.yMax - barHeight, 3f, barHeight );
+                    GUI.DrawTexture( bar, barBG );
                 }
             }
         }
 
         public static string getTrainingTip(Pawn pawn, TrainableDef td, AcceptanceReport ar)
         {
-            string label = td.LabelCap + "\n";
+            var label = new StringBuilder();
+            label.AppendLine(td.LabelCap);
             if (!ar.Accepted)
             {
-                label += ar.Reason + "\n";
+                label.AppendLine(ar.Reason);
             }
             else
             {
                 if (pawn.training.IsCompleted(td))
                 {
-                    label += "Training completed.";
+                    label.Append("Fluffy.TrainingCompleted".Translate());
                 }
                 else
                 {
                     if (!pawn.training.GetWanted(td))
                     {
-                        label += "Not training.\n";
+                        label.AppendLine("Fluffy.NotTraining".Translate());
                     }
                     else
                     {
-                        label += "Currently training.\n";
+                        label.AppendLine( "Fluffy.CurrentlyTraining".Translate() );
                     }
-                    //due to stupidity in core, this won't work. (pawn.training.GetSteps is internal)
-                    //DefMap<TrainableDef, int> stepsComplete = new DefMap<TrainableDef, int>();
-                    //int steps = td.steps;
-                    //label += stepsComplete[td].ToString() + " out of " + steps + " completed.";
+                    
+                    var getSteps = typeof(Pawn_TrainingTracker).GetMethod("GetSteps",
+                                                                           BindingFlags.NonPublic |
+                                                                           BindingFlags.Instance);
+                    if (getSteps == null)
+                    {
+#if DEBUG
+                        Log.Error("GetSteps is null!");
+#endif
+                        return label.ToString();
+                    }
+                    
+                    var curSteps = getSteps.Invoke(pawn.training, new object[] { td });
+                    int steps = td.steps;
+                    label.Append( "Fluffy.StepsCompleted".Translate( curSteps, steps ) );
                 }
             }
-            return label;
+            return label.ToString();
         }
 
         public static void ToggleAllTraining(TrainableDef td, List<Pawn> pawns)
