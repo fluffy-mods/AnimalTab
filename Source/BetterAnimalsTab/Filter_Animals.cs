@@ -18,7 +18,7 @@ namespace Fluffy
             False,
             None
         }
-
+        
         public static filterType bump(filterType current)
         {
             filterPossible = true;

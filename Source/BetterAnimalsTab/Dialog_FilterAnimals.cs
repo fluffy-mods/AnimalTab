@@ -13,6 +13,26 @@ namespace Fluffy
     {
         public List<PawnKindDef> pawnKinds;
 
+        public static bool sticky = false;
+
+        public static Rect location;
+
+        public override void PreClose()
+        {
+            base.PreClose();
+            location = currentWindowRect;
+        }
+
+        // kinda hacky, but sticky can't be set without opening, which populates location.
+        public override void PostOpen()
+        {
+            base.PostOpen();
+            if (sticky)
+            {
+                currentWindowRect = location;
+            }
+        }
+
         public static readonly Texture2D[] GenderTextures = new Texture2D[]
         {
             ContentFinder<Texture2D>.Get("UI/Gender/female", true),
@@ -321,6 +341,10 @@ namespace Fluffy
             }
             y += 30;
 
+
+            // sticky option
+            Rect stickyRect = new Rect(5f, inRect.height - 35f, (inRect.width / 4) - 10, 35f);
+            Widgets.LabelCheckbox(stickyRect, "Fluffy.FilterSticky".Translate(), ref sticky);
 
 
             // buttons

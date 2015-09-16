@@ -62,6 +62,14 @@ namespace Fluffy
         private static readonly Texture2D filterTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_large", true);
         private static readonly Texture2D filterOffTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_off_large", true);
 
+        public override void PostOpen()
+        {
+            base.PostOpen();
+            if (Dialog_FilterAnimals.sticky)
+            {
+                Find.WindowStack.Add(new Dialog_FilterAnimals());
+            }
+        }
 
         protected override void BuildPawnList()
         {

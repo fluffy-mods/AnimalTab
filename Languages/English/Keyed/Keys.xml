@@ -23,6 +23,8 @@
 
     <Fluffy.Shearable>Shearable</Fluffy.Shearable>
 
+
+    <Fluffy.FilterSticky>Sticky</Fluffy.FilterSticky>
     <Fluffy.Clear>Clear</Fluffy.Clear>
     <Fluffy.Enable>Enable</Fluffy.Enable>
     <Fluffy.Disable>Disable</Fluffy.Disable>
