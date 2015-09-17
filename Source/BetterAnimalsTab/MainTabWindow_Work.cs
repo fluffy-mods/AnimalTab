@@ -23,7 +23,16 @@ namespace Fluffy
         private static readonly Texture2D pasteTex = ContentFinder<Texture2D>.Get("UI/Buttons/Paste", true);
         private static readonly Texture2D cancelTex = ContentFinder<Texture2D>.Get("UI/Buttons/cancel", true);
 
-        private WorkTypeDef order;
+        private WorkTypeDef workOrder;
+
+        public enum order
+        {
+            Work,
+            Name,
+            Default
+        }
+
+        public order orderBy = order.Default;
 
         private bool asc = false;
 
@@ -55,7 +64,7 @@ namespace Fluffy
         protected void Copy(Pawn p)
         {
             copy = (from def in VisibleWorkTypeDefsInPriorityOrder
-                   select p.story.WorkTypeIsDisabled(def) ? -1 : p.workSettings.GetPriority(def)).ToList<int>();
+                    select p.story.WorkTypeIsDisabled(def) ? -1 : p.workSettings.GetPriority(def)).ToList<int>();
             copied = p;
 
 #if DEBUG
@@ -95,18 +104,24 @@ namespace Fluffy
         {
             this.pawns.Clear();
             IEnumerable<Pawn> sorted;
-            if (order != null)
+
+            switch (orderBy)
             {
-                sorted = from p in Find.ListerPawns.FreeColonists
-                         orderby (p.story == null || p.story.WorkTypeIsDisabled(order)), 
-                                  p.skills.AverageOfRelevantSkillsFor(order) descending
-                         select p;
-            }
-            else
-            {
-                sorted = from p in Find.ListerPawns.FreeColonists
-                         orderby p.LabelCap ascending
-                         select p;
+                case order.Work:
+                    sorted = from p in Find.ListerPawns.FreeColonists
+                             orderby (p.story == null || p.story.WorkTypeIsDisabled(workOrder)),
+                                      p.skills.AverageOfRelevantSkillsFor(workOrder) descending
+                             select p;
+                    break;
+                case order.Name:
+                    sorted = from p in Find.ListerPawns.FreeColonists
+                             orderby p.LabelCap ascending
+                             select p;
+                    break;
+                case order.Default:
+                default:
+                    sorted = Find.ListerPawns.FreeColonists;
+                    break;
             }
 
             this.pawns = sorted.ToList<Pawn>();
@@ -153,7 +168,7 @@ namespace Fluffy
         {
             int reset = toggle ? 1 : 4;
             bool min = pawns.All(p => (p.workSettings.GetPriority(work) == 0 || (p.story == null || p.story.WorkTypeIsDisabled(work))));
-            
+
             for (int i = 0; i < pawns.Count; i++)
             {
                 if (!(pawns[i].story == null || pawns[i].story.WorkTypeIsDisabled(work)))
@@ -215,20 +230,32 @@ namespace Fluffy
             GUI.color = Color.white;
             Rect rectname = new Rect(0f, 20f, num3, 33f);
             Widgets.Label(rectname, "Fluffy.Name".Translate());
+            Widgets.DrawHighlightIfMouseover(rectname);
             if (Widgets.InvisibleButton(rectname))
             {
-                if (order == null)
+                if (Event.current.button == 0)
                 {
-                    asc = !asc;
+                    if (orderBy == order.Name)
+                    {
+                        asc = !asc;
+                    }
+                    else
+                    {
+                        orderBy = order.Name;
+                        asc = false;
+                    }
                 }
-                else
+                else if (Event.current.button == 1)
                 {
-                    order = null;
-                    asc = false;
+                    if (orderBy != order.Default)
+                    {
+                        orderBy = order.Default;
+                        asc = false;
+                    }
                 }
                 BuildPawnList();
             }
-            TooltipHandler.TipRegion(rectname, "Fluffy.SortByName".Translate());
+            TooltipHandler.TipRegion(rectname, "Fluffy.SortByNameWork".Translate());
             Text.Anchor = TextAnchor.UpperLeft;
             Rect outRect = new Rect(0f, 50f, position2.width, position2.height - 50f);
             this.workColumnSpacing = (position2.width - 16f - 225f) / (float)MainTabWindow_Work.VisibleWorkTypeDefsInPriorityOrder.Count;
@@ -254,13 +281,14 @@ namespace Fluffy
                 {
                     tiptext.AppendLine("Fluffy.LeftSortBySkill".Translate());
                     tiptext.AppendLine("Fluffy.ShiftToChangePriority".Translate());
-                } else
+                }
+                else
                 {
                     tiptext.AppendLine("Fluffy.SortBySkill".Translate());
                     tiptext.AppendLine("Fluffy.ShiftToToggle".Translate());
                 }
-                tiptext.AppendLine().AppendLine( localDef.gerundLabel ).
-                        AppendLine().Append( localDef.description );
+                tiptext.AppendLine().AppendLine(localDef.gerundLabel).
+                        AppendLine().Append(localDef.description);
                 TooltipHandler.TipRegion(rect5, new TipSignal(() => tiptext.ToString(), localDef.GetHashCode()));
                 if (Event.current.type == EventType.MouseDown && Mouse.IsOver(rect5))
                 {
@@ -291,20 +319,20 @@ namespace Fluffy
                             }
                         }
                     }
-                    else if (Event.current.button == 0)
+                    else
                     {
                         //Log.Message("Clicked on " + current2.LabelCap);
-                        if (order == current2)
+                        if (orderBy == order.Work && workOrder == current2)
                         {
                             asc = !asc;
-                            BuildPawnList();
                         }
                         else
                         {
+                            orderBy = order.Work;
+                            workOrder = current2;
                             asc = false;
-                            order = current2;
-                            BuildPawnList();
                         }
+                        BuildPawnList();
                         //Log.Message("Sort order is now " + order.LabelCap + ", " + (asc ? "asc" : "desc"));
                     }
                     Event.current.Use();
@@ -343,7 +371,8 @@ namespace Fluffy
                     ClearCopied();
                 }
                 TooltipHandler.TipRegion(rectCancel, "Fluffy.ClearCopy".Translate());
-            } else
+            }
+            else
             {
                 Rect rectCopy = new Rect(num + 6f, rect.y + 6f, 16f, 16f);
                 if (Widgets.ImageButton(rectCopy, copyTex))

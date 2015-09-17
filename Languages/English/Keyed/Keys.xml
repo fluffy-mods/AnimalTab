@@ -46,6 +46,7 @@
     <Fluffy.Name>Name</Fluffy.Name>
 
     <Fluffy.SortByName>Click to sort by name.</Fluffy.SortByName>
+    <Fluffy.SortByNameWork>Click to sort by name.\nRight-click for vanilla sort order.</Fluffy.SortByNameWork>
     <Fluffy.SortByPetness>Click to sort by petness.(default)</Fluffy.SortByPetness>
     <Fluffy.SortByGender>Click to sort by gender.</Fluffy.SortByGender>
     <Fluffy.SortByAge>Click to sort by lifestage and age.</Fluffy.SortByAge>
