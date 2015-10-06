@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -19,9 +18,9 @@ namespace Fluffy
 
         private static List<WorkTypeDef> VisibleWorkTypeDefsInPriorityOrder;
 
-        private static readonly Texture2D copyTex = ContentFinder<Texture2D>.Get("UI/Buttons/Copy", true);
-        private static readonly Texture2D pasteTex = ContentFinder<Texture2D>.Get("UI/Buttons/Paste", true);
-        private static readonly Texture2D cancelTex = ContentFinder<Texture2D>.Get("UI/Buttons/cancel", true);
+        private static readonly Texture2D copyTex = ContentFinder<Texture2D>.Get("UI/Buttons/Copy");
+        private static readonly Texture2D pasteTex = ContentFinder<Texture2D>.Get("UI/Buttons/Paste");
+        private static readonly Texture2D cancelTex = ContentFinder<Texture2D>.Get("UI/Buttons/cancel");
 
         private WorkTypeDef workOrder;
 
@@ -204,7 +203,7 @@ namespace Fluffy
             Text.Anchor = TextAnchor.UpperLeft;
             Rect rect2 = new Rect(5f, 5f, 140f, 30f);
             bool useWorkPriorities = Find.Map.playSettings.useWorkPriorities;
-            Widgets.LabelCheckbox(rect2, "ManualPriorities".Translate(), ref Find.Map.playSettings.useWorkPriorities, false);
+            Widgets.LabelCheckbox(rect2, "ManualPriorities".Translate(), ref Find.Map.playSettings.useWorkPriorities);
             if (useWorkPriorities != Find.Map.playSettings.useWorkPriorities)
             {
                 foreach (Pawn current in Find.ListerPawns.FreeColonists)

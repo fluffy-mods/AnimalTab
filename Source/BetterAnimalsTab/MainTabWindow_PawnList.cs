@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 using RimWorld;
@@ -122,12 +121,12 @@ namespace Fluffy
             {
                 if (Event.current.button == 0)
                 {
-                    Find.MainTabsRoot.EscapeCurrentTab(true);
+                    Find.MainTabsRoot.EscapeCurrentTab();
                     Find.CameraMap.JumpTo(p.PositionHeld);
                     Find.Selector.ClearSelection();
                     if (p.SpawnedInWorld)
                     {
-                        Find.Selector.Select(p, true, true);
+                        Find.Selector.Select(p);
                     }
                 }
                 if (Event.current.button == 1 && !p.RaceProps.Humanlike && p.Name != null && !p.Name.Numerical)

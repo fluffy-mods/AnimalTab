@@ -1,8 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
-
-using RimWorld;
 
 namespace Fluffy
 {

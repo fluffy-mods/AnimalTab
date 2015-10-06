@@ -42,25 +42,25 @@ namespace Fluffy
 
         public static bool isDirty = false;
 
-        public static readonly Texture2D[] GenderTextures = new Texture2D[]
+        public static readonly Texture2D[] GenderTextures = new[]
         {
-            ContentFinder<Texture2D>.Get("UI/Gender/none", true),
-            ContentFinder<Texture2D>.Get("UI/Gender/male", true),
-            ContentFinder<Texture2D>.Get("UI/Gender/female", true)
+            ContentFinder<Texture2D>.Get("UI/Gender/none"),
+            ContentFinder<Texture2D>.Get("UI/Gender/male"),
+            ContentFinder<Texture2D>.Get("UI/Gender/female")
         };
 
-        public static readonly Texture2D[] LifeStageTextures = new Texture2D[]
+        public static readonly Texture2D[] LifeStageTextures = new[]
         {
-            ContentFinder<Texture2D>.Get("UI/LifeStage/1", true),
-            ContentFinder<Texture2D>.Get("UI/LifeStage/2", true),
-            ContentFinder<Texture2D>.Get("UI/LifeStage/3", true),
-            ContentFinder<Texture2D>.Get("UI/LifeStage/unknown", true)
+            ContentFinder<Texture2D>.Get("UI/LifeStage/1"),
+            ContentFinder<Texture2D>.Get("UI/LifeStage/2"),
+            ContentFinder<Texture2D>.Get("UI/LifeStage/3"),
+            ContentFinder<Texture2D>.Get("UI/LifeStage/unknown")
         };
 
-        public static readonly Texture2D WorkBoxCheckTex = ContentFinder<Texture2D>.Get("UI/Widgets/WorkBoxCheck", true);
-        public static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get("UI/Buttons/slaughter", true);
-        private static readonly Texture2D filterTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_large", true);
-        private static readonly Texture2D filterOffTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_off_large", true);
+        public static readonly Texture2D WorkBoxCheckTex = ContentFinder<Texture2D>.Get("UI/Widgets/WorkBoxCheck");
+        public static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get("UI/Buttons/slaughter");
+        private static readonly Texture2D filterTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_large");
+        private static readonly Texture2D filterOffTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_off_large");
 
         public override void PostOpen()
         {
@@ -165,8 +165,8 @@ namespace Fluffy
                         {
                             Filter_Animals.quickFilterPawnKind(p);
                             isDirty = true;
-                        }, MenuOptionPriority.Medium, null, null)));
-                        Find.WindowStack.Add(new FloatMenu(list2, false));
+                        })));
+                        Find.WindowStack.Add(new FloatMenu(list2));
                     }
                 }
             }
@@ -343,7 +343,7 @@ namespace Fluffy
 
             Rect rect2 = new Rect(num, 0f, 350f, Mathf.Round(position.height / 2f));
             Text.Font = GameFont.Small;
-            if (Widgets.TextButton(rect2, "ManageAreas".Translate(), true, false))
+            if (Widgets.TextButton(rect2, "ManageAreas".Translate()))
             {
                 Find.WindowStack.Add(new Dialog_ManageAreas());
             }
@@ -377,7 +377,7 @@ namespace Fluffy
                 Rect rect3 = rect2.ContractedBy(2f);
                 string label = (p.playerSettings.master == null) ? "NoneLower".Translate() : p.playerSettings.master.LabelBaseShort;
                 Text.Font = GameFont.Small;
-                if (Widgets.TextButton(rect3, label, true, false))
+                if (Widgets.TextButton(rect3, label))
                 {
                     TrainableUtility.OpenMasterSelectMenu(p);
                 }
@@ -400,7 +400,7 @@ namespace Fluffy
             {
                 labelAge = LifeStageTextures[p.ageTracker.CurLifeStageIndex];
             }
-            TipSignal tipAge = p.ageTracker.CurLifeStage.LabelCap;
+            TipSignal tipAge = p.ageTracker.CurLifeStage.LabelCap + ", " + p.ageTracker.AgeBiologicalYears;
             GUI.DrawTexture(rectb, labelAge);
             TooltipHandler.TipRegion(rectb, tipAge);
             num += 50f;

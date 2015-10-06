@@ -50,8 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filter_Animals.cs" />
-    <Compile Include="Dialog_FilterAnimals.cs" />
+    <Compile Include="Filters\Filters.cs" />
+    <Compile Include="Filters\Filter_Animals.cs" />
+    <Compile Include="Filters\Dialog_FilterAnimals.cs" />
     <Compile Include="WidgetsAnimals.cs" />
     <Compile Include="WidgetsWork.cs" />
     <Compile Include="MainTabWindow_Work.cs" />

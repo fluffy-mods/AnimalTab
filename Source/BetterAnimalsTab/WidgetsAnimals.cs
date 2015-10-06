@@ -11,12 +11,12 @@ namespace Fluffy
 {
     public static class WidgetsAnimals
     {
-        public static readonly Texture2D[] trainingTextures = new Texture2D[]
+        public static readonly Texture2D[] trainingTextures = new[]
         {
-            ContentFinder<Texture2D>.Get("UI/Training/obedience", true),
-            ContentFinder<Texture2D>.Get("UI/Training/release", true),
-            ContentFinder<Texture2D>.Get("UI/Training/rescue", true),
-            ContentFinder<Texture2D>.Get("UI/Training/haul", true)
+            ContentFinder<Texture2D>.Get("UI/Training/obedience"),
+            ContentFinder<Texture2D>.Get("UI/Training/release"),
+            ContentFinder<Texture2D>.Get("UI/Training/rescue"),
+            ContentFinder<Texture2D>.Get("UI/Training/haul")
         };
 
         public static readonly Texture2D CheckWhite = ContentFinder<Texture2D>.Get("UI/Buttons/CheckOnWhite");
