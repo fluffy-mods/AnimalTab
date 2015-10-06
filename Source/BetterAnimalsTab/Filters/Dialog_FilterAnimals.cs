@@ -1,35 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
-
-using RimWorld;
 
 namespace Fluffy
 {
     public class Dialog_FilterAnimals : Window
     {
-        public List<PawnKindDef> pawnKinds;
+        public List<PawnKindDef> PawnKinds;
 
-        public static bool sticky = false;
+        public static bool Sticky;
 
-        public static Rect location;
+        public static Rect Location;
 
         public override void PreClose()
         {
             base.PreClose();
-            location = currentWindowRect;
+            Location = currentWindowRect;
         }
 
         // kinda hacky, but sticky can't be set without opening, which populates location.
         public override void PostOpen()
         {
             base.PostOpen();
-            if (sticky)
+            if (Sticky)
             {
-                currentWindowRect = location;
+                currentWindowRect = Location;
             }
         }
 
@@ -45,15 +44,15 @@ namespace Fluffy
 
         public Dialog_FilterAnimals()
         {
-            this.pawnKinds = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+            PawnKinds = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
                 .Select(x => x.kindDef).Distinct().OrderBy(x => x.LabelCap).ToList();
-            this.forcePause = true;
-            this.closeOnEscapeKey = true;
-            this.absorbInputAroundWindow = false;
-            this.draggable = true;
+            forcePause = true;
+            closeOnEscapeKey = true;
+            absorbInputAroundWindow = false;
+            draggable = true;
         }
 
-        float colWidth
+        float ColWidth
         {
             get
             {
@@ -61,13 +60,15 @@ namespace Fluffy
             }
         }
 
-        float rowHeight = 30f;
-        float iconSize = 24f;
-        float labWidth => colWidth - 50f;
-        float iconWidthOffset = (50f - 24f) / 2f;
-        float iconHeightOffset => (rowHeight - iconSize) / 2f;
+        float _rowHeight = 30f;
+        float _iconSize = 24f;
+        float LabWidth => ColWidth - 50f;
+        float _iconWidthOffset = (50f - 24f) / 2f;
+/*
+        float IconHeightOffset => (_rowHeight - _iconSize) / 2f;
+*/
 
-        float x, y, x2;
+        float _x, _y, _x2;
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -81,38 +82,38 @@ namespace Fluffy
             
 
             // Pawnkinds on the left.
-            x = 5f;
-            y = 5f;
-            x2 = colWidth - 45f;
+            _x = 5f;
+            _y = 5f;
+            _x2 = ColWidth - 45f;
             
-            Rect rect = new Rect(x, y, colWidth, rowHeight);
+            Rect rect = new Rect(_x, _y, ColWidth, _rowHeight);
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerLeft;
             Widgets.Label(rect, "Fluffy.FilterByRace".Translate());
             Text.Font = GameFont.Small;
 
 
-            y += rowHeight;
+            _y += _rowHeight;
 
-            foreach (PawnKindDef pawnKind in pawnKinds)
+            foreach (PawnKindDef pawnKind in PawnKinds)
             {
                 DrawPawnKindRow(pawnKind);
             }
 
             // set window's actual height
-            if (y > _actualHeight) _actualHeight = y;
+            if (_y > _actualHeight) _actualHeight = _y;
 
             // specials on the right.
-            x = inRect.width / 2f + 5f;
-            x2 = inRect.width / 2f + colWidth - 45f;
-            y = 5f;
+            _x = inRect.width / 2f + 5f;
+            _x2 = inRect.width / 2f + ColWidth - 45f;
+            _y = 5f;
 
             Text.Font = GameFont.Tiny;
-            Rect rectAttributes = new Rect(x, 5f, colWidth, rowHeight);
+            Rect rectAttributes = new Rect(_x, 5f, ColWidth, _rowHeight);
             Widgets.Label(rectAttributes, "Fluffy.FilterByAttributes".Translate());
             Text.Font = GameFont.Small;
 
-            y += rowHeight;
+            _y += _rowHeight;
 
             // draw filter rows.
             foreach (IFilter filter in Filter_Animals.Filters)
@@ -121,46 +122,46 @@ namespace Fluffy
             }
 
             // set window's actual height
-            if (y > _actualHeight) _actualHeight = y;
+            if (_y > _actualHeight) _actualHeight = _y;
 
             // sticky option
             Rect stickyRect = new Rect(5f, inRect.height - 35f, (inRect.width / 4) - 10, 35f);
-            Widgets.LabelCheckbox(stickyRect, "Fluffy.FilterSticky".Translate(), ref sticky);
+            Widgets.LabelCheckbox(stickyRect, "Fluffy.FilterSticky".Translate(), ref Sticky);
 
 
             // buttons
             if (Widgets.TextButton(new Rect(inRect.width / 4f + 5f, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Clear".Translate()))
             {
-                Filter_Animals.resetFilter();
-                Filter_Animals.disableFilter();
-                MainTabWindow_Animals.isDirty = true;
+                Filter_Animals.ResetFilter();
+                Filter_Animals.DisableFilter();
+                MainTabWindow_Animals.IsDirty = true;
                 Event.current.Use();
             }
 
-            if (!Filter_Animals.filter)
+            if (!Filter_Animals.Filter)
             {
-                if (Widgets.TextButton(new Rect(x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+                if (Widgets.TextButton(new Rect(_x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Enable".Translate()))
                 {
-                    Filter_Animals.enableFilter();
-                    MainTabWindow_Animals.isDirty = true;
+                    Filter_Animals.EnableFilter();
+                    MainTabWindow_Animals.IsDirty = true;
                     Event.current.Use();
                 }
             }
             else
             {
-                if (Widgets.TextButton(new Rect(x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+                if (Widgets.TextButton(new Rect(_x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Disable".Translate()))
                 {
-                    Filter_Animals.disableFilter();
-                    MainTabWindow_Animals.isDirty = true;
+                    Filter_Animals.DisableFilter();
+                    MainTabWindow_Animals.IsDirty = true;
                     Event.current.Use();
                 }
             }
 
 
-            if (Widgets.TextButton(new Rect(x + inRect.width / 4, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+            if (Widgets.TextButton(new Rect(_x + inRect.width / 4, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "OK".Translate()))
             {
                 Find.WindowStack.TryRemove(this);
@@ -172,11 +173,11 @@ namespace Fluffy
 
         public void DrawPawnKindRow(PawnKindDef pawnKind)
         {
-            Rect rectRow = new Rect(x, y, colWidth, rowHeight);
-            Rect rectLabel = new Rect(x, y, labWidth, rowHeight);
+            Rect rectRow = new Rect(_x, _y, ColWidth, _rowHeight);
+            Rect rectLabel = new Rect(_x, _y, LabWidth, _rowHeight);
             Widgets.Label(rectLabel, pawnKind.LabelCap);
-            Rect rectIcon = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
-            bool inList = Filter_Animals.filterPawnKind.Contains(pawnKind);
+            Rect rectIcon = new Rect(_x2 + _iconWidthOffset, _y, _iconSize, _iconSize);
+            bool inList = Filter_Animals.FilterPawnKind.Contains(pawnKind);
             GUI.DrawTexture(rectIcon, inList ? Widgets.CheckboxOnTex : Widgets.CheckboxOffTex);
             if (Mouse.IsOver(rectRow))
             {
@@ -192,19 +193,19 @@ namespace Fluffy
                 {
                     SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 }
-                Filter_Animals.togglePawnKindFilter(pawnKind, inList);
-                MainTabWindow_Animals.isDirty = true;
+                Filter_Animals.TogglePawnKindFilter(pawnKind, inList);
+                MainTabWindow_Animals.IsDirty = true;
             }
-            y += rowHeight;
+            _y += _rowHeight;
         }
 
         public void DrawFilterRow(IFilter filter)
         {
             var label = new StringBuilder();
             label.Append(("Fluffy." + filter.label + "Label").Translate()).Append(" ");
-            Rect rect = new Rect(x, y, colWidth, rowHeight);
-            Rect rectLabel = new Rect(x, y, labWidth, rowHeight);
-            Rect rectIcon = new Rect(x2 + iconWidthOffset, y, iconSize, iconSize);
+            Rect rect = new Rect(_x, _y, ColWidth, _rowHeight);
+            Rect rectLabel = new Rect(_x, _y, LabWidth, _rowHeight);
+            Rect rectIcon = new Rect(_x2 + _iconWidthOffset, _y, _iconSize, _iconSize);
             switch (filter.state)
             {
                 case FilterType.True:
@@ -225,13 +226,13 @@ namespace Fluffy
             {
                 filter.bump();
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                MainTabWindow_Animals.isDirty = true;
+                MainTabWindow_Animals.IsDirty = true;
             }
             if (Mouse.IsOver(rect))
             {
                 GUI.DrawTexture(rect, TexUI.HighlightTex);
             }
-            y += rowHeight;
+            _y += _rowHeight;
         }
     }
 }

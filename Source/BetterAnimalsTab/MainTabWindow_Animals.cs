@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
 
-using RimWorld;
-
 namespace Fluffy
 {
-    public class MainTabWindow_Animals : Fluffy.MainTabWindow_PawnList
+    public class MainTabWindow_Animals : MainTabWindow_PawnList
     {
-        private const float TopAreaHeight = 65f;
+        //private const float TopAreaHeight = 65f;
 
-        private const float MasterWidth = 90f;
+        //private const float MasterWidth = 90f;
 
-        private const float AreaAllowedWidth = 350f;
+        //private const float AreaAllowedWidth = 350f;
 
-        public enum orders
+        public enum Orders
         {
             Default,
             Name,
@@ -26,31 +25,29 @@ namespace Fluffy
             Training
         }
 
-        public static orders order = orders.Default;
+        public static Orders Order = Orders.Default;
 
-        public static TrainableDef trainingOrder;
+        public static TrainableDef TrainingOrder;
 
-        public static bool asc = false;
+        public static bool Asc;
 
         public override Vector2 RequestedTabSize
         {
             get
             {
-                return new Vector2(1050f, 65f + (float)base.PawnsCount * 30f + 65f);
+                return new Vector2(1050f, 65f + PawnsCount * 30f + 65f);
             }
         }
 
-        public static bool isDirty = false;
+        public static bool IsDirty;
 
-        public static readonly Texture2D[] GenderTextures = new[]
-        {
+        public static readonly Texture2D[] GenderTextures = {
             ContentFinder<Texture2D>.Get("UI/Gender/none"),
             ContentFinder<Texture2D>.Get("UI/Gender/male"),
             ContentFinder<Texture2D>.Get("UI/Gender/female")
         };
 
-        public static readonly Texture2D[] LifeStageTextures = new[]
-        {
+        public static readonly Texture2D[] LifeStageTextures = {
             ContentFinder<Texture2D>.Get("UI/LifeStage/1"),
             ContentFinder<Texture2D>.Get("UI/LifeStage/2"),
             ContentFinder<Texture2D>.Get("UI/LifeStage/3"),
@@ -59,13 +56,13 @@ namespace Fluffy
 
         public static readonly Texture2D WorkBoxCheckTex = ContentFinder<Texture2D>.Get("UI/Widgets/WorkBoxCheck");
         public static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get("UI/Buttons/slaughter");
-        private static readonly Texture2D filterTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_large");
-        private static readonly Texture2D filterOffTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_off_large");
+        private static readonly Texture2D FilterTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_large");
+        private static readonly Texture2D FilterOffTex = ContentFinder<Texture2D>.Get("UI/Buttons/filter_off_large");
 
         public override void PostOpen()
         {
             base.PostOpen();
-            if (Dialog_FilterAnimals.sticky)
+            if (Dialog_FilterAnimals.Sticky)
             {
                 Find.WindowStack.Add(new Dialog_FilterAnimals());
             }
@@ -74,43 +71,43 @@ namespace Fluffy
         protected override void BuildPawnList()
         {
             IEnumerable<Pawn> sorted;
-            bool dump;
-            switch (order)
+            switch (Order)
             {
-                case orders.Default:
+                case Orders.Default:
                     sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.RaceProps.petness descending, p.RaceProps.baseBodySize, p.def.label
                              select p;
                     break;
-                case orders.Name:
+                case Orders.Name:
                     sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.Name.Numerical, p.Name.ToStringFull, p.def.label
                              select p;
                     break;
-                case orders.Gender:
+                case Orders.Gender:
                     sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.KindLabel, p.gender
                              select p;
                     break;
-                case orders.LifeStage:
+                case Orders.LifeStage:
                     sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.ageTracker.CurLifeStageRace.minAge descending, p.ageTracker.AgeBiologicalTicks descending
                              select p;
                     break;
-                case orders.Slaughter:
+                case Orders.Slaughter:
                     sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter) != null descending, p.BodySize descending
                              select p;
                     break;
-                case orders.Training:
+                case Orders.Training:
+                    bool dump;
                     sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
-                             orderby p.training.IsCompleted(trainingOrder) descending, p.training.GetWanted(trainingOrder) descending, p.training.CanAssignToTrain(trainingOrder, out dump).Accepted descending
+                             orderby p.training.IsCompleted(TrainingOrder) descending, p.training.GetWanted(TrainingOrder) descending, p.training.CanAssignToTrain(TrainingOrder, out dump).Accepted descending
                              select p;
                     break;
                 default:
@@ -121,19 +118,19 @@ namespace Fluffy
                     break;
             }
 
-            this.pawns = sorted.ToList<Pawn>();
+            Pawns = sorted.ToList();
 
-            if (Filter_Animals.filter)
+            if (Filter_Animals.Filter)
             {
-                this.pawns = Filter_Animals.FilterAnimals(this.pawns);
+                Pawns = Filter_Animals.FilterAnimals(Pawns);
             }
 
-            if (asc && this.pawns.Count() > 1)
+            if (Asc && Pawns.Count > 1)
             {
-                this.pawns.Reverse();
+                Pawns.Reverse();
             }
             
-            isDirty = false;
+            IsDirty = false;
         }
 
         public override void DoWindowContents(Rect fillRect)
@@ -143,7 +140,7 @@ namespace Fluffy
             GUI.BeginGroup(position);
 
             // ARRRGGHHH!!!
-            if (isDirty) BuildPawnList();
+            if (IsDirty) BuildPawnList();
 
 
             Rect filterButton = new Rect(0f, 0f, 200f, Mathf.Round(position.height / 2f));
@@ -161,10 +158,10 @@ namespace Fluffy
                     if (list.Count > 0)
                     {
                         List<FloatMenuOption> list2 = new List<FloatMenuOption>();
-                        list2.AddRange(list.ConvertAll<FloatMenuOption>((PawnKindDef p) => new FloatMenuOption(p.LabelCap, delegate
+                        list2.AddRange(list.ConvertAll(p => new FloatMenuOption(p.LabelCap, delegate
                         {
-                            Filter_Animals.quickFilterPawnKind(p);
-                            isDirty = true;
+                            Filter_Animals.QuickFilterPawnKind(p);
+                            IsDirty = true;
                         })));
                         Find.WindowStack.Add(new FloatMenu(list2));
                     }
@@ -172,20 +169,20 @@ namespace Fluffy
             }
             TooltipHandler.TipRegion(filterButton, "Fluffy.FilterTooltip".Translate());
             Rect filterIcon = new Rect(205f, (filterButton.height - 24f) / 2f, 24f, 24f);
-            if (Filter_Animals.filter)
+            if (Filter_Animals.Filter)
             {
-                if(Widgets.ImageButton(filterIcon, filterOffTex))
+                if(Widgets.ImageButton(filterIcon, FilterOffTex))
                 {
-                    Filter_Animals.disableFilter();
+                    Filter_Animals.DisableFilter();
                     BuildPawnList();
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 }
                 TooltipHandler.TipRegion(filterIcon, "Fluffy.DisableFilter".Translate());
-            } else if (Filter_Animals.filterPossible)
+            } else if (Filter_Animals.FilterPossible)
             {
-                if (Widgets.ImageButton(filterIcon, filterTex))
+                if (Widgets.ImageButton(filterIcon, FilterTex))
                 {
-                    Filter_Animals.enableFilter();
+                    Filter_Animals.EnableFilter();
                     BuildPawnList();
                     SoundDefOf.Click.PlayOneShotOnCamera();
                 }
@@ -199,14 +196,14 @@ namespace Fluffy
             Widgets.Label(rectname, "Fluffy.Name".Translate());
             if (Widgets.InvisibleButton(rectname))
             {
-                if (order == orders.Name)
+                if (Order == Orders.Name)
                 {
-                    asc = !asc;
+                    Asc = !Asc;
                 }
                 else
                 {
-                    order = orders.Name;
-                    asc = false;
+                    Order = Orders.Name;
+                    Asc = false;
                 }
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
                 BuildPawnList();
@@ -222,17 +219,17 @@ namespace Fluffy
             Widgets.Label(rect, "Master".Translate());
             if(Widgets.InvisibleButton(rect)){
                     SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
-                if (order == orders.Default)
+                if (Order == Orders.Default)
                 {
-                    asc = !asc;
+                    Asc = !Asc;
                 }
                 else
                 {
-                    order = orders.Default;
-                    asc = false;
+                    Order = Orders.Default;
+                    Asc = false;
                 }
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                this.BuildPawnList();
+                BuildPawnList();
             }
             TooltipHandler.TipRegion(rect, "Fluffy.SortByPetness".Translate());
             if (Mouse.IsOver(rect))
@@ -254,17 +251,17 @@ namespace Fluffy
 
             if (Widgets.InvisibleButton(recta))
             {
-                if (order == orders.Gender)
+                if (Order == Orders.Gender)
                 {
-                    asc = !asc;
+                    Asc = !Asc;
                 }
                 else
                 {
-                    order = orders.Gender;
-                    asc = false;
+                    Order = Orders.Gender;
+                    Asc = false;
                 }
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                this.BuildPawnList();
+                BuildPawnList();
             }
             TooltipHandler.TipRegion(recta, "Fluffy.SortByGender".Translate());
             if (Mouse.IsOver(recta))
@@ -287,17 +284,17 @@ namespace Fluffy
 
             if (Widgets.InvisibleButton(rectb))
             {
-                if (order == orders.LifeStage)
+                if (Order == Orders.LifeStage)
                 {
-                    asc = !asc;
+                    Asc = !Asc;
                 }
                 else
                 {
-                    order = orders.LifeStage;
-                    asc = false;
+                    Order = Orders.LifeStage;
+                    Asc = false;
                 }
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                this.BuildPawnList();
+                BuildPawnList();
             }
             TooltipHandler.TipRegion(rectb, "Fluffy.SortByAge".Translate());
             if (Mouse.IsOver(rectb))
@@ -312,21 +309,21 @@ namespace Fluffy
             {
                 if (Event.current.shift)
                 {
-                    WidgetsAnimals.SlaughterAllAnimals(pawns);
+                    WidgetsAnimals.SlaughterAllAnimals(Pawns);
                 }
                 else
                 {
-                    if (order == orders.Slaughter)
+                    if (Order == Orders.Slaughter)
                     {
-                        asc = !asc;
+                        Asc = !Asc;
                     }
                     else
                     {
-                        order = orders.Slaughter;
-                        asc = false;
+                        Order = Orders.Slaughter;
+                        Asc = false;
                     }
                     SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                    this.BuildPawnList();
+                    BuildPawnList();
                 }
             }
             TooltipHandler.TipRegion(rectc, "Fluffy.SortByBodysizeSlaughter".Translate());
@@ -337,7 +334,7 @@ namespace Fluffy
 
             num += 50f;
             Rect headers = new Rect(num, rectname.height - 30f, 80f, 30f);
-            WidgetsAnimals.DoTrainingHeaders(headers, pawns);
+            WidgetsAnimals.DoTrainingHeaders(headers, Pawns);
 
             num += 90f;
 
@@ -350,14 +347,13 @@ namespace Fluffy
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerCenter;
             Rect rect3 = new Rect(num, position.height - 27f, 350f, 30f);
-            WidgetsAnimals.DoAllowedAreaHeaders(rect3, pawns, AllowedAreaMode.Animal);
-            num += 350f;
+            WidgetsAnimals.DoAllowedAreaHeaders(rect3, Pawns, AllowedAreaMode.Animal);
             GUI.EndGroup();
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
             Rect outRect = new Rect(0f, position.height, fillRect.width, fillRect.height - position.height);
-            base.DrawRows(outRect);
+            DrawRows(outRect);
         }
 
         protected override void DrawPawnRow(Rect rect, Pawn p)
@@ -392,14 +388,7 @@ namespace Fluffy
             num += 50f;
 
             Rect rectb = new Rect(num + widthOffset, heightOffset, x, x);
-            Texture2D labelAge;
-            if (p.RaceProps.lifeStageAges.Count > 3)
-            {
-                labelAge = LifeStageTextures[3];
-            } else
-            {
-                labelAge = LifeStageTextures[p.ageTracker.CurLifeStageIndex];
-            }
+            var labelAge = p.RaceProps.lifeStageAges.Count > 3 ? LifeStageTextures[3] : LifeStageTextures[p.ageTracker.CurLifeStageIndex];
             TipSignal tipAge = p.ageTracker.CurLifeStage.LabelCap + ", " + p.ageTracker.AgeBiologicalYears;
             GUI.DrawTexture(rectb, labelAge);
             TooltipHandler.TipRegion(rectb, tipAge);
@@ -407,9 +396,9 @@ namespace Fluffy
 
             Rect rectc = new Rect(num, 0f, 50f, 30f);
             Rect rectc1 = new Rect(num + 17f, heightOffset, x, x);
-            bool Slaughter = Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter) != null;
+            bool slaughter = Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter) != null;
 
-            if (Slaughter)
+            if (slaughter)
             {
                 GUI.DrawTexture(rectc1, WorkBoxCheckTex);
                 TooltipHandler.TipRegion(rectc, "Fluffy.StopSlaughter".Translate());
@@ -419,7 +408,7 @@ namespace Fluffy
             }
             if (Widgets.InvisibleButton(rectc))
             {
-                if (Slaughter)
+                if (slaughter)
                 {
                     WidgetsAnimals.UnSlaughterAnimal(p);
                     SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
@@ -444,7 +433,6 @@ namespace Fluffy
 
             Rect rect4 = new Rect(num, 0f, 350f, rect.height);
             AreaAllowedGUI.DoAllowedAreaSelectors(rect4, p, AllowedAreaMode.Animal);
-            num += 350f;
             GUI.EndGroup();
         }
     }

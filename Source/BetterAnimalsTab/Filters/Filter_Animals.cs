@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Verse;
 using RimWorld;
+using Verse;
 
 namespace Fluffy
 {
     public static class Filter_Animals
     {
-        public static List<PawnKindDef> filterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+        public static List<PawnKindDef> FilterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
                 .Select(x => x.kindDef).Distinct().ToList();
 
-        public static List<IFilter> Filters = new List<IFilter>()
+        public static List<IFilter> Filters = new List<IFilter>
         {
             new Filter_Gender(),
             new Filter_Training(),
@@ -21,67 +21,68 @@ namespace Fluffy
             new Filter_Shearable()
         };
         
-        public static bool filter = false;
+        public static bool Filter;
 
-        public static bool filterPossible = false;
+        public static bool FilterPossible;
 
-        public static void togglePawnKindFilter(PawnKindDef pawnKind, bool remove = true)
+        public static void TogglePawnKindFilter(PawnKindDef pawnKind, bool remove = true)
         {
             if (remove)
             {
-                filterPawnKind.Remove(pawnKind);
+                FilterPawnKind.Remove(pawnKind);
             }
             else
             {
-                if (filterPawnKind == null) resetPawnKindFilter();
-                filterPawnKind.Add(pawnKind);
+                if (FilterPawnKind == null) ResetPawnKindFilter();
+                // ReSharper disable once PossibleNullReferenceException
+                FilterPawnKind.Add(pawnKind);
             }
-            if (!filter) enableFilter();
-            filterPossible = true;
+            if (!Filter) EnableFilter();
+            FilterPossible = true;
         }
 
-        public static void enableFilter()
+        public static void EnableFilter()
         {
-            filter = true;
+            Filter = true;
         }
 
-        public static void disableFilter()
+        public static void DisableFilter()
         {
-            filter = false;
+            Filter = false;
         }
 
-        public static void resetFilter()
+        public static void ResetFilter()
         {
-            resetPawnKindFilter();
-            foreach (Filter filter in Filters)
+            ResetPawnKindFilter();
+            foreach (IFilter filter in Filters)
             {
                 filter.state = FilterType.None;
             }
-            filterPossible = false;
+            FilterPossible = false;
         }
 
-        public static void resetPawnKindFilter()
+        public static void ResetPawnKindFilter()
         {
-            filterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+            FilterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
                 .Select(x => x.kindDef).Distinct().ToList();
         }
 
-        public static void filterAllPawnKinds()
+        public static void FilterAllPawnKinds()
         {
-            filterPawnKind = new List<PawnKindDef>();
+            FilterPawnKind = new List<PawnKindDef>();
         }
 
-        public static void quickFilterPawnKind(PawnKindDef def)
+        public static void QuickFilterPawnKind(PawnKindDef def)
         {
-            resetFilter();
-            filterAllPawnKinds();
-            filterPawnKind.Add(def);
-            enableFilter();
+            ResetFilter();
+            FilterAllPawnKinds();
+            FilterPawnKind.Add(def);
+            EnableFilter();
         }
 
         public static List<Pawn> FilterAnimals(List<Pawn> pawns)
         {
-            pawns = pawns.Where(p => filterPawnKind.Contains(p.kindDef) &&
+            pawns = pawns.Where(p => FilterPawnKind.Contains(p.kindDef) &&
                                      Filters.All(f => f.filter(p))
                                      ).ToList();
             return pawns;

@@ -1,8 +1,8 @@
 ﻿using System.Text;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
-using RimWorld;
 
 namespace Fluffy
 {
@@ -50,7 +50,7 @@ namespace Fluffy
                 return;
             }
             Rect rect = new Rect(topLeft.x, topLeft.y, 25f, 25f);
-            WidgetsWork.DrawWorkBoxBackground(rect, p, wType);
+            DrawWorkBoxBackground(rect, p, wType);
             if (Find.PlaySettings.useWorkPriorities)
             {
                 int priority = p.workSettings.GetPriority(wType);
@@ -64,7 +64,7 @@ namespace Fluffy
                     label = string.Empty;
                 }
                 Text.Anchor = TextAnchor.MiddleCenter;
-                GUI.color = WidgetsWork.ColorOfPriority(priority);
+                GUI.color = ColorOfPriority(priority);
                 Rect rect2 = rect.ContractedBy(-3f);
                 Widgets.Label(rect2, label);
                 GUI.color = Color.white;
@@ -99,7 +99,7 @@ namespace Fluffy
                 int priority2 = p.workSettings.GetPriority(wType);
                 if (priority2 > 0)
                 {
-                    GUI.DrawTexture(rect, WidgetsWork.WorkBoxCheckTex);
+                    GUI.DrawTexture(rect, WorkBoxCheckTex);
                 }
                 if (Mouse.IsOver(rect))
                 {
@@ -131,10 +131,7 @@ namespace Fluffy
             stringBuilder.AppendLine(wDef.gerundLabel);
             if (p.story.WorkTypeIsDisabled(wDef))
             {
-                stringBuilder.Append("CannotDoThisWork".Translate(new object[]
-                {
-                    p.NameStringShort
-                }));
+                stringBuilder.Append("CannotDoThisWork".Translate(p.NameStringShort));
             }
             else
             {
@@ -151,12 +148,7 @@ namespace Fluffy
                     }
                     text = text.Substring(0, text.Length - 2);
                 }
-                stringBuilder.AppendLine("RelevantSkills".Translate(new object[]
-                {
-                    text,
-                    p.skills.AverageOfRelevantSkillsFor(wDef).ToString(),
-                    20
-                }));
+                stringBuilder.AppendLine("RelevantSkills".Translate(text, p.skills.AverageOfRelevantSkillsFor(wDef).ToString(), 20));
                 stringBuilder.AppendLine();
                 stringBuilder.Append(wDef.description);
             }
@@ -171,14 +163,14 @@ namespace Fluffy
             float a;
             if (num <= 14f)
             {
-                image = WidgetsWork.WorkBoxBGTex_Bad;
-                image2 = WidgetsWork.WorkBoxBGTex_Mid;
+                image = WorkBoxBGTex_Bad;
+                image2 = WorkBoxBGTex_Mid;
                 a = num / 14f;
             }
             else
             {
-                image = WidgetsWork.WorkBoxBGTex_Mid;
-                image2 = WidgetsWork.WorkBoxBGTex_Excellent;
+                image = WorkBoxBGTex_Mid;
+                image2 = WorkBoxBGTex_Excellent;
                 a = (num - 14f) / 6f;
             }
             GUI.DrawTexture(rect, image);
@@ -193,11 +185,11 @@ namespace Fluffy
                 position.yMin = rect.center.y;
                 if (passion == Passion.Minor)
                 {
-                    GUI.DrawTexture(position, WidgetsWork.PassionWorkboxMinorIcon);
+                    GUI.DrawTexture(position, PassionWorkboxMinorIcon);
                 }
                 else if (passion == Passion.Major)
                 {
-                    GUI.DrawTexture(position, WidgetsWork.PassionWorkboxMajorIcon);
+                    GUI.DrawTexture(position, PassionWorkboxMajorIcon);
                 }
             }
             GUI.color = Color.white;

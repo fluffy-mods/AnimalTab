@@ -5,9 +5,9 @@ namespace Fluffy
 {
     public class Dialog_RenamePet : Window
     {
-        private Pawn pet;
+        private Pawn _pet;
 
-        private string curName;
+        private string _curName;
 
         public override Vector2 InitialWindowSize
         {
@@ -19,10 +19,10 @@ namespace Fluffy
 
         public Dialog_RenamePet(Pawn pet)
         {
-            this.pet = pet;
-            this.curName = pet.Name.ToString();
-            this.closeOnEscapeKey = true;
-            this.absorbInputAroundWindow = true;
+            _pet = pet;
+            _curName = pet.Name.ToString();
+            closeOnEscapeKey = true;
+            absorbInputAroundWindow = true;
         }
 
         public override void DoWindowContents(Rect inRect)
@@ -35,12 +35,12 @@ namespace Fluffy
                 Event.current.Use();
             }
             Widgets.Label(new Rect(0f, 0f, inRect.width, inRect.height), "Fluffy.PetName".Translate());
-            this.curName = Widgets.TextField(new Rect(0f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), this.curName);
+            _curName = Widgets.TextField(new Rect(0f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), _curName);
             if (Widgets.TextButton(new Rect(inRect.width / 2f + 20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), "OK".Translate()) || flag)
             {
-                if (this.IsValidName(this.curName))
+                if (IsValidName(_curName))
                 {
-                    pet.Name = new NameSingle(this.curName);
+                    _pet.Name = new NameSingle(_curName);
                     Find.WindowStack.TryRemove(this);
                     Messages.Message("Fluffy.PetRenamed".Translate(), MessageSound.Benefit);
                 }

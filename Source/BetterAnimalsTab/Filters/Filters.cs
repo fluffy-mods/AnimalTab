@@ -1,6 +1,6 @@
-﻿using Verse;
-using RimWorld;
+﻿using RimWorld;
 using UnityEngine;
+using Verse;
 
 namespace Fluffy
 {
@@ -48,8 +48,8 @@ namespace Fluffy
             {
                 state = FilterType.None;
             }
-            Filter_Animals.filter = true;
-            Filter_Animals.filterPossible = true;
+            Filter_Animals.Filter = true;
+            Filter_Animals.FilterPossible = true;
         }
     }
 

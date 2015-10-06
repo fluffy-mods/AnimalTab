@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Verse;
-using Verse.Sound;
-using RimWorld;
-using UnityEngine;
 using System.Reflection;
 using System.Text;
+using RimWorld;
+using UnityEngine;
+using Verse;
+using Verse.Sound;
 
 namespace Fluffy
 {
     public static class WidgetsAnimals
     {
-        public static readonly Texture2D[] trainingTextures = new[]
-        {
+        public static readonly Texture2D[] TrainingTextures = {
             ContentFinder<Texture2D>.Get("UI/Training/obedience"),
             ContentFinder<Texture2D>.Get("UI/Training/release"),
             ContentFinder<Texture2D>.Get("UI/Training/rescue"),
@@ -21,9 +20,9 @@ namespace Fluffy
 
         public static readonly Texture2D CheckWhite = ContentFinder<Texture2D>.Get("UI/Buttons/CheckOnWhite");
 
-        public static readonly Texture2D barBG = SolidColorMaterials.NewSolidColorTexture(0f, 1f, 0f, 0.8f);
+        public static readonly Texture2D BarBg = SolidColorMaterials.NewSolidColorTexture(0f, 1f, 0f, 0.8f);
 
-        public static List<TrainableDef> trainables
+        public static List<TrainableDef> Trainables
         {
             get
             {
@@ -71,7 +70,7 @@ namespace Fluffy
                     num++;
                 }
             }
-            float num2 = rect.width / (float)num;
+            float num2 = rect.width / num;
             Text.WordWrap = false;
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerCenter;
@@ -91,22 +90,22 @@ namespace Fluffy
             }
             TooltipHandler.TipRegion(rect2, "NoAreaAllowed".Translate());
             int num3 = 1;
-            for (int j = 0; j < allAreas.Count; j++)
+            foreach (Area area in allAreas)
             {
-                if (allAreas[j].AssignableAsAllowed(mode))
+                if (area.AssignableAsAllowed(mode))
                 {
-                    float num4 = (float)num3 * num2;
+                    float num4 = num3 * num2;
                     Rect rect3 = new Rect(rect.x + num4, rect.y, num2, rect.height);
-                    Widgets.Label(rect3, allAreas[j].Label);
+                    Widgets.Label(rect3, area.Label);
                     if (Widgets.InvisibleButton(rect3))
                     {
-                        for (int i = 0; i < pawns.Count; i++)
+                        foreach (Pawn p in pawns)
                         {
                             SoundDefOf.DesignateDragStandardChanged.PlayOneShotOnCamera();
-                            pawns[i].playerSettings.AreaRestriction = allAreas[j];
+                            p.playerSettings.AreaRestriction = area;
                         }
                     }
-                    TooltipHandler.TipRegion(rect3, "Fluffy.RestrictAllTo".Translate(allAreas[j].Label));
+                    TooltipHandler.TipRegion(rect3, "Fluffy.RestrictAllTo".Translate(area.Label));
                     if (Mouse.IsOver(rect3))
                     {
                         GUI.DrawTexture(rect3, TexUI.HighlightTex);
@@ -120,7 +119,7 @@ namespace Fluffy
         public static void DoTrainingHeaders(Rect rect, List<Pawn> pawns)
         {
             List<TrainableDef> trainables = TrainableUtility.TrainableDefsInListOrder;
-            float width = rect.width / trainables.Count();
+            float width = rect.width / trainables.Count;
             float iconSize = 16f;
             float widthOffset = (width - iconSize) / 2;
             float heightOffset = (rect.height - iconSize) / 2;
@@ -144,20 +143,20 @@ namespace Fluffy
                 tooltip.AppendLine( "Fluffy.ShiftToTrainAll".Translate() ).AppendLine()
                        .Append( trainables[i].description );
                 TooltipHandler.TipRegion(bg, tooltip.ToString());
-                GUI.DrawTexture(icon, trainingTextures[i]);
+                GUI.DrawTexture(icon, TrainingTextures[i]);
                 if(Widgets.InvisibleButton(bg))
                 {
                     if (!Event.current.shift)
                     {
-                        if (MainTabWindow_Animals.order == MainTabWindow_Animals.orders.Training && MainTabWindow_Animals.trainingOrder == trainables[i])
+                        if (MainTabWindow_Animals.Order == MainTabWindow_Animals.Orders.Training && MainTabWindow_Animals.TrainingOrder == trainables[i])
                         {
-                            MainTabWindow_Animals.asc = !MainTabWindow_Animals.asc;
+                            MainTabWindow_Animals.Asc = !MainTabWindow_Animals.Asc;
                         }
                         else
                         {
-                            MainTabWindow_Animals.order = MainTabWindow_Animals.orders.Training;
-                            MainTabWindow_Animals.asc = false;
-                            MainTabWindow_Animals.trainingOrder = trainables[i];
+                            MainTabWindow_Animals.Order = MainTabWindow_Animals.Orders.Training;
+                            MainTabWindow_Animals.Asc = false;
+                            MainTabWindow_Animals.TrainingOrder = trainables[i];
                         }
                     } 
                     else if (Event.current.shift)
@@ -165,37 +164,37 @@ namespace Fluffy
                         ToggleAllTraining(trainables[i], pawns);
                     }
                     SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                    MainTabWindow_Animals.isDirty = true;
+                    MainTabWindow_Animals.IsDirty = true;
                 }
             }
         }
 
         public static void DoTrainingRow(Rect rect, Pawn pawn)
         {
-            List<TrainableDef> trainables = TrainableUtility.TrainableDefsInListOrder;
-            float width = rect.width / trainables.Count();
+            List<TrainableDef> trainableDefs = TrainableUtility.TrainableDefsInListOrder;
+            float width = rect.width / trainableDefs.Count;
             float iconSize = 16f;
             float widthOffset = (width - iconSize) / 2;
             float heightOffset = (rect.height - iconSize) / 2;
             float x = rect.xMin;
             float y = rect.yMin;
 
-            for (int i = 0; i < trainables.Count(); i++)
+            for (int i = 0; i < trainableDefs.Count; i++)
             {
                 Rect bg = new Rect(x, y, width, rect.height);
                 Rect icon = new Rect(x + widthOffset, y + heightOffset, iconSize, iconSize);
                 x += width;
                 bool vis;
-                AcceptanceReport report = pawn.training.CanAssignToTrain(trainables[i], out vis);
-                TooltipHandler.TipRegion(bg, getTrainingTip(pawn, trainables[i], report));
+                AcceptanceReport report = pawn.training.CanAssignToTrain(trainableDefs[i], out vis);
+                TooltipHandler.TipRegion(bg, GetTrainingTip(pawn, trainableDefs[i], report));
                 if (vis)
                 {
-                    drawTrainingButton(icon, pawn, trainables[i], report);
-                    if (report.Accepted && !pawn.training.IsCompleted(trainables[i]))
+                    DrawTrainingButton(icon, pawn, trainableDefs[i], report);
+                    if (report.Accepted && !pawn.training.IsCompleted(trainableDefs[i]))
                     {
                         if (Widgets.InvisibleButton(bg))
                         {
-                            ToggleTraining(trainables[i], pawn, report);
+                            ToggleTraining(trainableDefs[i], pawn, report);
                         }
                         if (Mouse.IsOver(icon))
                         {
@@ -215,7 +214,7 @@ namespace Fluffy
             }
         }
 
-        public static void drawTrainingButton(Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport ar)
+        public static void DrawTrainingButton(Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport ar)
         {
             if (ar.Accepted)
             {
@@ -245,12 +244,12 @@ namespace Fluffy
                     // Return value of Invoke(...) is Object; thus casting into int type.
                     float barHeight = (rect.height/steps)*(int) curSteps;
                     Rect bar = new Rect( rect.xMax - 5f, rect.yMax - barHeight, 3f, barHeight );
-                    GUI.DrawTexture( bar, barBG );
+                    GUI.DrawTexture( bar, BarBg );
                 }
             }
         }
 
-        public static string getTrainingTip(Pawn pawn, TrainableDef td, AcceptanceReport ar)
+        public static string GetTrainingTip(Pawn pawn, TrainableDef td, AcceptanceReport ar)
         {
             var label = new StringBuilder();
             label.AppendLine(td.LabelCap);
@@ -266,15 +265,10 @@ namespace Fluffy
                 }
                 else
                 {
-                    if (!pawn.training.GetWanted(td))
-                    {
-                        label.AppendLine("Fluffy.NotTraining".Translate());
-                    }
-                    else
-                    {
-                        label.AppendLine( "Fluffy.CurrentlyTraining".Translate() );
-                    }
-                    
+                    label.AppendLine(!pawn.training.GetWanted(td)
+                        ? "Fluffy.NotTraining".Translate()
+                        : "Fluffy.CurrentlyTraining".Translate());
+
                     var getSteps = typeof(Pawn_TrainingTracker).GetMethod("GetSteps",
                                                                            BindingFlags.NonPublic |
                                                                            BindingFlags.Instance);
@@ -329,9 +323,9 @@ namespace Fluffy
                 SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 if (td.prerequisites != null)
                 {
-                    for (int i = 0; i < td.prerequisites.Count; i++)
+                    foreach (TrainableDef trainable in td.prerequisites)
                     {
-                        SetWantedRecursive(td.prerequisites[i], pawn, true);
+                        SetWantedRecursive(trainable, pawn, true);
                     }
                 }
             }

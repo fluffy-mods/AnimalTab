@@ -1,70 +1,70 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RimWorld;
 using UnityEngine;
 using Verse;
-using RimWorld;
 using Verse.Sound;
 
 namespace Fluffy
 {
     public class MainTabWindow_Work : MainTabWindow_PawnList
     {
-        private const float TopAreaHeight = 40f;
+        //private const float TopAreaHeight = 40f;
 
         protected const float LabelRowHeight = 50f;
 
-        private float workColumnSpacing = -1f;
+        private float _workColumnSpacing = -1f;
 
-        private static List<WorkTypeDef> VisibleWorkTypeDefsInPriorityOrder;
+        private static List<WorkTypeDef> _visibleWorkTypeDefsInPriorityOrder;
 
-        private static readonly Texture2D copyTex = ContentFinder<Texture2D>.Get("UI/Buttons/Copy");
-        private static readonly Texture2D pasteTex = ContentFinder<Texture2D>.Get("UI/Buttons/Paste");
-        private static readonly Texture2D cancelTex = ContentFinder<Texture2D>.Get("UI/Buttons/cancel");
+        private static readonly Texture2D CopyTex = ContentFinder<Texture2D>.Get("UI/Buttons/Copy");
+        private static readonly Texture2D PasteTex = ContentFinder<Texture2D>.Get("UI/Buttons/Paste");
+        private static readonly Texture2D CancelTex = ContentFinder<Texture2D>.Get("UI/Buttons/cancel");
 
-        private WorkTypeDef workOrder;
+        private WorkTypeDef _workOrder;
 
-        public enum order
+        public enum Order
         {
             Work,
             Name,
             Default
         }
 
-        public order orderBy = order.Default;
+        public Order OrderBy = Order.Default;
 
-        private bool asc = false;
+        private bool _asc;
 
-        private List<int> copy = null;
+        private List<int> _copy;
 
-        public static Pawn copied = null;
+        public static Pawn Copied;
 
         public override Vector2 RequestedTabSize
         {
             get
             {
-                return new Vector2(1050f, 90f + (float)base.PawnsCount * 30f + 65f);
+                return new Vector2(1050f, 90f + PawnsCount * 30f + 65f);
             }
         }
 
         public override void PreOpen()
         {
             base.PreOpen();
-            MainTabWindow_Work.Reinit();
+            Reinit();
         }
 
         public static void Reinit()
         {
-            MainTabWindow_Work.VisibleWorkTypeDefsInPriorityOrder = (from def in WorkTypeDefsUtility.WorkTypeDefsInPriorityOrder
+            _visibleWorkTypeDefsInPriorityOrder = (from def in WorkTypeDefsUtility.WorkTypeDefsInPriorityOrder
                                                                      where def.visible
-                                                                     select def).ToList<WorkTypeDef>();
+                                                                     select def).ToList();
         }
 
         protected void Copy(Pawn p)
         {
-            copy = (from def in VisibleWorkTypeDefsInPriorityOrder
-                    select p.story.WorkTypeIsDisabled(def) ? -1 : p.workSettings.GetPriority(def)).ToList<int>();
-            copied = p;
+            _copy = (from def in _visibleWorkTypeDefsInPriorityOrder
+                    select p.story.WorkTypeIsDisabled(def) ? -1 : p.workSettings.GetPriority(def)).ToList();
+            Copied = p;
 
 #if DEBUG
             var temp = "Priorities: ";
@@ -78,55 +78,54 @@ namespace Fluffy
 
         protected void Paste(Pawn p)
         {
-            for (int i = 0; i < VisibleWorkTypeDefsInPriorityOrder.Count; i++)
+            for (int i = 0; i < _visibleWorkTypeDefsInPriorityOrder.Count; i++)
             {
 #if DEBUG
                 Log.Message("Attempting paste...");
 #endif
-                if (p.story != null && !p.story.WorkTypeIsDisabled(VisibleWorkTypeDefsInPriorityOrder[i]) && copy[i] >= 0)
+                if (p.story != null && !p.story.WorkTypeIsDisabled(_visibleWorkTypeDefsInPriorityOrder[i]) && _copy[i] >= 0)
                 {
 #if DEBUG
                     Log.Message(VisibleWorkTypeDefsInPriorityOrder[i].LabelCap);
 #endif
-                    p.workSettings.SetPriority(VisibleWorkTypeDefsInPriorityOrder[i], copy[i]);
+                    p.workSettings.SetPriority(_visibleWorkTypeDefsInPriorityOrder[i], _copy[i]);
                 }
             }
         }
 
         protected void ClearCopied()
         {
-            copy = null;
-            copied = null;
+            _copy = null;
+            Copied = null;
         }
 
         protected override void BuildPawnList()
         {
-            this.pawns.Clear();
+            Pawns.Clear();
             IEnumerable<Pawn> sorted;
 
-            switch (orderBy)
+            switch (OrderBy)
             {
-                case order.Work:
+                case Order.Work:
                     sorted = from p in Find.ListerPawns.FreeColonists
-                             orderby (p.story == null || p.story.WorkTypeIsDisabled(workOrder)),
-                                      p.skills.AverageOfRelevantSkillsFor(workOrder) descending
+                             orderby (p.story == null || p.story.WorkTypeIsDisabled(_workOrder)),
+                                      p.skills.AverageOfRelevantSkillsFor(_workOrder) descending
                              select p;
                     break;
-                case order.Name:
+                case Order.Name:
                     sorted = from p in Find.ListerPawns.FreeColonists
                              orderby p.LabelCap ascending
                              select p;
                     break;
-                case order.Default:
                 default:
                     sorted = Find.ListerPawns.FreeColonists;
                     break;
             }
 
-            this.pawns = sorted.ToList<Pawn>();
-            if (asc && this.pawns.Count() > 1)
+            Pawns = sorted.ToList();
+            if (_asc && Pawns.Count > 1)
             {
-                this.pawns.Reverse();
+                Pawns.Reverse();
                 SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
             }
             else
@@ -135,57 +134,56 @@ namespace Fluffy
             }
         }
 
-        protected void incrementJobPriority(WorkTypeDef work, bool toggle)
+        protected void IncrementJobPriority(WorkTypeDef work, bool toggle)
         {
             int start = toggle ? 3 : 4;
-            bool max = pawns.All(p => (p.workSettings.GetPriority(work) == 1 || (p.story == null || p.story.WorkTypeIsDisabled(work))));
+            bool max = Pawns.All(p => (p.workSettings.GetPriority(work) == 1 || (p.story == null || p.story.WorkTypeIsDisabled(work))));
 
-            for (int i = 0; i < pawns.Count; i++)
+            foreach (Pawn t in Pawns)
             {
-                if (!(pawns[i].story == null || pawns[i].story.WorkTypeIsDisabled(work)))
+                if (!(t.story == null || t.story.WorkTypeIsDisabled(work)))
                 {
-                    int cur = pawns[i].workSettings.GetPriority(work);
+                    int cur = t.workSettings.GetPriority(work);
                     if (cur > 1)
                     {
-                        pawns[i].workSettings.SetPriority(work, cur - 1);
+                        t.workSettings.SetPriority(work, cur - 1);
                     }
                     if (cur == 0)
                     {
                         if (toggle) SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
-                        pawns[i].workSettings.SetPriority(work, start);
+                        t.workSettings.SetPriority(work, start);
                     }
                     if (toggle && max)
                     {
                         SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
-                        pawns[i].workSettings.SetPriority(work, 0);
+                        t.workSettings.SetPriority(work, 0);
                     }
                 }
             }
         }
 
-        protected void decrementJobPriority(WorkTypeDef work, bool toggle)
+        protected void DecrementJobPriority(WorkTypeDef work, bool toggle)
         {
-            int reset = toggle ? 1 : 4;
-            bool min = pawns.All(p => (p.workSettings.GetPriority(work) == 0 || (p.story == null || p.story.WorkTypeIsDisabled(work))));
+            bool min = Pawns.All(p => (p.workSettings.GetPriority(work) == 0 || (p.story == null || p.story.WorkTypeIsDisabled(work))));
 
-            for (int i = 0; i < pawns.Count; i++)
+            foreach (Pawn p in Pawns)
             {
-                if (!(pawns[i].story == null || pawns[i].story.WorkTypeIsDisabled(work)))
+                if (!(p.story == null || p.story.WorkTypeIsDisabled(work)))
                 {
-                    int cur = pawns[i].workSettings.GetPriority(work);
+                    int cur = p.workSettings.GetPriority(work);
                     if (!toggle && cur > 0 && cur < 4)
                     {
-                        pawns[i].workSettings.SetPriority(work, cur + 1);
+                        p.workSettings.SetPriority(work, cur + 1);
                     }
                     if (cur == 4 || (toggle && cur == 1))
                     {
-                        pawns[i].workSettings.SetPriority(work, 0);
+                        p.workSettings.SetPriority(work, 0);
                         if (toggle) SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                     }
                     if (min && toggle)
                     {
-                        pawns[i].workSettings.SetPriority(work, 3);
-                        if (toggle) SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                        p.workSettings.SetPriority(work, 3);
+                        SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                     }
                 }
             }
@@ -234,22 +232,22 @@ namespace Fluffy
             {
                 if (Event.current.button == 0)
                 {
-                    if (orderBy == order.Name)
+                    if (OrderBy == Order.Name)
                     {
-                        asc = !asc;
+                        _asc = !_asc;
                     }
                     else
                     {
-                        orderBy = order.Name;
-                        asc = false;
+                        OrderBy = Order.Name;
+                        _asc = false;
                     }
                 }
                 else if (Event.current.button == 1)
                 {
-                    if (orderBy != order.Default)
+                    if (OrderBy != Order.Default)
                     {
-                        orderBy = order.Default;
-                        asc = false;
+                        OrderBy = Order.Default;
+                        _asc = false;
                     }
                 }
                 BuildPawnList();
@@ -257,9 +255,9 @@ namespace Fluffy
             TooltipHandler.TipRegion(rectname, "Fluffy.SortByNameWork".Translate());
             Text.Anchor = TextAnchor.UpperLeft;
             Rect outRect = new Rect(0f, 50f, position2.width, position2.height - 50f);
-            this.workColumnSpacing = (position2.width - 16f - 225f) / (float)MainTabWindow_Work.VisibleWorkTypeDefsInPriorityOrder.Count;
+            _workColumnSpacing = (position2.width - 16f - 225f) / _visibleWorkTypeDefsInPriorityOrder.Count;
             int num4 = 0;
-            foreach (WorkTypeDef current2 in MainTabWindow_Work.VisibleWorkTypeDefsInPriorityOrder)
+            foreach (WorkTypeDef current2 in _visibleWorkTypeDefsInPriorityOrder)
             {
                 Vector2 vector = Text.CalcSize(current2.labelShort);
                 float num5 = num3 + 15f;
@@ -298,11 +296,11 @@ namespace Fluffy
                             if (useWorkPriorities)
                             {
                                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                                incrementJobPriority(current2, false);
+                                IncrementJobPriority(current2, false);
                             }
                             else
                             {
-                                incrementJobPriority(current2, true);
+                                IncrementJobPriority(current2, true);
                             }
                         }
                         else if (Event.current.button == 1)
@@ -310,26 +308,26 @@ namespace Fluffy
                             if (useWorkPriorities)
                             {
                                 SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
-                                decrementJobPriority(current2, false);
+                                DecrementJobPriority(current2, false);
                             }
                             else
                             {
-                                decrementJobPriority(current2, true);
+                                DecrementJobPriority(current2, true);
                             }
                         }
                     }
                     else
                     {
                         //Log.Message("Clicked on " + current2.LabelCap);
-                        if (orderBy == order.Work && workOrder == current2)
+                        if (OrderBy == Order.Work && _workOrder == current2)
                         {
-                            asc = !asc;
+                            _asc = !_asc;
                         }
                         else
                         {
-                            orderBy = order.Work;
-                            workOrder = current2;
-                            asc = false;
+                            OrderBy = Order.Work;
+                            _workOrder = current2;
+                            _asc = false;
                         }
                         BuildPawnList();
                         //Log.Message("Sort order is now " + order.LabelCap + ", " + (asc ? "asc" : "desc"));
@@ -340,10 +338,10 @@ namespace Fluffy
                 Widgets.DrawLineVertical(num5, rect5.yMax - 3f, 50f - rect5.yMax + 3f);
                 Widgets.DrawLineVertical(num5 + 1f, rect5.yMax - 3f, 50f - rect5.yMax + 3f);
                 GUI.color = Color.white;
-                num3 += this.workColumnSpacing;
+                num3 += _workColumnSpacing;
                 num4++;
             }
-            base.DrawRows(outRect);
+            DrawRows(outRect);
             GUI.EndGroup();
         }
 
@@ -351,20 +349,19 @@ namespace Fluffy
         {
             float num = 175f;
             Text.Font = GameFont.Medium;
-            for (int i = 0; i < MainTabWindow_Work.VisibleWorkTypeDefsInPriorityOrder.Count; i++)
+            foreach (WorkTypeDef workTypeDef in _visibleWorkTypeDefsInPriorityOrder)
             {
-                WorkTypeDef workTypeDef = MainTabWindow_Work.VisibleWorkTypeDefsInPriorityOrder[i];
                 Vector2 topLeft = new Vector2(num, rect.y + 2.5f);
                 WidgetsWork.DrawWorkBoxFor(topLeft, p, workTypeDef);
                 Rect rect2 = new Rect(topLeft.x, topLeft.y, 25f, 25f);
                 TooltipHandler.TipRegion(rect2, WidgetsWork.TipForPawnWorker(p, workTypeDef));
-                num += this.workColumnSpacing;
+                num += _workColumnSpacing;
             }
 
-            if (copied == p)
+            if (Copied == p)
             {
                 Rect rectCancel = new Rect(num + 17f, rect.y + 6f, 16f, 16f);
-                if (Widgets.ImageButton(rectCancel, cancelTex))
+                if (Widgets.ImageButton(rectCancel, CancelTex))
                 {
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     ClearCopied();
@@ -374,17 +371,17 @@ namespace Fluffy
             else
             {
                 Rect rectCopy = new Rect(num + 6f, rect.y + 6f, 16f, 16f);
-                if (Widgets.ImageButton(rectCopy, copyTex))
+                if (Widgets.ImageButton(rectCopy, CopyTex))
                 {
                     SoundDefOf.Click.PlayOneShotOnCamera();
                     Copy(p);
                 }
                 TooltipHandler.TipRegion(rectCopy, "Fluffy.Copy".Translate());
             }
-            if (copy != null && copied != p)
+            if (_copy != null && Copied != p)
             {
                 Rect rectPaste = new Rect(num + 28f, rect.y + 6f, 16f, 16f);
-                if (Widgets.ImageButton(rectPaste, pasteTex))
+                if (Widgets.ImageButton(rectPaste, PasteTex))
                 {
                     SoundDefOf.Click.PlayOneShotOnCamera();
                     Paste(p);

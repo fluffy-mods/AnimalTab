@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using RimWorld;
 using UnityEngine;
 using Verse;
-using RimWorld;
 
 namespace Fluffy
 {
@@ -13,15 +13,15 @@ namespace Fluffy
 
         protected const float NameLeftMargin = 15f;
 
-        protected Vector2 scrollPosition = Vector2.zero;
+        protected Vector2 ScrollPosition = Vector2.zero;
 
-        protected List<Pawn> pawns = new List<Pawn>();
+        protected List<Pawn> Pawns = new List<Pawn>();
 
         protected int PawnsCount
         {
             get
             {
-                return this.pawns.Count;
+                return Pawns.Count;
             }
         }
 
@@ -30,49 +30,48 @@ namespace Fluffy
         public override void PreOpen()
         {
             base.PreOpen();
-            this.BuildPawnList();
+            BuildPawnList();
         }
 
         public override void PostOpen()
         {
             base.PostOpen();
-            this.currentWindowRect.size = this.InitialWindowSize;
+            currentWindowRect.size = InitialWindowSize;
         }
 
         public override void DoWindowContents(Rect inRect)
         {
             base.DoWindowContents(inRect);
-            this.currentWindowRect.size = this.InitialWindowSize;
+            currentWindowRect.size = InitialWindowSize;
         }
 
         protected virtual void BuildPawnList()
         {
-            this.pawns.Clear();
-            this.pawns.AddRange(Find.ListerPawns.FreeColonists);
+            Pawns.Clear();
+            Pawns.AddRange(Find.ListerPawns.FreeColonists);
         }
 
         public void Notify_PawnsChanged()
         {
-            this.BuildPawnList();
+            BuildPawnList();
         }
 
         protected void DrawRows(Rect outRect)
         {
-            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, (float)this.pawns.Count * 30f);
-            Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect);
+            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, Pawns.Count * 30f);
+            Widgets.BeginScrollView(outRect, ref ScrollPosition, viewRect);
             float num = 0f;
-            for (int i = 0; i < this.pawns.Count; i++)
+            foreach (Pawn p in Pawns)
             {
-                Pawn p = this.pawns[i];
                 Rect rect = new Rect(0f, num, viewRect.width, 30f);
-                if (num - this.scrollPosition.y + 30f >= 0f && num - this.scrollPosition.y <= outRect.height)
+                if (num - ScrollPosition.y + 30f >= 0f && num - ScrollPosition.y <= outRect.height)
                 {
                     GUI.color = new Color(1f, 1f, 1f, 0.2f);
                     Widgets.DrawLineHorizontal(0f, num, viewRect.width);
                     GUI.color = Color.white;
-                    this.PreDrawPawnRow(rect, p);
-                    this.DrawPawnRow(rect, p);
-                    this.PostDrawPawnRow(rect, p);
+                    PreDrawPawnRow(rect, p);
+                    DrawPawnRow(rect, p);
+                    PostDrawPawnRow(rect, p);
                 }
                 num += 30f;
             }
@@ -83,7 +82,7 @@ namespace Fluffy
         private void PreDrawPawnRow(Rect rect, Pawn p)
         {
             Rect rect2 = new Rect(0f, rect.y, rect.width, 30f);
-            if (Mouse.IsOver(rect2) || MainTabWindow_Work.copied == p)
+            if (Mouse.IsOver(rect2) || MainTabWindow_Work.Copied == p)
             {
                 GUI.DrawTexture(rect2, TexUI.HighlightTex);
             }
