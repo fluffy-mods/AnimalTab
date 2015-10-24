@@ -6,8 +6,10 @@ using Verse.Sound;
 
 namespace Fluffy
 {
-    public static class WidgetsWork
+    public static class Widgets_Work
     {
+        public static bool prioritiesDirty = false;
+
         public const float WorkBoxSize = 25f;
 
         private const int MidAptCutoff = 14;

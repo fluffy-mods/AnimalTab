@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageData>
 
+  <!-- Work priority details -->
+  <Fluffy.WorkPrioritiesDetails>Priority details</Fluffy.WorkPrioritiesDetails>
+
   <!-- Dialog_FilterAnimals -->
   <Fluffy.FilterByRace>Filter by race</Fluffy.FilterByRace>
   <Fluffy.FilterByAttributes>Filter by attributes</Fluffy.FilterByAttributes>

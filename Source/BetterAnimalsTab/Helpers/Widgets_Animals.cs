@@ -9,7 +9,7 @@ using Verse.Sound;
 
 namespace Fluffy
 {
-    public static class WidgetsAnimals
+    public static class Widgets_Animals
     {
         public static readonly Texture2D[] TrainingTextures = {
             ContentFinder<Texture2D>.Get("UI/Training/obedience"),

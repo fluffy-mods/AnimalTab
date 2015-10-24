@@ -5,7 +5,7 @@ using Verse;
 
 namespace Fluffy
 {
-    public static class Filter_Animals
+    public static class Widgets_Filter
     {
         public static List<PawnKindDef> FilterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
                 .Select(x => x.kindDef).Distinct().ToList();

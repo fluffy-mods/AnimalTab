@@ -68,9 +68,9 @@ namespace Fluffy
 
 #if DEBUG
             var temp = "Priorities: ";
-            for (int i = 0; i < copy.Count; i++)
+            for (int i = 0; i < _copy.Count; i++)
             {
-                temp += ", " + copy[i].ToString();
+                temp += ", " + _copy[i].ToString();
             }
             Log.Message(temp);
 #endif
@@ -86,7 +86,7 @@ namespace Fluffy
                 if (p.story != null && !p.story.WorkTypeIsDisabled(_visibleWorkTypeDefsInPriorityOrder[i]) && _copy[i] >= 0)
                 {
 #if DEBUG
-                    Log.Message(VisibleWorkTypeDefsInPriorityOrder[i].LabelCap);
+                    Log.Message( _visibleWorkTypeDefsInPriorityOrder[i].LabelCap);
 #endif
                     p.workSettings.SetPriority(_visibleWorkTypeDefsInPriorityOrder[i], _copy[i]);
                 }
@@ -191,6 +191,13 @@ namespace Fluffy
 
         public override void DoWindowContents(Rect rect)
         {
+            // catch priority changes
+            if (Widgets_Work.prioritiesDirty)
+            {
+                Reinit();
+                Widgets_Work.prioritiesDirty = false;
+            }
+            
             base.DoWindowContents(rect);
             Rect position = new Rect(0f, 0f, rect.width, 40f);
             GUI.BeginGroup(position);
@@ -199,7 +206,11 @@ namespace Fluffy
             float num3 = 175f;
 
             Text.Anchor = TextAnchor.UpperLeft;
-            Rect rect2 = new Rect(5f, 5f, 140f, 30f);
+
+            float headerWidth = (position.width - 25f) / 4;
+
+            // use manual toggle
+            Rect rect2 = new Rect(5f, 5f, headerWidth, 30f);
             bool useWorkPriorities = Find.Map.playSettings.useWorkPriorities;
             Widgets.LabelCheckbox(rect2, "ManualPriorities".Translate(), ref Find.Map.playSettings.useWorkPriorities);
             if (useWorkPriorities != Find.Map.playSettings.useWorkPriorities)
@@ -209,16 +220,28 @@ namespace Fluffy
                     current.workSettings.Notify_UseWorkPrioritiesChanged();
                 }
             }
-            float num = position.width / 3f;
-            float num2 = position.width * 2f / 3f;
-            Rect rect3 = new Rect(num - 50f, 5f, 160f, 30f);
-            Rect rect4 = new Rect(num2 - 50f, 5f, 160f, 30f);
-            GUI.color = new Color(1f, 1f, 1f, 0.5f);
-            Text.Anchor = TextAnchor.UpperCenter;
+
+            // priorities detail button
+            Rect detailRect = new Rect(3 * (headerWidth + 5f) + 5f, 5f, headerWidth, 30f);
+            if (Widgets.TextButton(detailRect, "Fluffy.WorkPrioritiesDetails".Translate()))
+            {
+                Find.WindowStack.Add( new Dialog_Priority()
+                {
+                    doCloseX = true,
+                    draggable = true
+                });
+            }
+
+            // high/low priority labels
+            Rect rect3 = new Rect(headerWidth + 10f, 5f, headerWidth, 30f);
+            Rect rect4 = new Rect(2 * (headerWidth + 5f) + 5f, 5f, headerWidth, 30f);
+            GUI.color = new Color( 1f, 1f, 1f, 0.5f );
+            Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
-            Widgets.Label(rect3, "<= " + "HigherPriority".Translate());
-            Widgets.Label(rect4, "LowerPriority".Translate() + " =>");
+            Widgets.Label( rect3, "<= " + "HigherPriority".Translate() );
+            Widgets.Label( rect4, "LowerPriority".Translate() + " =>" );
             Text.Font = GameFont.Small;
+
             GUI.EndGroup();
             Rect position2 = new Rect(0f, 40f, rect.width, rect.height - 40f);
             GUI.BeginGroup(position2);
@@ -352,9 +375,9 @@ namespace Fluffy
             foreach (WorkTypeDef workTypeDef in _visibleWorkTypeDefsInPriorityOrder)
             {
                 Vector2 topLeft = new Vector2(num, rect.y + 2.5f);
-                WidgetsWork.DrawWorkBoxFor(topLeft, p, workTypeDef);
+                Widgets_Work.DrawWorkBoxFor(topLeft, p, workTypeDef);
                 Rect rect2 = new Rect(topLeft.x, topLeft.y, 25f, 25f);
-                TooltipHandler.TipRegion(rect2, WidgetsWork.TipForPawnWorker(p, workTypeDef));
+                TooltipHandler.TipRegion(rect2, Widgets_Work.TipForPawnWorker(p, workTypeDef));
                 num += _workColumnSpacing;
             }
 

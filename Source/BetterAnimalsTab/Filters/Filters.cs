@@ -48,8 +48,8 @@ namespace Fluffy
             {
                 state = FilterType.None;
             }
-            Filter_Animals.Filter = true;
-            Filter_Animals.FilterPossible = true;
+            Widgets_Filter.Filter = true;
+            Widgets_Filter.FilterPossible = true;
         }
     }
 

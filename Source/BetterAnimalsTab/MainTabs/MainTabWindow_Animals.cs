@@ -120,9 +120,9 @@ namespace Fluffy
 
             Pawns = sorted.ToList();
 
-            if (Filter_Animals.Filter)
+            if (Widgets_Filter.Filter)
             {
-                Pawns = Filter_Animals.FilterAnimals(Pawns);
+                Pawns = Widgets_Filter.FilterAnimals(Pawns);
             }
 
             if (Asc && Pawns.Count > 1)
@@ -140,6 +140,7 @@ namespace Fluffy
             GUI.BeginGroup(position);
 
             // ARRRGGHHH!!!
+            // Allow other panels to trigger rebuilding the pawn list. (This took me forever to figure out...)
             if (IsDirty) BuildPawnList();
 
 
@@ -160,7 +161,7 @@ namespace Fluffy
                         List<FloatMenuOption> list2 = new List<FloatMenuOption>();
                         list2.AddRange(list.ConvertAll(p => new FloatMenuOption(p.LabelCap, delegate
                         {
-                            Filter_Animals.QuickFilterPawnKind(p);
+                            Widgets_Filter.QuickFilterPawnKind(p);
                             IsDirty = true;
                         })));
                         Find.WindowStack.Add(new FloatMenu(list2));
@@ -169,20 +170,20 @@ namespace Fluffy
             }
             TooltipHandler.TipRegion(filterButton, "Fluffy.FilterTooltip".Translate());
             Rect filterIcon = new Rect(205f, (filterButton.height - 24f) / 2f, 24f, 24f);
-            if (Filter_Animals.Filter)
+            if (Widgets_Filter.Filter)
             {
                 if(Widgets.ImageButton(filterIcon, FilterOffTex))
                 {
-                    Filter_Animals.DisableFilter();
+                    Widgets_Filter.DisableFilter();
                     BuildPawnList();
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                 }
                 TooltipHandler.TipRegion(filterIcon, "Fluffy.DisableFilter".Translate());
-            } else if (Filter_Animals.FilterPossible)
+            } else if (Widgets_Filter.FilterPossible)
             {
                 if (Widgets.ImageButton(filterIcon, FilterTex))
                 {
-                    Filter_Animals.EnableFilter();
+                    Widgets_Filter.EnableFilter();
                     BuildPawnList();
                     SoundDefOf.Click.PlayOneShotOnCamera();
                 }
@@ -309,7 +310,7 @@ namespace Fluffy
             {
                 if (Event.current.shift)
                 {
-                    WidgetsAnimals.SlaughterAllAnimals(Pawns);
+                    Widgets_Animals.SlaughterAllAnimals(Pawns);
                 }
                 else
                 {
@@ -334,7 +335,7 @@ namespace Fluffy
 
             num += 50f;
             Rect headers = new Rect(num, rectname.height - 30f, 80f, 30f);
-            WidgetsAnimals.DoTrainingHeaders(headers, Pawns);
+            Widgets_Animals.DoTrainingHeaders(headers, Pawns);
 
             num += 90f;
 
@@ -347,7 +348,7 @@ namespace Fluffy
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.LowerCenter;
             Rect rect3 = new Rect(num, position.height - 27f, 350f, 30f);
-            WidgetsAnimals.DoAllowedAreaHeaders(rect3, Pawns, AllowedAreaMode.Animal);
+            Widgets_Animals.DoAllowedAreaHeaders(rect3, Pawns, AllowedAreaMode.Animal);
             GUI.EndGroup();
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
@@ -410,12 +411,12 @@ namespace Fluffy
             {
                 if (slaughter)
                 {
-                    WidgetsAnimals.UnSlaughterAnimal(p);
+                    Widgets_Animals.UnSlaughterAnimal(p);
                     SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                 }
                 else
                 {
-                    WidgetsAnimals.SlaughterAnimal(p);
+                    Widgets_Animals.SlaughterAnimal(p);
                     SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 }
             }
@@ -427,7 +428,7 @@ namespace Fluffy
             num += 50f;
 
             Rect trainingRect = new Rect(num, 0f, 80f, 30f);
-            WidgetsAnimals.DoTrainingRow(trainingRect, p);
+            Widgets_Animals.DoTrainingRow(trainingRect, p);
 
             num += 90f;
 

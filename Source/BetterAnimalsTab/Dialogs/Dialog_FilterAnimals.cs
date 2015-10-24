@@ -116,7 +116,7 @@ namespace Fluffy
             _y += _rowHeight;
 
             // draw filter rows.
-            foreach (IFilter filter in Filter_Animals.Filters)
+            foreach (IFilter filter in Widgets_Filter.Filters)
             {
                 DrawFilterRow(filter);
             }
@@ -133,18 +133,18 @@ namespace Fluffy
             if (Widgets.TextButton(new Rect(inRect.width / 4f + 5f, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Clear".Translate()))
             {
-                Filter_Animals.ResetFilter();
-                Filter_Animals.DisableFilter();
+                Widgets_Filter.ResetFilter();
+                Widgets_Filter.DisableFilter();
                 MainTabWindow_Animals.IsDirty = true;
                 Event.current.Use();
             }
 
-            if (!Filter_Animals.Filter)
+            if (!Widgets_Filter.Filter)
             {
                 if (Widgets.TextButton(new Rect(_x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Enable".Translate()))
                 {
-                    Filter_Animals.EnableFilter();
+                    Widgets_Filter.EnableFilter();
                     MainTabWindow_Animals.IsDirty = true;
                     Event.current.Use();
                 }
@@ -154,7 +154,7 @@ namespace Fluffy
                 if (Widgets.TextButton(new Rect(_x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Disable".Translate()))
                 {
-                    Filter_Animals.DisableFilter();
+                    Widgets_Filter.DisableFilter();
                     MainTabWindow_Animals.IsDirty = true;
                     Event.current.Use();
                 }
@@ -177,7 +177,7 @@ namespace Fluffy
             Rect rectLabel = new Rect(_x, _y, LabWidth, _rowHeight);
             Widgets.Label(rectLabel, pawnKind.LabelCap);
             Rect rectIcon = new Rect(_x2 + _iconWidthOffset, _y, _iconSize, _iconSize);
-            bool inList = Filter_Animals.FilterPawnKind.Contains(pawnKind);
+            bool inList = Widgets_Filter.FilterPawnKind.Contains(pawnKind);
             GUI.DrawTexture(rectIcon, inList ? Widgets.CheckboxOnTex : Widgets.CheckboxOffTex);
             if (Mouse.IsOver(rectRow))
             {
@@ -193,7 +193,7 @@ namespace Fluffy
                 {
                     SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 }
-                Filter_Animals.TogglePawnKindFilter(pawnKind, inList);
+                Widgets_Filter.TogglePawnKindFilter(pawnKind, inList);
                 MainTabWindow_Animals.IsDirty = true;
             }
             _y += _rowHeight;
