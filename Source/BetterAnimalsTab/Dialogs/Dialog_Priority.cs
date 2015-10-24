@@ -261,7 +261,7 @@ namespace Fluffy
             // button areas
             Rect workTypeSortRect = new Rect(workTypeListRect.xMax + _margin, workTypeListRect.yMin, _buttonSize.x, areaHeight);
             Rect workGiverSortRect = new Rect(workGiverListRect.xMax + _margin, workGiverListRect.yMin, _buttonSize.x, areaHeight);
-            Rect resetRect = new Rect(inRect.width - 27f, _margin + 13f, 24f, 24f);
+            Rect resetRect = new Rect(inRect.width - 27f, 13f, 24f, 24f);
 
             // draw backgrounds
             Widgets.DrawMenuSection( workTypeListRect );
