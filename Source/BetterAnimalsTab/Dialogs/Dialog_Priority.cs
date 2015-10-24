@@ -26,13 +26,15 @@ namespace Fluffy
         private WorkGiverDef        _selectedWorkGiverDef;
         private Vector2             _buttonSize                 = new Vector2(16f, 16f);
         private bool                _workTypeMoved              = false;
-        private bool                _workGiverMoved             = false;
+        private static bool         _workGiverMoved             = false;
         private bool                _first                      = true;
 
         public readonly Texture2D   TopArrow                    = ContentFinder<Texture2D>.Get("UI/Buttons/ArrowTop");
         public readonly Texture2D   UpArrow                     = ContentFinder<Texture2D>.Get("UI/Buttons/ArrowUp");
         public readonly Texture2D   DownArrow                   = ContentFinder<Texture2D>.Get("UI/Buttons/ArrowDown");
         public readonly Texture2D   BottomArrow                 = ContentFinder<Texture2D>.Get("UI/Buttons/ArrowBottom");
+
+        public readonly Texture2D   ResetButton                 = ContentFinder<Texture2D>.Get("UI/Buttons/reset");
 
         public List<WorkTypeDef> WorkTypeDefs
         {
@@ -50,7 +52,9 @@ namespace Fluffy
         {
             base.PreOpen();
 
-            // normalize priorities first time the tab is opened.
+            // normalize priorities first time the tab is opened
+            // also, if this is a fresh (non-load) game, we may not have a backup yet - make sure it's created.
+            // finally, show a disclaimer the first time the tab is opened.
             if (_first)
             {
                 _first = false;
@@ -59,6 +63,15 @@ namespace Fluffy
                 foreach (WorkTypeDef workTypeDef in _workTypeDefs)
                 {
                     RebuildWorkGiverDefsList(workTypeDef);
+                }
+
+                MapComponent_Priorities.CreateXMLPrioritiesIfNotExists();
+
+                if (!MapComponent_Priorities.userWarned)
+                {
+                    MapComponent_Priorities.userWarned = true;
+                    Find.WindowStack.Add(new Dialog_Message("Fluffy.WorkPrioritiesDisclaimer".Translate(), "Fluffy.WorkPrioritiesDisclaimerTitle".Translate()));
+                    Find.WindowStack.WindowOfType<Dialog_Message>().layer = WindowLayer.Super;
                 }
             }
         }
@@ -83,7 +96,7 @@ namespace Fluffy
             NotifyPrioritiesChanged();
         }
 
-        private void RebuildWorkGiverDefsList(WorkTypeDef workType)
+        public static void RebuildWorkGiverDefsList(WorkTypeDef workType)
         {
             // first reset the list, since core uses a cache
             // normalization is irrelevant for order
@@ -213,7 +226,7 @@ namespace Fluffy
             }
         }
 
-        private void NotifyPrioritiesChanged()
+        private static void NotifyPrioritiesChanged()
         {
             // force all pawns to rebuild their internal priority list.
             foreach (Pawn pawn in Find.ListerPawns.FreeColonists)
@@ -248,6 +261,7 @@ namespace Fluffy
             // button areas
             Rect workTypeSortRect = new Rect(workTypeListRect.xMax + _margin, workTypeListRect.yMin, _buttonSize.x, areaHeight);
             Rect workGiverSortRect = new Rect(workGiverListRect.xMax + _margin, workGiverListRect.yMin, _buttonSize.x, areaHeight);
+            Rect resetRect = new Rect(inRect.width - 27f, _margin + 13f, 24f, 24f);
 
             // draw backgrounds
             Widgets.DrawMenuSection( workTypeListRect );
@@ -279,6 +293,13 @@ namespace Fluffy
             Text.Font = GameFont.Medium;
             Widgets.Label(headerRect, "Fluffy.WorkPrioritiesDetails".Translate() );
             Text.Font = GameFont.Small;
+
+            // reset button
+            if (Widgets.ImageButton(resetRect, ResetButton))
+            {
+                MapComponent_Priorities.ResetPriorities();
+                RebuildWorkTypeDefsList();
+            }
 
             // worktype lister
             GUI.BeginGroup( workTypeListRect );

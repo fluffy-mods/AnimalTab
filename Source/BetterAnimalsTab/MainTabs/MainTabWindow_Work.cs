@@ -225,11 +225,7 @@ namespace Fluffy
             Rect detailRect = new Rect(3 * (headerWidth + 5f) + 5f, 5f, headerWidth, 30f);
             if (Widgets.TextButton(detailRect, "Fluffy.WorkPrioritiesDetails".Translate()))
             {
-                Find.WindowStack.Add( new Dialog_Priority()
-                {
-                    doCloseX = true,
-                    draggable = true
-                });
+                Find.WindowStack.Add( new Dialog_Priority());
             }
 
             // high/low priority labels
