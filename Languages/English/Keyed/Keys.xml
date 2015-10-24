@@ -5,7 +5,7 @@
   <Fluffy.WorkPrioritiesDetails>Priority details</Fluffy.WorkPrioritiesDetails>
   <Fluffy.WorkPrioritiesDisclaimer>The work priorities detail window allows you to change priorities of work types (cooking, constructing, etc.), and the activities within them (carry materials, build, etc.).\n\nDISCLAIMER:\n - The priority of some "emergency" jobs is ignored, and these jobs are always perfomed first (e.g. extinguishing fire).\n - It is entirely possible to bring your colony to a grinding halt by carelessly changing priorities. Use the button on the top of the screen to return to the default priorities.</Fluffy.WorkPrioritiesDisclaimer>
   <Fluffy.WorkPrioritiesDisclaimerTitle>Priority details</Fluffy.WorkPrioritiesDisclaimerTitle>
-
+  <Fluffy.ResetPriorities>Reset priorities to default</Fluffy.ResetPriorities>
 
   <!-- Dialog_FilterAnimals -->
   <Fluffy.FilterByRace>Filter by race</Fluffy.FilterByRace>

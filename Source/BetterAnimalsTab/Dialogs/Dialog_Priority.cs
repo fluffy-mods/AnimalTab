@@ -295,6 +295,7 @@ namespace Fluffy
             Text.Font = GameFont.Small;
 
             // reset button
+            TooltipHandler.TipRegion(resetRect, "Fluffy.ResetPriorities".Translate());
             if (Widgets.ImageButton(resetRect, ResetButton))
             {
                 MapComponent_Priorities.ResetPriorities();
