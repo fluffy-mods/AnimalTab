@@ -35,7 +35,7 @@ namespace Fluffy
                 LoadPriorities(_priorities);
             }
         }
-
+        
         public static void ResetPriorities()
         {
             LoadPriorities(_XMLPriorities);
@@ -81,7 +81,23 @@ namespace Fluffy
             return list;
         }
 
-        public static void CreateXMLPrioritiesIfNotExists()
+        public static void InitMapComponent()
+        {
+            CreateXMLPrioritiesIfNotExists();
+            TryInjectMapComponent();
+        }
+
+        private static void TryInjectMapComponent()
+        {
+            if( Find.Map.GetComponent<MapComponent_Priorities>() == null )
+            {
+                Log.Message( "Enhanced Tabs :: Injecting map component" );
+                // all the relevant bits are static, just create a new one.
+                Find.Map.components.Add( new MapComponent_Priorities() );
+            }
+        }
+
+        private static void CreateXMLPrioritiesIfNotExists()
         {
             if (_XMLPriorities == null || _XMLPriorities.Count == 0)
             {

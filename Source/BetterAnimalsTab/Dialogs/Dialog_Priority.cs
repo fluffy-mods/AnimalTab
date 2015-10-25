@@ -53,7 +53,7 @@ namespace Fluffy
             base.PreOpen();
 
             // normalize priorities first time the tab is opened
-            // also, if this is a fresh (non-load) game, we may not have a backup yet - make sure it's created.
+            // initialize the map component, making sure we have a valid backup and the map component is injected into the game
             // finally, show a disclaimer the first time the tab is opened.
             if (_first)
             {
@@ -65,7 +65,7 @@ namespace Fluffy
                     RebuildWorkGiverDefsList(workTypeDef);
                 }
 
-                MapComponent_Priorities.CreateXMLPrioritiesIfNotExists();
+                MapComponent_Priorities.InitMapComponent();
 
                 if (!MapComponent_Priorities.userWarned)
                 {
