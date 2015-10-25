@@ -236,9 +236,7 @@ namespace Fluffy
                 pawn.workSettings.Notify_UseWorkPrioritiesChanged();
             }
         }
-
-        // TODO: some sort of saveable format
-
+        
         public override void DoWindowContents( Rect inRect )
         {
             // Close if work tab closed

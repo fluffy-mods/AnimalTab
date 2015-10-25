@@ -11,9 +11,7 @@ namespace Fluffy
     public class MainTabWindow_Work : MainTabWindow_PawnList
     {
         //private const float TopAreaHeight = 40f;
-
         protected const float LabelRowHeight = 50f;
-
         private float _workColumnSpacing = -1f;
 
         private static List<WorkTypeDef> _visibleWorkTypeDefsInPriorityOrder;
@@ -32,12 +30,11 @@ namespace Fluffy
         }
 
         public Order OrderBy = Order.Default;
-
         private bool _asc;
-
         private List<int> _copy;
-
         public static Pawn Copied;
+
+        private int _UItick;
 
         public override Vector2 RequestedTabSize
         {
@@ -126,11 +123,6 @@ namespace Fluffy
             if (_asc && Pawns.Count > 1)
             {
                 Pawns.Reverse();
-                SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
-            }
-            else
-            {
-                SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
             }
         }
 
@@ -196,6 +188,13 @@ namespace Fluffy
             {
                 Reinit();
                 Widgets_Work.prioritiesDirty = false;
+            }
+
+            // update the list every 5 seconds (workaround to catch external pawn list changes)
+            _UItick++;
+            if (_UItick%300 == 0)
+            {
+                BuildPawnList();
             }
             
             base.DoWindowContents(rect);
@@ -268,6 +267,14 @@ namespace Fluffy
                         OrderBy = Order.Default;
                         _asc = false;
                     }
+                }
+                if (_asc)
+                {
+                    SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                }
+                else
+                {
+                    SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 }
                 BuildPawnList();
             }
@@ -347,6 +354,14 @@ namespace Fluffy
                             OrderBy = Order.Work;
                             _workOrder = current2;
                             _asc = false;
+                        }
+                        if( _asc )
+                        {
+                            SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                        }
+                        else
+                        {
+                            SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                         }
                         BuildPawnList();
                         //Log.Message("Sort order is now " + order.LabelCap + ", " + (asc ? "asc" : "desc"));
