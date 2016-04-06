@@ -104,18 +104,18 @@ namespace Fluffy
             switch (OrderBy)
             {
                 case Order.Work:
-                    sorted = from p in Find.ListerPawns.FreeColonists
+                    sorted = from p in Find.MapPawns.FreeColonists
                              orderby (p.story == null || p.story.WorkTypeIsDisabled(_workOrder)),
                                       p.skills.AverageOfRelevantSkillsFor(_workOrder) descending
                              select p;
                     break;
                 case Order.Name:
-                    sorted = from p in Find.ListerPawns.FreeColonists
+                    sorted = from p in Find.MapPawns.FreeColonists
                              orderby p.LabelCap ascending
                              select p;
                     break;
                 default:
-                    sorted = Find.ListerPawns.FreeColonists;
+                    sorted = Find.MapPawns.FreeColonists;
                     break;
             }
 
@@ -214,7 +214,7 @@ namespace Fluffy
             Widgets.LabelCheckbox(rect2, "ManualPriorities".Translate(), ref Find.Map.playSettings.useWorkPriorities);
             if (useWorkPriorities != Find.Map.playSettings.useWorkPriorities)
             {
-                foreach (Pawn current in Find.ListerPawns.FreeColonists)
+                foreach (Pawn current in Find.MapPawns.FreeColonists)
                 {
                     current.workSettings.Notify_UseWorkPrioritiesChanged();
                 }

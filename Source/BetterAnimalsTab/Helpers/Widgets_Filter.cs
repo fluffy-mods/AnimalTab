@@ -7,7 +7,7 @@ namespace Fluffy
 {
     public static class Widgets_Filter
     {
-        public static List<PawnKindDef> FilterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+        public static List<PawnKindDef> FilterPawnKind = Find.MapPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
                 .Select(x => x.kindDef).Distinct().ToList();
 
         public static List<IFilter> Filters = new List<IFilter>
@@ -63,7 +63,7 @@ namespace Fluffy
 
         public static void ResetPawnKindFilter()
         {
-            FilterPawnKind = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+            FilterPawnKind = Find.MapPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
                 .Select(x => x.kindDef).Distinct().ToList();
         }
 

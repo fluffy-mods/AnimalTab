@@ -445,7 +445,7 @@ namespace Fluffy
         private static void NotifyPrioritiesChanged()
         {
             // force all pawns to rebuild their internal priority list.
-            foreach ( Pawn pawn in Find.ListerPawns.FreeColonists )
+            foreach ( Pawn pawn in Find.MapPawns.FreeColonists )
             {
                 // core method that sets the private field .isDirty to true.
                 // that's all it does, so fine to use until Ty changes it and reflection becomes necessary.

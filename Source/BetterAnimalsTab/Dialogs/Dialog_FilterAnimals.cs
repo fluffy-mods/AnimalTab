@@ -44,7 +44,7 @@ namespace Fluffy
 
         public Dialog_FilterAnimals()
         {
-            PawnKinds = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+            PawnKinds = Find.MapPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
                 .Select(x => x.kindDef).Distinct().OrderBy(x => x.LabelCap).ToList();
             forcePause = true;
             closeOnEscapeKey = true;

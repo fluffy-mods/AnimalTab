@@ -74,44 +74,44 @@ namespace Fluffy
             switch (Order)
             {
                 case Orders.Default:
-                    sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.RaceProps.petness descending, p.RaceProps.baseBodySize, p.def.label
                              select p;
                     break;
                 case Orders.Name:
-                    sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.Name.Numerical, p.Name.ToStringFull, p.def.label
                              select p;
                     break;
                 case Orders.Gender:
-                    sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.KindLabel, p.gender
                              select p;
                     break;
                 case Orders.LifeStage:
-                    sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.ageTracker.CurLifeStageRace.minAge descending, p.ageTracker.AgeBiologicalTicks descending
                              select p;
                     break;
                 case Orders.Slaughter:
-                    sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter) != null descending, p.BodySize descending
                              select p;
                     break;
                 case Orders.Training:
                     bool dump;
-                    sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.training.IsCompleted(TrainingOrder) descending, p.training.GetWanted(TrainingOrder) descending, p.training.CanAssignToTrain(TrainingOrder, out dump).Accepted descending
                              select p;
                     break;
                 default:
-                    sorted = from p in Find.ListerPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
                              where p.RaceProps.Animal
                              orderby p.RaceProps.petness descending, p.RaceProps.baseBodySize, p.def.label
                              select p;
@@ -153,7 +153,7 @@ namespace Fluffy
                     Find.WindowStack.Add(new Dialog_FilterAnimals());
                 } else if (Event.current.button == 1)
                 {
-                    List<PawnKindDef> list = Find.ListerPawns.PawnsInFaction(Faction.OfColony).Where(p => p.RaceProps.Animal)
+                    List<PawnKindDef> list = Find.MapPawns.PawnsInFaction(Faction.OfColony).Where(p => p.RaceProps.Animal)
                                                  .Select(p => p.kindDef).Distinct().OrderBy(p => p.LabelCap).ToList();
 
                     if (list.Count > 0)

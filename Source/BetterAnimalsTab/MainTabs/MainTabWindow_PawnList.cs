@@ -48,7 +48,7 @@ namespace Fluffy
         protected virtual void BuildPawnList()
         {
             Pawns.Clear();
-            Pawns.AddRange(Find.ListerPawns.FreeColonists);
+            Pawns.AddRange(Find.MapPawns.FreeColonists);
         }
 
         public void Notify_PawnsChanged()
@@ -94,7 +94,7 @@ namespace Fluffy
                 rect4.xMin -= 4f;
                 rect4.yMin += 4f;
                 rect4.yMax -= 6f;
-                Widgets.FillableBar(rect4, p.health.summaryHealth.SummaryHealthPercent, PawnUIOverlay.HealthTex, BaseContent.ClearTex, false);
+                Widgets.FillableBar(rect4, p.health.summaryHealth.SummaryHealthPercent, PawnUIOverlay.OverlayHealthTex, BaseContent.ClearTex, false);
             }
             if (Mouse.IsOver(rect3))
             {
@@ -123,7 +123,7 @@ namespace Fluffy
                     Find.MainTabsRoot.EscapeCurrentTab();
                     Find.CameraMap.JumpTo(p.PositionHeld);
                     Find.Selector.ClearSelection();
-                    if (p.SpawnedInWorld)
+                    if (p.Spawned)
                     {
                         Find.Selector.Select(p);
                     }
