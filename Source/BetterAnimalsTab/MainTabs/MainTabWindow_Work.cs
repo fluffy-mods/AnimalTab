@@ -6,6 +6,12 @@ using UnityEngine;
 using Verse;
 using Verse.Sound;
 
+/// <summary>
+/// Note that this class, and all the classes related to it, are deprecated and no longer actually used.
+/// 
+/// The only reason they're here is so that I can easily recover them, should CCL take too long, and the new work tab not be viable.
+/// </summary>
+
 namespace Fluffy
 {
     public class MainTabWindow_Work : MainTabWindow_PawnList
@@ -210,9 +216,9 @@ namespace Fluffy
 
             // use manual toggle
             Rect rect2 = new Rect(5f, 5f, headerWidth, 30f);
-            bool useWorkPriorities = Find.Map.playSettings.useWorkPriorities;
-            Widgets.LabelCheckbox(rect2, "ManualPriorities".Translate(), ref Find.Map.playSettings.useWorkPriorities);
-            if (useWorkPriorities != Find.Map.playSettings.useWorkPriorities)
+            bool useWorkPriorities = Current.Game.playSettings.useWorkPriorities;
+            Widgets.CheckboxLabeled(rect2, "ManualPriorities".Translate(), ref Current.Game.playSettings.useWorkPriorities);
+            if (useWorkPriorities != Current.Game.playSettings.useWorkPriorities)
             {
                 foreach (Pawn current in Find.MapPawns.FreeColonists)
                 {
@@ -222,7 +228,7 @@ namespace Fluffy
 
             // priorities detail button
             Rect detailRect = new Rect(3 * (headerWidth + 5f) + 5f, 5f, headerWidth, 30f);
-            if (Widgets.TextButton(detailRect, "Fluffy.WorkPrioritiesDetails".Translate()))
+            if (Widgets.ButtonText(detailRect, "Fluffy.WorkPrioritiesDetails".Translate()))
             {
                 Find.WindowStack.Add( new Dialog_Priority());
             }
@@ -246,7 +252,7 @@ namespace Fluffy
             Rect rectname = new Rect(0f, 20f, num3, 33f);
             Widgets.Label(rectname, "Fluffy.Name".Translate());
             Widgets.DrawHighlightIfMouseover(rectname);
-            if (Widgets.InvisibleButton(rectname))
+            if (Widgets.ButtonInvisible(rectname))
             {
                 if (Event.current.button == 0)
                 {
@@ -395,7 +401,7 @@ namespace Fluffy
             if (Copied == p)
             {
                 Rect rectCancel = new Rect(num + 17f, rect.y + 6f, 16f, 16f);
-                if (Widgets.ImageButton(rectCancel, CancelTex))
+                if (Widgets.ButtonImage(rectCancel, CancelTex))
                 {
                     SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     ClearCopied();
@@ -405,7 +411,7 @@ namespace Fluffy
             else
             {
                 Rect rectCopy = new Rect(num + 6f, rect.y + 6f, 16f, 16f);
-                if (Widgets.ImageButton(rectCopy, CopyTex))
+                if (Widgets.ButtonImage(rectCopy, CopyTex))
                 {
                     SoundDefOf.Click.PlayOneShotOnCamera();
                     Copy(p);
@@ -415,7 +421,7 @@ namespace Fluffy
             if (_copy != null && Copied != p)
             {
                 Rect rectPaste = new Rect(num + 28f, rect.y + 6f, 16f, 16f);
-                if (Widgets.ImageButton(rectPaste, PasteTex))
+                if (Widgets.ButtonImage(rectPaste, PasteTex))
                 {
                     SoundDefOf.Click.PlayOneShotOnCamera();
                     Paste(p);

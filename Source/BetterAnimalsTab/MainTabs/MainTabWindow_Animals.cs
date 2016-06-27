@@ -74,44 +74,44 @@ namespace Fluffy
             switch (Order)
             {
                 case Orders.Default:
-                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfPlayer)
                              where p.RaceProps.Animal
                              orderby p.RaceProps.petness descending, p.RaceProps.baseBodySize, p.def.label
                              select p;
                     break;
                 case Orders.Name:
-                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfPlayer)
                              where p.RaceProps.Animal
                              orderby p.Name.Numerical, p.Name.ToStringFull, p.def.label
                              select p;
                     break;
                 case Orders.Gender:
-                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfPlayer)
                              where p.RaceProps.Animal
                              orderby p.KindLabel, p.gender
                              select p;
                     break;
                 case Orders.LifeStage:
-                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfPlayer)
                              where p.RaceProps.Animal
                              orderby p.ageTracker.CurLifeStageRace.minAge descending, p.ageTracker.AgeBiologicalTicks descending
                              select p;
                     break;
                 case Orders.Slaughter:
-                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfPlayer)
                              where p.RaceProps.Animal
                              orderby Find.DesignationManager.DesignationOn(p, DesignationDefOf.Slaughter) != null descending, p.BodySize descending
                              select p;
                     break;
                 case Orders.Training:
                     bool dump;
-                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfPlayer)
                              where p.RaceProps.Animal
                              orderby p.training.IsCompleted(TrainingOrder) descending, p.training.GetWanted(TrainingOrder) descending, p.training.CanAssignToTrain(TrainingOrder, out dump).Accepted descending
                              select p;
                     break;
                 default:
-                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfColony)
+                    sorted = from p in Find.MapPawns.PawnsInFaction(Faction.OfPlayer)
                              where p.RaceProps.Animal
                              orderby p.RaceProps.petness descending, p.RaceProps.baseBodySize, p.def.label
                              select p;
@@ -146,14 +146,14 @@ namespace Fluffy
 
             Rect filterButton = new Rect(0f, 0f, 200f, Mathf.Round(position.height / 2f));
             Text.Font = GameFont.Small;
-            if (Widgets.TextButton(filterButton, "Fluffy.Filter".Translate()))
+            if (Widgets.ButtonText(filterButton, "Fluffy.Filter".Translate()))
             {
                 if (Event.current.button == 0)
                 {
                     Find.WindowStack.Add(new Dialog_FilterAnimals());
                 } else if (Event.current.button == 1)
                 {
-                    List<PawnKindDef> list = Find.MapPawns.PawnsInFaction(Faction.OfColony).Where(p => p.RaceProps.Animal)
+                    List<PawnKindDef> list = Find.MapPawns.PawnsInFaction(Faction.OfPlayer).Where(p => p.RaceProps.Animal)
                                                  .Select(p => p.kindDef).Distinct().OrderBy(p => p.LabelCap).ToList();
 
                     if (list.Count > 0)
@@ -172,7 +172,7 @@ namespace Fluffy
             Rect filterIcon = new Rect(205f, (filterButton.height - 24f) / 2f, 24f, 24f);
             if (Widgets_Filter.Filter)
             {
-                if(Widgets.ImageButton(filterIcon, FilterOffTex))
+                if(Widgets.ButtonImage(filterIcon, FilterOffTex))
                 {
                     Widgets_Filter.DisableFilter();
                     BuildPawnList();
@@ -181,7 +181,7 @@ namespace Fluffy
                 TooltipHandler.TipRegion(filterIcon, "Fluffy.DisableFilter".Translate());
             } else if (Widgets_Filter.FilterPossible)
             {
-                if (Widgets.ImageButton(filterIcon, FilterTex))
+                if (Widgets.ButtonImage(filterIcon, FilterTex))
                 {
                     Widgets_Filter.EnableFilter();
                     BuildPawnList();
@@ -195,7 +195,7 @@ namespace Fluffy
             Text.Anchor = TextAnchor.LowerCenter;
             Rect rectname = new Rect(0f, 0f, num, position.height + 3f);
             Widgets.Label(rectname, "Fluffy.Name".Translate());
-            if (Widgets.InvisibleButton(rectname))
+            if (Widgets.ButtonInvisible(rectname))
             {
                 if (Order == Orders.Name)
                 {
@@ -218,7 +218,7 @@ namespace Fluffy
             
             Rect rect = new Rect(num, rectname.height - 30f, 90f, 30);
             Widgets.Label(rect, "Master".Translate());
-            if(Widgets.InvisibleButton(rect)){
+            if(Widgets.ButtonInvisible(rect)){
                     SoundDefOf.AmountDecrement.PlayOneShotOnCamera();
                 if (Order == Orders.Default)
                 {
@@ -250,7 +250,7 @@ namespace Fluffy
             GUI.DrawTexture(recta2, GenderTextures[2]);
             num += 25f;
 
-            if (Widgets.InvisibleButton(recta))
+            if (Widgets.ButtonInvisible(recta))
             {
                 if (Order == Orders.Gender)
                 {
@@ -283,7 +283,7 @@ namespace Fluffy
             GUI.DrawTexture(rectb3, LifeStageTextures[2]);
             num += 17f;
 
-            if (Widgets.InvisibleButton(rectb))
+            if (Widgets.ButtonInvisible(rectb))
             {
                 if (Order == Orders.LifeStage)
                 {
@@ -306,7 +306,7 @@ namespace Fluffy
             Rect rectc = new Rect(num, rectname.height - 30f, 50f, 30f);
             Rect rectc1 = new Rect(num + 17f, 48f, 16f, 16f);
             GUI.DrawTexture(rectc1, SlaughterTex);
-            if (Widgets.InvisibleButton(rectc1))
+            if (Widgets.ButtonInvisible(rectc1))
             {
                 if (Event.current.shift)
                 {
@@ -341,7 +341,7 @@ namespace Fluffy
 
             Rect rect2 = new Rect(num, 0f, 350f, Mathf.Round(position.height / 2f));
             Text.Font = GameFont.Small;
-            if (Widgets.TextButton(rect2, "ManageAreas".Translate()))
+            if (Widgets.ButtonText(rect2, "ManageAreas".Translate()))
             {
                 Find.WindowStack.Add(new Dialog_ManageAreas());
             }
@@ -372,9 +372,9 @@ namespace Fluffy
             {
                 Rect rect2 = new Rect(num, 0f, 90f, rect.height);
                 Rect rect3 = rect2.ContractedBy(2f);
-                string label = (p.playerSettings.master == null) ? "NoneLower".Translate() : p.playerSettings.master.LabelBaseShort;
+                string label = (p.playerSettings.master == null) ? "NoneLower".Translate() : p.playerSettings.master.LabelShort;
                 Text.Font = GameFont.Small;
-                if (Widgets.TextButton(rect3, label))
+                if (Widgets.ButtonText(rect3, label))
                 {
                     TrainableUtility.OpenMasterSelectMenu(p);
                 }
@@ -407,7 +407,7 @@ namespace Fluffy
             {
                 TooltipHandler.TipRegion(rectc, "Fluffy.MarkSlaughter".Translate());
             }
-            if (Widgets.InvisibleButton(rectc))
+            if (Widgets.ButtonInvisible(rectc))
             {
                 if (slaughter)
                 {

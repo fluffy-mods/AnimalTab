@@ -39,7 +39,7 @@ namespace Fluffy
 
         #region Properties
 
-        public override Vector2 InitialWindowSize
+        public override Vector2 InitialSize
         {
             get
             {
@@ -141,7 +141,7 @@ namespace Fluffy
 
             // reset button
             TooltipHandler.TipRegion( resetRect, "Fluffy.ResetPriorities".Translate() );
-            if ( Widgets.ImageButton( resetRect, ResetButton ) )
+            if ( Widgets.ButtonImage( resetRect, ResetButton ) )
             {
                 MapComponent_Priorities.ResetPriorities();
                 RebuildWorkTypeDefsList();
@@ -292,7 +292,7 @@ namespace Fluffy
             cur.x -= _margin;
 
             // return click for selecting stuff.
-            return Widgets.InvisibleButton( buttonRect );
+            return Widgets.ButtonInvisible( buttonRect );
         }
 
         public void DrawSortButtons( Rect rect, bool active, WorkTypeDef workType, WorkGiverDef workGiver = null )
@@ -344,7 +344,7 @@ namespace Fluffy
 
             if ( active && !top )
             {
-                if ( Widgets.ImageButton( topRect, TopArrow ) )
+                if ( Widgets.ButtonImage( topRect, TopArrow ) )
                 {
                     if ( isWorkType )
                     {
@@ -355,7 +355,7 @@ namespace Fluffy
                         Top( workType, workGiver );
                     }
                 }
-                if ( Widgets.ImageButton( upRect, UpArrow ) )
+                if ( Widgets.ButtonImage( upRect, UpArrow ) )
                 {
                     if ( isWorkType )
                     {
@@ -379,7 +379,7 @@ namespace Fluffy
 
             if ( active && !bottom )
             {
-                if ( Widgets.ImageButton( downRect, DownArrow ) )
+                if ( Widgets.ButtonImage( downRect, DownArrow ) )
                 {
                     if ( isWorkType )
                     {
@@ -390,7 +390,7 @@ namespace Fluffy
                         Down( workType, workGiver );
                     }
                 }
-                if ( Widgets.ImageButton( bottomRect, BottomArrow ) )
+                if ( Widgets.ButtonImage( bottomRect, BottomArrow ) )
                 {
                     if ( isWorkType )
                     {

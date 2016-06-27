@@ -19,7 +19,7 @@ namespace Fluffy
         public override void PreClose()
         {
             base.PreClose();
-            Location = currentWindowRect;
+            Location = windowRect;
         }
 
         // kinda hacky, but sticky can't be set without opening, which populates location.
@@ -28,13 +28,13 @@ namespace Fluffy
             base.PostOpen();
             if (Sticky)
             {
-                currentWindowRect = Location;
+                windowRect = Location;
             }
         }
 
         private float _actualHeight = 500f;
 
-        public override Vector2 InitialWindowSize
+        public override Vector2 InitialSize
         {
             get
             {
@@ -44,7 +44,7 @@ namespace Fluffy
 
         public Dialog_FilterAnimals()
         {
-            PawnKinds = Find.MapPawns.PawnsInFaction(Faction.OfColony).Where(x => x.RaceProps.Animal)
+            PawnKinds = Find.MapPawns.PawnsInFaction(Faction.OfPlayer).Where(x => x.RaceProps.Animal)
                 .Select(x => x.kindDef).Distinct().OrderBy(x => x.LabelCap).ToList();
             forcePause = true;
             closeOnEscapeKey = true;
@@ -56,7 +56,7 @@ namespace Fluffy
         {
             get
             {
-                return (InitialWindowSize.x / 2f) - 10f;
+                return (InitialSize.x / 2f) - 10f;
             }
         }
 
@@ -126,11 +126,11 @@ namespace Fluffy
 
             // sticky option
             Rect stickyRect = new Rect(5f, inRect.height - 35f, (inRect.width / 4) - 10, 35f);
-            Widgets.LabelCheckbox(stickyRect, "Fluffy.FilterSticky".Translate(), ref Sticky);
+            Widgets.CheckboxLabeled(stickyRect, "Fluffy.FilterSticky".Translate(), ref Sticky);
 
 
             // buttons
-            if (Widgets.TextButton(new Rect(inRect.width / 4f + 5f, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+            if (Widgets.ButtonText(new Rect(inRect.width / 4f + 5f, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Clear".Translate()))
             {
                 Widgets_Filter.ResetFilter();
@@ -141,7 +141,7 @@ namespace Fluffy
 
             if (!Widgets_Filter.Filter)
             {
-                if (Widgets.TextButton(new Rect(_x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+                if (Widgets.ButtonText(new Rect(_x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Enable".Translate()))
                 {
                     Widgets_Filter.EnableFilter();
@@ -151,7 +151,7 @@ namespace Fluffy
             }
             else
             {
-                if (Widgets.TextButton(new Rect(_x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+                if (Widgets.ButtonText(new Rect(_x, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "Fluffy.Disable".Translate()))
                 {
                     Widgets_Filter.DisableFilter();
@@ -161,7 +161,7 @@ namespace Fluffy
             }
 
 
-            if (Widgets.TextButton(new Rect(_x + inRect.width / 4, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
+            if (Widgets.ButtonText(new Rect(_x + inRect.width / 4, inRect.height - 35f, inRect.width / 4f - 10f, 35f),
                                             "OK".Translate()))
             {
                 Find.WindowStack.TryRemove(this);
@@ -183,7 +183,7 @@ namespace Fluffy
             {
                 GUI.DrawTexture(rectRow, TexUI.HighlightTex);
             }
-            if (Widgets.InvisibleButton(rectRow))
+            if (Widgets.ButtonInvisible(rectRow))
             {
                 if (inList)
                 {
@@ -222,7 +222,7 @@ namespace Fluffy
                     break;
             }
             Widgets.Label(rectLabel, label.ToString());
-            if (Widgets.InvisibleButton(rect))
+            if (Widgets.ButtonInvisible(rect))
             {
                 filter.bump();
                 SoundDefOf.AmountIncrement.PlayOneShotOnCamera();

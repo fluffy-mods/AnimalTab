@@ -36,13 +36,13 @@ namespace Fluffy
         public override void PostOpen()
         {
             base.PostOpen();
-            currentWindowRect.size = InitialWindowSize;
+            windowRect.size = InitialSize;
         }
 
         public override void DoWindowContents(Rect inRect)
         {
             base.DoWindowContents(inRect);
-            currentWindowRect.size = InitialWindowSize;
+            windowRect.size = InitialSize;
         }
 
         protected virtual void BuildPawnList()
@@ -94,7 +94,7 @@ namespace Fluffy
                 rect4.xMin -= 4f;
                 rect4.yMin += 4f;
                 rect4.yMax -= 6f;
-                Widgets.FillableBar(rect4, p.health.summaryHealth.SummaryHealthPercent, PawnUIOverlay.OverlayHealthTex, BaseContent.ClearTex, false);
+                Widgets.FillableBar(rect4, p.health.summaryHealth.SummaryHealthPercent, GenWorldUI.OverlayHealthTex, BaseContent.ClearTex, false);
             }
             if (Mouse.IsOver(rect3))
             {
@@ -121,7 +121,7 @@ namespace Fluffy
                 if (Event.current.button == 0)
                 {
                     Find.MainTabsRoot.EscapeCurrentTab();
-                    Find.CameraMap.JumpTo(p.PositionHeld);
+                    Find.CameraDriver.JumpTo(p.PositionHeld);
                     Find.Selector.ClearSelection();
                     if (p.Spawned)
                     {

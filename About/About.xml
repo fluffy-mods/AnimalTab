@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<name>Enhanced Tabs</name>
-	<author>Fluffy (l2032)</author>
+	<name>Animals Tab</name>
+	<author>Fluffy</author>
 	<url>https://ludeon.com/forums/index.php?topic=15964.0</url>
-	<targetVersion>Alpha 12d</targetVersion>
+	<targetVersion>0.14.1214</targetVersion>
 	<description>Features:
 	=== Animals Tab ===
 	- Gender and lifestage icons on the animals tab. Easily keep track of your chickenfarm!
@@ -11,12 +11,5 @@
 	- Sort by name, gender, lifestage/age, and bodysize (meat).
 	- Filter by race, and a variety of attributes.
 	- Rename (named) pets. Don't like the name Buttercup for your Warg? Change it!
-
-	=== Work Tab ===
-	- Sorting by average skill for a job.
-	- Copy/Paste functionality for priorities.
-	- Increase/decrease priority of a job for all colonists.
-	- Drag jobs on/off in the simplified view.
-	- Change priorities for worktypes (e.g. cooking, animal handling) and workgivers (e.g. shearing, milking, butchering)
 	</description>
 </ModMetaData>

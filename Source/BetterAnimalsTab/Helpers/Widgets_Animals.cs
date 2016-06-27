@@ -76,7 +76,7 @@ namespace Fluffy
             Text.Anchor = TextAnchor.LowerCenter;
             Rect rect2 = new Rect(rect.x, rect.y, num2, rect.height);
             Widgets.Label(rect2, "NoAreaAllowed".Translate());
-            if (Widgets.InvisibleButton(rect2))
+            if (Widgets.ButtonInvisible(rect2))
             {
                 for (int i = 0; i < pawns.Count; i++)
                 {
@@ -97,7 +97,7 @@ namespace Fluffy
                     float num4 = num3 * num2;
                     Rect rect3 = new Rect(rect.x + num4, rect.y, num2, rect.height);
                     Widgets.Label(rect3, area.Label);
-                    if (Widgets.InvisibleButton(rect3))
+                    if (Widgets.ButtonInvisible(rect3))
                     {
                         foreach (Pawn p in pawns)
                         {
@@ -144,7 +144,7 @@ namespace Fluffy
                        .Append( trainables[i].description );
                 TooltipHandler.TipRegion(bg, tooltip.ToString());
                 GUI.DrawTexture(icon, TrainingTextures[i]);
-                if(Widgets.InvisibleButton(bg))
+                if(Widgets.ButtonInvisible(bg))
                 {
                     if (!Event.current.shift)
                     {
@@ -192,7 +192,7 @@ namespace Fluffy
                     DrawTrainingButton(icon, pawn, trainableDefs[i], report);
                     if (report.Accepted && !pawn.training.IsCompleted(trainableDefs[i]))
                     {
-                        if (Widgets.InvisibleButton(bg))
+                        if (Widgets.ButtonInvisible(bg))
                         {
                             ToggleTraining(trainableDefs[i], pawn, report);
                         }

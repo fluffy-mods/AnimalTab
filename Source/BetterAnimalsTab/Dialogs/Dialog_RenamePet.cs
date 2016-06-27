@@ -9,7 +9,7 @@ namespace Fluffy
 
         private string _curName;
 
-        public override Vector2 InitialWindowSize
+        public override Vector2 InitialSize
         {
             get
             {
@@ -36,7 +36,7 @@ namespace Fluffy
             }
             Widgets.Label(new Rect(0f, 0f, inRect.width, inRect.height), "Fluffy.PetName".Translate());
             _curName = Widgets.TextField(new Rect(0f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), _curName);
-            if (Widgets.TextButton(new Rect(inRect.width / 2f + 20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), "OK".Translate()) || flag)
+            if (Widgets.ButtonText(new Rect(inRect.width / 2f + 20f, inRect.height - 35f, inRect.width / 2f - 20f, 35f), "OK".Translate()) || flag)
             {
                 if (IsValidName(_curName))
                 {
