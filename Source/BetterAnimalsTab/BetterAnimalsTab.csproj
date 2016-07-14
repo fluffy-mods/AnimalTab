@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Dialogs\Dialog_Priority.cs" />
     <Compile Include="Filters\Filters.cs" />
+    <Compile Include="Helpers\Resources.cs" />
     <Compile Include="Helpers\Widgets_Filter.cs" />
     <Compile Include="Dialogs\Dialog_FilterAnimals.cs" />
     <Compile Include="Helpers\Widgets_Animals.cs" />

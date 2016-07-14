@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// // Karel Kroeze
+// // Saveable_WorkGiverDef.cs
+// // 2016-06-27
+
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace Fluffy
 {
-    class Saveable_WorkGiverDef : IExposable
+    internal class Saveable_WorkGiverDef : IExposable
     {
         public string defName;
         public int priority;
@@ -17,7 +18,7 @@ namespace Fluffy
             // empty constructor for scribe.
         }
 
-        public Saveable_WorkGiverDef(WorkGiverDef def)
+        public Saveable_WorkGiverDef( WorkGiverDef def )
         {
             defName = def.defName;
             priority = def.priorityInType;
@@ -25,8 +26,8 @@ namespace Fluffy
 
         public void ExposeData()
         {
-            Scribe_Values.LookValue(ref defName, "defName");
-            Scribe_Values.LookValue(ref priority, "priority");
+            Scribe_Values.LookValue( ref defName, "defName" );
+            Scribe_Values.LookValue( ref priority, "priority" );
         }
     }
 }
