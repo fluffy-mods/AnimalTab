@@ -2,6 +2,7 @@
 // // Widgets_Animals.cs
 // // 2016-06-27
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,6 +17,14 @@ namespace Fluffy
 {
     public static class Widgets_Animals
     {
+        public static bool Pregnant( this Pawn pawn )
+        {
+            return pawn.health.hediffSet.GetFirstHediffOfDef( HediffDefOf.Pregnant )?.Visible ?? false;
+        }
+
+        public static IEnumerable<Pawn> AnimalsOfColony => Find.MapPawns.SpawnedPawnsInFaction( Faction.OfPlayer ).Where( p => p.RaceProps.Animal );
+        public static IEnumerable<Pawn> ObedientAnimalsOfColony => AnimalsOfColony.Where( p => p.training.IsCompleted( TrainableDefOf.Obedience ) );
+
         public static List<TrainableDef> Trainables
         {
             get { return TrainableUtility.TrainableDefsInListOrder; }
@@ -51,118 +60,7 @@ namespace Fluffy
                 }
             }
         }
-
-        public static void DoAllowedAreaHeaders( Rect rect, List<Pawn> pawns, AllowedAreaMode mode )
-        {
-            List<Area> allAreas = Find.AreaManager.AllAreas;
-            var num = 1;
-            foreach ( Area t in allAreas )
-            {
-                if ( t.AssignableAsAllowed( mode ) )
-                {
-                    num++;
-                }
-            }
-            float num2 = rect.width / num;
-            Text.WordWrap = false;
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.LowerCenter;
-            var rect2 = new Rect( rect.x, rect.y, num2, rect.height );
-            Widgets.Label( rect2, "NoAreaAllowed".Translate() );
-            if ( Widgets.ButtonInvisible( rect2 ) )
-            {
-                foreach ( Pawn t in pawns )
-                {
-                    SoundDefOf.DesignateDragStandardChanged.PlayOneShotOnCamera();
-                    t.playerSettings.AreaRestriction = null;
-                }
-            }
-            if ( Mouse.IsOver( rect2 ) )
-            {
-                GUI.DrawTexture( rect2, TexUI.HighlightTex );
-            }
-            TooltipHandler.TipRegion( rect2, "NoAreaAllowed".Translate() );
-            var num3 = 1;
-            foreach ( Area area in allAreas )
-            {
-                if ( area.AssignableAsAllowed( mode ) )
-                {
-                    float num4 = num3 * num2;
-                    var rect3 = new Rect( rect.x + num4, rect.y, num2, rect.height );
-                    Widgets.Label( rect3, area.Label );
-                    if ( Widgets.ButtonInvisible( rect3 ) )
-                    {
-                        foreach ( Pawn p in pawns )
-                        {
-                            SoundDefOf.DesignateDragStandardChanged.PlayOneShotOnCamera();
-                            p.playerSettings.AreaRestriction = area;
-                        }
-                    }
-                    TooltipHandler.TipRegion( rect3, "Fluffy.RestrictAllTo".Translate( area.Label ) );
-                    if ( Mouse.IsOver( rect3 ) )
-                    {
-                        GUI.DrawTexture( rect3, TexUI.HighlightTex );
-                    }
-                    num3++;
-                }
-            }
-            Text.WordWrap = true;
-        }
-
-        public static void DoTrainingHeaders( Rect rect, List<Pawn> pawns )
-        {
-            List<TrainableDef> trainables = TrainableUtility.TrainableDefsInListOrder;
-            float width = rect.width / trainables.Count;
-            var iconSize = 16f;
-            float widthOffset = ( width - iconSize ) / 2;
-            float heightOffset = ( rect.height - iconSize ) / 2;
-            float x = rect.xMin;
-            float y = rect.yMin;
-
-            for ( var i = 0; i < trainables.Count; i++ )
-            {
-                var bg = new Rect( x, y, width, rect.height );
-                var icon = new Rect( x + widthOffset, y + heightOffset, iconSize, iconSize );
-                x += width;
-                if ( Mouse.IsOver( bg ) )
-                {
-                    GUI.DrawTexture( bg, TexUI.HighlightTex );
-#if DEBUG
-                    Log.Message( trainables[i].label );
-#endif
-                }
-                var tooltip = new StringBuilder();
-                tooltip.AppendLine( "Fluffy.SortByTrainables".Translate( trainables[i].LabelCap ) );
-                tooltip.AppendLine( "Fluffy.ShiftToTrainAll".Translate() ).AppendLine()
-                       .Append( trainables[i].description );
-                TooltipHandler.TipRegion( bg, tooltip.ToString() );
-                GUI.DrawTexture( icon, TrainingTextures[i] );
-                if ( Widgets.ButtonInvisible( bg ) )
-                {
-                    if ( !Event.current.shift )
-                    {
-                        if ( MainTabWindow_Animals.Order == MainTabWindow_Animals.Orders.Training &&
-                             MainTabWindow_Animals.TrainingOrder == trainables[i] )
-                        {
-                            MainTabWindow_Animals.Asc = !MainTabWindow_Animals.Asc;
-                        }
-                        else
-                        {
-                            MainTabWindow_Animals.Order = MainTabWindow_Animals.Orders.Training;
-                            MainTabWindow_Animals.Asc = false;
-                            MainTabWindow_Animals.TrainingOrder = trainables[i];
-                        }
-                    }
-                    else if ( Event.current.shift )
-                    {
-                        ToggleAllTraining( trainables[i], pawns );
-                    }
-                    SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                    MainTabWindow_Animals.IsDirty = true;
-                }
-            }
-        }
-
+        
         public static void DoTrainingRow( Rect rect, Pawn pawn )
         {
             List<TrainableDef> trainableDefs = TrainableUtility.TrainableDefsInListOrder;
@@ -334,6 +232,44 @@ namespace Fluffy
                 {
                     SetWantedRecursive( current, pawn, false );
                 }
+            }
+        }
+
+        public static FloatMenuOption MassAssignMaster_FloatMenuOption( Pawn colonist )
+        {
+            var animals = ObedientAnimalsOfColony;
+            if ( colonist == null )
+            {
+                return new FloatMenuOption( "Fluffy.MassAssignMasterNone".Translate(),
+                                            delegate { MassAssignMaster( null, animals ); } );
+            }
+            
+            // get number of animals this pawn could be the master of.
+            var skill = colonist.skills.GetSkill( SkillDefOf.Animals ).level;
+            var eligibleAnimals = animals.Where( p => Mathf.RoundToInt( p.GetStatValue( StatDefOf.MinimumHandlingSkill ) ) < skill );
+            Action action = delegate { MassAssignMaster( colonist, eligibleAnimals ); };
+
+            return new FloatMenuOption( "Fluffy.MassAssignMaster".Translate( colonist.NameStringShort, skill, eligibleAnimals.Count(), animals.Count() ),
+                eligibleAnimals.Any() ? action : null );
+            
+        }
+
+        private static void MassAssignMaster( Pawn pawn, IEnumerable<Pawn> animals )
+        {
+            foreach ( Pawn animal in animals )
+                animal.playerSettings.master = pawn;
+        }
+
+        public static void MassAssignMasterBonded()
+        {
+            // assign bonded animals to their bond-master, if not bonded, or bonded has low skill, do not touch.
+            foreach ( Pawn animal in ObedientAnimalsOfColony )
+            {
+                // get bond
+                var bond = animal.relations.GetFirstDirectRelationPawn( PawnRelationDefOf.Bond, p => p.Faction == Faction.OfPlayer );
+                if ( bond == null || bond.skills.GetSkill( SkillDefOf.Animals).level < animal.GetStatValue( StatDefOf.MinimumHandlingSkill ))
+                    continue;
+                animal.playerSettings.master = bond;
             }
         }
     }

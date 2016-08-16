@@ -41,5 +41,6 @@ namespace BetterAnimalsTab
         public static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get( "UI/Buttons/slaughter" );
         public static readonly Texture2D FilterTex = ContentFinder<Texture2D>.Get( "UI/Buttons/filter_large" );
         public static readonly Texture2D FilterOffTex = ContentFinder<Texture2D>.Get( "UI/Buttons/filter_off_large" );
+        public static readonly Texture2D PregnantTex = ContentFinder<Texture2D>.Get( "UI/FilterStates/pregnant_large" );
     }
 }

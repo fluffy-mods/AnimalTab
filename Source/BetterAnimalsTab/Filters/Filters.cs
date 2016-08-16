@@ -79,8 +79,7 @@ namespace Fluffy
         public override Texture2D[] Textures => new[]
                                                 {
                                                     ContentFinder<Texture2D>.Get( "UI/FilterStates/reproductive_large" ),
-                                                    ContentFinder<Texture2D>.Get(
-                                                                                 "UI/FilterStates/not_reproductive_large" ),
+                                                    ContentFinder<Texture2D>.Get( "UI/FilterStates/not_reproductive_large" ),
                                                     ContentFinder<Texture2D>.Get( "UI/FilterStates/all_large" )
                                                 };
 
@@ -193,8 +192,7 @@ namespace Fluffy
 
         public override bool IsAllowed( Pawn p )
         {
-            Hediff diff = p.health.hediffSet.GetFirstHediffOfDef( HediffDefOf.Pregnant );
-            bool pregnant = diff != null && diff.Visible;
+            bool pregnant = p.Pregnant();
             if ( State == FilterType.None )
                 return true;
             if ( State == FilterType.True && pregnant )
