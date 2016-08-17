@@ -10,6 +10,7 @@ using UnityEngine;
 using Verse;
 using Verse.Sound;
 using static BetterAnimalsTab.Resources;
+using BetterAnimalsTab;
 
 namespace Fluffy
 {
@@ -40,9 +41,9 @@ namespace Fluffy
         {
             base.PostOpen();
             if ( Dialog_FilterAnimals.Sticky )
-            {
                 Find.WindowStack.Add( new Dialog_FilterAnimals() );
-            }
+
+            Log.Message( "PetFollow available?: " + Widgets_PetFollow.PetFollowAvailable );
         }
 
         protected override void BuildPawnList()
@@ -144,6 +145,12 @@ namespace Fluffy
             var masterRect = new Rect( curX, nameRect.height - 30f, 90f, 30 );
             DrawColumnHeader_Master( ref curX, masterRect );
 
+            if ( Widgets_PetFollow.PetFollowAvailable )
+            {
+                var followRect = new Rect( curX, nameRect.height - 30f, 50f, 30f );
+                DrawColumnHeader_Follow( ref curX, followRect );
+            }
+
             var genderRect = new Rect( curX, nameRect.height - 30f, 50f, 30f );
             DrawColumnHeader_Gender( ref curX, genderRect );
 
@@ -173,6 +180,29 @@ namespace Fluffy
 
             var outRect = new Rect( 0f, position.height, fillRect.width, fillRect.height - position.height );
             DrawRows( outRect );
+        }
+
+        private void DrawColumnHeader_Follow( ref float curX, Rect rect )
+        {
+            Rect draftedRect = new Rect( rect.xMin, rect.yMin, rect.width / 2f, rect.height );
+            Rect draftedIconRect = new Rect( 0f, 0f, iconSize, iconSize ).CenteredOnXIn( draftedRect ).CenteredOnYIn( draftedRect );
+            Rect hunterRect = draftedRect, hunterIconRect = draftedIconRect;
+            hunterRect.x += rect.width / 2f;
+            hunterIconRect.x += rect.width / 2f;
+
+            GUI.DrawTexture( draftedIconRect, Widgets_PetFollow.FollowDraftIcon );
+            Widgets.DrawHighlightIfMouseover( draftedRect );
+            TooltipHandler.TipRegion( draftedRect, "Fluffy.PetFollow.DraftedColumnTip".Translate() );
+            if ( Widgets.ButtonInvisible( draftedRect ) && Event.current.shift )
+                Widgets_PetFollow.ToggleAllFollowsDrafted( Pawns );
+
+            GUI.DrawTexture( hunterIconRect, Widgets_PetFollow.FollowHuntIcon );
+            Widgets.DrawHighlightIfMouseover( hunterRect );
+            TooltipHandler.TipRegion( hunterRect, "Fluffy.PetFollow.HunterColumnTip".Translate() );
+            if ( Widgets.ButtonInvisible( hunterRect ) && Event.current.shift )
+                Widgets_PetFollow.ToggleAllFollowsHunter( Pawns );
+
+            curX += 50f;
         }
 
         private void DrawColumnHeader_Pregnant( ref float curX, Rect pregnantRect )
@@ -579,6 +609,65 @@ namespace Fluffy
                 }
             }
             curX += 90f;
+
+            if ( Widgets_PetFollow.PetFollowAvailable )
+            {
+                Rect draftedRect = new Rect( curX, 0f, 25f, 30f );
+                Rect hunterRect = new Rect( curX + 25f, 0f, 25f, 30f );
+                curX += 50f;
+
+                if ( p.CanFollow() )
+                {
+                    Rect draftedIconRect =
+                        new Rect( 0f, 0f, iconSize, iconSize ).CenteredOnYIn( draftedRect ).CenteredOnXIn( draftedRect );
+                    Rect hunterIconRect =
+                        new Rect( 0f, 0f, iconSize, iconSize ).CenteredOnYIn( hunterRect ).CenteredOnXIn( hunterRect );
+
+                    // handle drafted follow
+                    bool followDrafted = p.FollowsDrafted();
+                    string draftedTip = followDrafted
+                                            ? "Fluffy.PetFollow.FollowingDrafted".Translate()
+                                            : "Fluffy.PetFollow.NotFollowingDrafted".Translate();
+                    TooltipHandler.TipRegion( draftedRect, draftedTip );
+
+                    if ( followDrafted )
+                        GUI.DrawTexture( draftedIconRect, WorkBoxCheckTex );
+
+                    if ( Mouse.IsOver( draftedRect ) )
+                        Widgets.DrawHighlight( draftedIconRect );
+
+                    if ( Widgets.ButtonInvisible( draftedRect ) )
+                    {
+                        p.FollowsDrafted( !followDrafted );
+                        if ( followDrafted )
+                            SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                        else
+                            SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                    }
+
+                    // handle hunter follow
+                    bool followHunter = p.FollowsHunter();
+                    string hunterTip = followHunter
+                                           ? "Fluffy.PetFollow.FollowingHunter".Translate()
+                                           : "Fluffy.PetFollow.NotFollowingHunter".Translate();
+                    TooltipHandler.TipRegion( hunterRect, hunterTip );
+
+                    if ( followHunter )
+                        GUI.DrawTexture( hunterIconRect, WorkBoxCheckTex );
+
+                    if ( Mouse.IsOver( hunterRect ) )
+                        Widgets.DrawHighlight( hunterIconRect );
+
+                    if ( Widgets.ButtonInvisible( hunterRect ) )
+                    {
+                        p.FollowsHunter( !followHunter );
+                        if ( followHunter )
+                            SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                        else
+                            SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                    }
+                }
+            }
 
             var recta = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
             Texture2D labelSex = GenderTextures[(int) p.gender];

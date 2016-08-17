@@ -7,6 +7,14 @@
 	<Fluffy.WorkPrioritiesDisclaimerTitle>Priority details</Fluffy.WorkPrioritiesDisclaimerTitle>
 	<Fluffy.ResetPriorities>Reset priorities to default</Fluffy.ResetPriorities>
 
+	<!-- PetFollow integration -->
+	<Fluffy.PetFollow.DraftedColumnTip>Shift-Click to assign all animals to follow their master when drafted.</Fluffy.PetFollow.DraftedColumnTip>
+	<Fluffy.PetFollow.HunterColumnTip>Shift-Click to assign all animals to follow their master when hunting.</Fluffy.PetFollow.HunterColumnTip>
+	<Fluffy.PetFollow.NotFollowingDrafted>Not following master when drafted.</Fluffy.PetFollow.NotFollowingDrafted>
+	<Fluffy.PetFollow.NotFollowingHunter>Not following master when hunting.</Fluffy.PetFollow.NotFollowingHunter>
+	<Fluffy.PetFollow.FollowingDrafted>Follows master when drafted.</Fluffy.PetFollow.FollowingDrafted>
+	<Fluffy.PetFollow.FollowingHunter>Follows master when hunting.</Fluffy.PetFollow.FollowingHunter>
+
 	<!-- Dialog_FilterAnimals -->
 	<Fluffy.FilterByRace>Filter by race</Fluffy.FilterByRace>
 	<Fluffy.FilterByAttributes>Filter by attributes</Fluffy.FilterByAttributes>
@@ -49,7 +57,6 @@
 	<Fluffy.Disable>Disable</Fluffy.Disable>
 
 	<!-- Dialog_RenamePet -->
-
 	<Fluffy.PetName>Pet name</Fluffy.PetName>
 	<Fluffy.PetRenamed>Pet renamed!</Fluffy.PetRenamed>
 	<Fluffy.PetInvalidName>Invalid name.</Fluffy.PetInvalidName>

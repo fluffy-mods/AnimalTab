@@ -55,6 +55,7 @@
     <Compile Include="Helpers\Widgets_Filter.cs" />
     <Compile Include="Dialogs\Dialog_FilterAnimals.cs" />
     <Compile Include="Helpers\Widgets_Animals.cs" />
+    <Compile Include="Helpers\Widgets_PetFollow.cs" />
     <Compile Include="Helpers\Widgets_Work.cs" />
     <Compile Include="MainTabs\MainTabWindow_PawnList.cs" />
     <Compile Include="Dialogs\Dialog_RenamePet.cs" />
