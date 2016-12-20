@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+	<!-- Work priority details -->
+	<Fluffy.WorkPrioritiesDetails>Detalhes de prioridade</Fluffy.WorkPrioritiesDetails>
+	<Fluffy.WorkPrioritiesDisclaimer>A janela de detalhes de prioridades de trabalho te permite alterar as prioridades de tipos de trabalho (cozinhar, construir, etc.), e as atividades contidas por elas (carregar materiais, construir, etc.).\n\nAVISO:\n - As prioridades de alguns trabalhos de "emergência" são ignoradas, e estes trabalhos são sempre realizados antes (ex. combater incêndio).\n - É inteiramente possível levar sua colônia a uma parada laboriosa ao ajustar cuidadosamente as prioridades. Use o botão no topo da tela para voltar para as prioridades padrões.</Fluffy.WorkPrioritiesDisclaimer>
+	<Fluffy.WorkPrioritiesDisclaimerTitle>Detalhes de prioridade</Fluffy.WorkPrioritiesDisclaimerTitle>
+	<Fluffy.ResetPriorities>Restaurar prioridades ao padrão</Fluffy.ResetPriorities>
+
+	<!-- PetFollow integration -->
+	<Fluffy.PetFollow.DraftedColumnTip>Shift-Clique para designar todos os animais para seguir seus mestres quando alistados.</Fluffy.PetFollow.DraftedColumnTip>
+	<Fluffy.PetFollow.HunterColumnTip>Shift-Clique para designar todos os animais para seguir seus mestres quando caçando.</Fluffy.PetFollow.HunterColumnTip>
+	<Fluffy.PetFollow.NotFollowingDrafted>Não segue o mestre quando alistado.</Fluffy.PetFollow.NotFollowingDrafted>
+	<Fluffy.PetFollow.NotFollowingHunter>Não segue o mestre quando caçando.</Fluffy.PetFollow.NotFollowingHunter>
+	<Fluffy.PetFollow.FollowingDrafted>Segue o mestre quando alistado.</Fluffy.PetFollow.FollowingDrafted>
+	<Fluffy.PetFollow.FollowingHunter>Segue o mestre quando caçando.</Fluffy.PetFollow.FollowingHunter>
+
+	<!-- Dialog_FilterAnimals -->
+	<Fluffy.FilterByRace>Filtrar por raça</Fluffy.FilterByRace>
+	<Fluffy.FilterByAttributes>Filtrar por atributos</Fluffy.FilterByAttributes>
+
+	<Fluffy.Yes>sim</Fluffy.Yes>
+	<Fluffy.No>não</Fluffy.No>
+	<Fluffy.Both>ambos</Fluffy.Both>
+
+	<Fluffy.genderLabel>Gênero</Fluffy.genderLabel>
+	<Fluffy.genderYes>fêmea</Fluffy.genderYes>
+	<Fluffy.genderNo>macho</Fluffy.genderNo>
+
+	<Fluffy.trainingLabel>Treinamento de obediência</Fluffy.trainingLabel>
+	<Fluffy.trainingYes>sim</Fluffy.trainingYes>
+	<Fluffy.trainingNo>não</Fluffy.trainingNo>
+
+	<Fluffy.reproductiveLabel>Reprodutivo</Fluffy.reproductiveLabel>
+	<Fluffy.reproductiveYes>sim</Fluffy.reproductiveYes>
+	<Fluffy.reproductiveNo>não</Fluffy.reproductiveNo>
+
+	<Fluffy.pregnantLabel>Prenhe</Fluffy.pregnantLabel>
+	<Fluffy.pregnantYes>sim</Fluffy.pregnantYes>
+	<Fluffy.pregnantNo>não</Fluffy.pregnantNo>
+
+	<Fluffy.oldLabel>Velho</Fluffy.oldLabel>
+	<Fluffy.oldYes>Perto da morte</Fluffy.oldYes>
+	<Fluffy.oldNo>Não está perto da morte</Fluffy.oldNo>
+
+	<Fluffy.milkableLabel>Leiteiro</Fluffy.milkableLabel>
+	<Fluffy.milkableYes>sim</Fluffy.milkableYes>
+	<Fluffy.milkableNo>não</Fluffy.milkableNo>
+
+	<Fluffy.shearableLabel>Tosquiável</Fluffy.shearableLabel>
+	<Fluffy.shearableYes>sim</Fluffy.shearableYes>
+	<Fluffy.shearableNo>não</Fluffy.shearableNo>
+
+	<Fluffy.FilterSticky>Pegajoso</Fluffy.FilterSticky>
+	<Fluffy.Clear>Limpar</Fluffy.Clear>
+	<Fluffy.Enable>Ativar</Fluffy.Enable>
+	<Fluffy.Disable>Desativar</Fluffy.Disable>
+
+	<!-- Dialog_RenamePet -->
+	<Fluffy.PetName>Nome do animal de estimação</Fluffy.PetName>
+	<Fluffy.PetRenamed>Animal de estimação renomeado!</Fluffy.PetRenamed>
+	<Fluffy.PetInvalidName>Nome inválido.</Fluffy.PetInvalidName>
+
+	<!-- MainTabWindow_Animals -->
+	<Fluffy.RestrictAllTo>Restringir todos à {0}</Fluffy.RestrictAllTo>
+	<Fluffy.SortByTrainables>Clique para ordenar por {0}</Fluffy.SortByTrainables>
+	<Fluffy.ShiftToTrainAll>Shift clique para treinar todos</Fluffy.ShiftToTrainAll>
+	<Fluffy.TrainingCompleted>Treinamento completo.</Fluffy.TrainingCompleted>
+	<Fluffy.NotTraining>Não está treinando.</Fluffy.NotTraining>
+	<Fluffy.CurrentlyTraining>Atualmente treinando.</Fluffy.CurrentlyTraining>
+	<Fluffy.StepsCompleted>{0} de {1} completos.</Fluffy.StepsCompleted>
+	<Fluffy.Pregnant>{0} está prenhe.</Fluffy.Pregnant>
+	<Fluffy.Filter>Filtro</Fluffy.Filter>
+	<Fluffy.FilterTooltip>Clique esquerdo para selecionar o filtro.\nClique direito para selecionar um filtro rápido.</Fluffy.FilterTooltip>
+	<Fluffy.DisableFilter>Disativar filtro</Fluffy.DisableFilter>
+	<Fluffy.EnableFilter>Ativar filtro</Fluffy.EnableFilter>
+	<Fluffy.Name>Nome</Fluffy.Name>
+	<Fluffy.SortByName>Clique para ordenar por nome.</Fluffy.SortByName>
+	<Fluffy.SortByPetness>Clique para ordenar pelo mestre e estimação.\nClique direito para designar mestre em massa.</Fluffy.SortByPetness>
+	<Fluffy.SortByGender>Clique para ordenar por gênero.</Fluffy.SortByGender>
+	<Fluffy.SortByAge>Clique para ordenar por estágio de vida e idade.</Fluffy.SortByAge>
+	<Fluffy.SortByPregnancy>Clique para ordenar por prenhez.</Fluffy.SortByPregnancy>
+	<Fluffy.SortByBodysizeSlaughter>Clique para ordenar por designação de abate e tamanho corporal.\nShift-clique para alternar abate para todos.</Fluffy.SortByBodysizeSlaughter>
+	<Fluffy.StopSlaughter>salvar do bloco do açougueiro</Fluffy.StopSlaughter>
+	<Fluffy.MarkSlaughter>marcar para abate</Fluffy.MarkSlaughter>
+	<Fluffy.ClickToJump>Clique esquerdo para saltar para.</Fluffy.ClickToJump>
+	<Fluffy.RightClickToRename>Clique direito para renomear.</Fluffy.RightClickToRename>
+	<Fluffy.MassAssignMasterNone>Destituir todos</Fluffy.MassAssignMasterNone>
+	<Fluffy.MassAssignMasterBonded>Designar para criar laço com colonos</Fluffy.MassAssignMasterBonded>
+	<Fluffy.MassAssignMaster>Designar todos para {0} ( Habilidade {1}, {2}/{3} pode ser designada )</Fluffy.MassAssignMaster>
+	<Fluffy.NoObedientAnimals>Nenhum animal obediente para designar</Fluffy.NoObedientAnimals>
+</LanguageData>
