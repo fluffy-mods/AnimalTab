@@ -50,13 +50,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Filters\Filters.cs" />
+    <Compile Include="Filters\Filter.cs" />
+    <Compile Include="Filters\FilterType.cs" />
+    <Compile Include="Filters\Filter_Gender.cs" />
+    <Compile Include="Filters\Filter_Milkable.cs" />
+    <Compile Include="Filters\Filter_Old.cs" />
+    <Compile Include="Filters\Filter_Pregnant.cs" />
+    <Compile Include="Filters\Filter_Reproductive.cs" />
+    <Compile Include="Filters\Filter_Shearable.cs" />
+    <Compile Include="Filters\Filter_Training.cs" />
     <Compile Include="Helpers\Resources.cs" />
     <Compile Include="Helpers\Widgets_Filter.cs" />
     <Compile Include="Dialogs\Dialog_FilterAnimals.cs" />
     <Compile Include="Helpers\Widgets_Animals.cs" />
-    <Compile Include="Helpers\Widgets_PetFollow.cs" />
-    <Compile Include="Helpers\Widgets_Work.cs" />
+    <Compile Include="Helpers\Widgets_Follow.cs" />
     <Compile Include="MainTabs\MainTabWindow_PawnList.cs" />
     <Compile Include="Dialogs\Dialog_RenamePet.cs" />
     <Compile Include="MainTabs\MainTabWindow_Animals.cs" />

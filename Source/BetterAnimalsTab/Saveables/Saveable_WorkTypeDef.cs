@@ -4,22 +4,26 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Fluffy
 {
     internal class Saveable_WorkTypeDef : IExposable
     {
+        #region Fields
+
         public string defName;
         public int priority;
         public List<Saveable_WorkGiverDef> workGivers;
 
+        #endregion Fields
+
+        #region Constructors
+
         // empty constructor for scribe
         public Saveable_WorkTypeDef()
         {
-            // tralalalalala, in the morning!   
+            // tralalalalala, in the morning!
         }
 
         public Saveable_WorkTypeDef( WorkTypeDef def )
@@ -29,11 +33,17 @@ namespace Fluffy
             workGivers = def.workGiversByPriority.Select( wg => new Saveable_WorkGiverDef( wg ) ).ToList();
         }
 
+        #endregion Constructors
+
+        #region Methods
+
         public void ExposeData()
         {
             Scribe_Values.LookValue( ref defName, "defName" );
             Scribe_Values.LookValue( ref priority, "priority" );
             Scribe_Collections.LookList( ref workGivers, "workGivers", LookMode.Deep );
         }
+
+        #endregion Methods
     }
 }

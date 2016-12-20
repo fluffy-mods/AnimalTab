@@ -2,9 +2,8 @@
 // // MainTabWindow_PawnList.cs
 // // 2016-06-27
 
-using System.Collections.Generic;
 using RimWorld;
-using RimWorld.Planet;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -12,9 +11,11 @@ namespace Fluffy
 {
     public abstract class MainTabWindow_PawnList : MainTabWindow
     {
+        #region Fields
+
         public const float PawnRowHeight = 30f;
 
-        protected const float NameColumnWidth = 175f;
+        protected const float NameColumnWidth = 175f; 
 
         protected const float NameLeftMargin = 15f;
 
@@ -22,13 +23,24 @@ namespace Fluffy
 
         private Vector2 _scrollPosition = Vector2.zero;
 
+        #endregion Fields
+
+        #region Properties
+
         protected int PawnsCount => Pawns.Count;
 
-        protected abstract void DrawPawnRow( Rect r, Pawn p );
+        #endregion Properties
 
-        public override void PreOpen()
+        #region Methods
+
+        public override void DoWindowContents( Rect inRect )
         {
-            base.PreOpen();
+            base.DoWindowContents( inRect );
+            windowRect.size = InitialSize;
+        }
+
+        public void Notify_PawnsChanged()
+        {
             BuildPawnList();
         }
 
@@ -38,10 +50,10 @@ namespace Fluffy
             windowRect.size = InitialSize;
         }
 
-        public override void DoWindowContents( Rect inRect )
+        public override void PreOpen()
         {
-            base.DoWindowContents( inRect );
-            windowRect.size = InitialSize;
+            base.PreOpen();
+            BuildPawnList();
         }
 
         protected virtual void BuildPawnList()
@@ -50,7 +62,7 @@ namespace Fluffy
             Pawns.AddRange( Find.VisibleMap.mapPawns.FreeColonists );
         }
 
-        public void Notify_PawnsChanged() { BuildPawnList(); }
+        protected abstract void DrawPawnRow( Rect r, Pawn p );
 
         protected void DrawRows( Rect outRect )
         {
@@ -75,6 +87,16 @@ namespace Fluffy
             Text.Anchor = TextAnchor.UpperLeft;
         }
 
+        private void PostDrawPawnRow( Rect rect, Pawn p )
+        {
+            if ( p.Downed )
+            {
+                GUI.color = new Color( 1f, 0f, 0f, 0.5f );
+                Widgets.DrawLineHorizontal( rect.x, rect.center.y, rect.width );
+                GUI.color = Color.white;
+            }
+        }
+
         private void PreDrawPawnRow( Rect rect, Pawn p )
         {
             var rect2 = new Rect( 0f, rect.y, rect.width, 30f );
@@ -90,7 +112,7 @@ namespace Fluffy
                 rect4.xMin -= 4f;
                 rect4.yMin += 4f;
                 rect4.yMax -= 6f;
-                Widgets.FillableBar( rect4, 
+                Widgets.FillableBar( rect4,
                                      p.health.summaryHealth.SummaryHealthPercent,
                                      GenMapUI.OverlayHealthTex,
                                      BaseContent.ClearTex, false );
@@ -145,14 +167,6 @@ namespace Fluffy
             TooltipHandler.TipRegion( rect3, tooltip );
         }
 
-        private void PostDrawPawnRow( Rect rect, Pawn p )
-        {
-            if ( p.Downed )
-            {
-                GUI.color = new Color( 1f, 0f, 0f, 0.5f );
-                Widgets.DrawLineHorizontal( rect.x, rect.center.y, rect.width );
-                GUI.color = Color.white;
-            }
-        }
+        #endregion Methods
     }
 }

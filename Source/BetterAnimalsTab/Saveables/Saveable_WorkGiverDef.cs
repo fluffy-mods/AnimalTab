@@ -3,15 +3,20 @@
 // // 2016-06-27
 
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Fluffy
 {
     internal class Saveable_WorkGiverDef : IExposable
     {
+        #region Fields
+
         public string defName;
         public int priority;
+
+        #endregion Fields
+
+        #region Constructors
 
         public Saveable_WorkGiverDef()
         {
@@ -24,10 +29,16 @@ namespace Fluffy
             priority = def.priorityInType;
         }
 
+        #endregion Constructors
+
+        #region Methods
+
         public void ExposeData()
         {
             Scribe_Values.LookValue( ref defName, "defName" );
             Scribe_Values.LookValue( ref priority, "priority" );
         }
+
+        #endregion Methods
     }
 }

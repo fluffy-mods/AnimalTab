@@ -2,7 +2,6 @@
 // // Dialog_RenamePet.cs
 // // 2016-06-27
 
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -10,8 +9,14 @@ namespace Fluffy
 {
     public class Dialog_RenamePet : Window
     {
+        #region Fields
+
         private readonly Pawn _pet;
         private string _curName;
+
+        #endregion Fields
+
+        #region Constructors
 
         public Dialog_RenamePet( Pawn pet )
         {
@@ -21,7 +26,15 @@ namespace Fluffy
             absorbInputAroundWindow = true;
         }
 
+        #endregion Constructors
+
+        #region Properties
+
         public override Vector2 InitialSize => new Vector2( 500f, 200f );
+
+        #endregion Properties
+
+        #region Methods
 
         public override void DoWindowContents( Rect inRect )
         {
@@ -53,6 +66,11 @@ namespace Fluffy
             }
         }
 
-        private bool IsValidName( string s ) { return s.Length != 0 && GenText.IsValidFilename( s ); }
+        private bool IsValidName( string s )
+        {
+            return s.Length != 0 && GenText.IsValidFilename( s );
+        }
+
+        #endregion Methods
     }
 }

@@ -2,19 +2,16 @@
 // // Widgets_Filter.cs
 // // 2016-06-27
 
+using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Fluffy
 {
     public static class Widgets_Filter
     {
-        public static List<PawnKindDef> FilterPawnKind =
-            Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer ).Where( x => x.RaceProps.Animal )
-                .Select( x => x.kindDef ).Distinct().ToList();
+        #region Fields
 
         public static readonly List<Filter> Filters = new List<Filter>
                                              {
@@ -29,7 +26,62 @@ namespace Fluffy
 
         public static bool Filter;
 
+        public static List<PawnKindDef> FilterPawnKind =
+            Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer ).Where( x => x.RaceProps.Animal )
+                .Select( x => x.kindDef ).Distinct().ToList();
+
         public static bool FilterPossible;
+
+        #endregion Fields
+
+        #region Methods
+
+        public static void DisableFilter()
+        {
+            Filter = false;
+        }
+
+        public static void EnableFilter()
+        {
+            Filter = true;
+        }
+
+        public static void FilterAllPawnKinds()
+        {
+            FilterPawnKind = new List<PawnKindDef>();
+        }
+
+        public static List<Pawn> FilterAnimals( List<Pawn> pawns )
+        {
+            pawns = pawns.Where( p => FilterPawnKind.Contains( p.kindDef ) &&
+                                      Filters.All( f => f.IsAllowed( p ) )
+                ).ToList();
+            return pawns;
+        }
+
+        public static void QuickFilterPawnKind( PawnKindDef def )
+        {
+            ResetFilter();
+            FilterAllPawnKinds();
+            FilterPawnKind.Add( def );
+            EnableFilter();
+        }
+
+        public static void ResetFilter()
+        {
+            ResetPawnKindFilter();
+            foreach ( Filter filter in Filters )
+            {
+                filter.State = FilterType.None;
+            }
+            FilterPossible = false;
+        }
+
+        public static void ResetPawnKindFilter()
+        {
+            FilterPawnKind = Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer ).Where( x => x.RaceProps.Animal )
+                                 .Select( x => x.kindDef ).Distinct().ToList();
+        }
 
         public static void TogglePawnKindFilter( PawnKindDef pawnKind, bool remove = true )
         {
@@ -49,42 +101,6 @@ namespace Fluffy
             FilterPossible = true;
         }
 
-        public static void EnableFilter() { Filter = true; }
-
-        public static void DisableFilter() { Filter = false; }
-
-        public static void ResetFilter()
-        {
-            ResetPawnKindFilter();
-            foreach ( Filter filter in Filters )
-            {
-                filter.State = FilterType.None;
-            }
-            FilterPossible = false;
-        }
-
-        public static void ResetPawnKindFilter()
-        {
-            FilterPawnKind = Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer ).Where( x => x.RaceProps.Animal )
-                                 .Select( x => x.kindDef ).Distinct().ToList();
-        }
-
-        public static void FilterAllPawnKinds() { FilterPawnKind = new List<PawnKindDef>(); }
-
-        public static void QuickFilterPawnKind( PawnKindDef def )
-        {
-            ResetFilter();
-            FilterAllPawnKinds();
-            FilterPawnKind.Add( def );
-            EnableFilter();
-        }
-
-        public static List<Pawn> FilterAnimals( List<Pawn> pawns )
-        {
-            pawns = pawns.Where( p => FilterPawnKind.Contains( p.kindDef ) &&
-                                      Filters.All( f => f.IsAllowed( p ) )
-                ).ToList();
-            return pawns;
-        }
+        #endregion Methods
     }
 }

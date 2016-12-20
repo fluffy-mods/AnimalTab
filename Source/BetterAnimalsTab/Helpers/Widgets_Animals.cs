@@ -2,12 +2,12 @@
 // // Widgets_Animals.cs
 // // 2016-06-27
 
+using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -60,7 +60,7 @@ namespace Fluffy
                 }
             }
         }
-        
+
         public static void DoTrainingRow( Rect rect, Pawn pawn )
         {
             List<TrainableDef> trainableDefs = TrainableUtility.TrainableDefsInListOrder;
@@ -101,10 +101,14 @@ namespace Fluffy
         {
             bool train = !pawn.training.GetWanted( td );
             if ( ar.Accepted )
-            {
                 SetWantedRecursive( td, pawn, train );
-            }
         }
+
+
+        // Get method named "GetSteps", which is internal(non-public) and not static(instance)
+        public static MethodInfo getSteps = typeof( Pawn_TrainingTracker ).GetMethod( "GetSteps",
+                                                                                    BindingFlags.NonPublic |
+                                                                                    BindingFlags.Instance );
 
         public static void DrawTrainingButton( Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport ar )
         {
@@ -118,10 +122,6 @@ namespace Fluffy
                 {
                     GUI.DrawTexture( rect, Widgets.CheckboxOnTex );
 
-                    // Get method named "GetSteps", which is internal(non-public) and not static(instance)
-                    MethodInfo getSteps = typeof( Pawn_TrainingTracker ).GetMethod( "GetSteps",
-                                                                                    BindingFlags.NonPublic |
-                                                                                    BindingFlags.Instance );
                     if ( getSteps == null )
                     {
 #if DEBUG
@@ -131,10 +131,10 @@ namespace Fluffy
                     }
 
                     // Call "GetSteps" from instance pawn.training, parameter is td.
-                    object curSteps = getSteps.Invoke( pawn.training, new object[] {td} );
+                    object curSteps = getSteps.Invoke( pawn.training, new object[] { td } );
                     int steps = td.steps;
                     // Return value of Invoke(...) is Object; thus casting into int type.
-                    float barHeight = rect.height / steps * (int) curSteps;
+                    float barHeight = rect.height / steps * (int)curSteps;
                     var bar = new Rect( rect.xMax - 5f, rect.yMax - barHeight, 3f, barHeight );
                     GUI.DrawTexture( bar, BarBg );
                 }
@@ -172,7 +172,7 @@ namespace Fluffy
                         return label.ToString();
                     }
 
-                    object curSteps = getSteps.Invoke( pawn.training, new object[] {td} );
+                    object curSteps = getSteps.Invoke( pawn.training, new object[] { td } );
                     int steps = td.steps;
                     label.Append( "Fluffy.StepsCompleted".Translate( curSteps, steps ) );
                 }
@@ -241,17 +241,18 @@ namespace Fluffy
             if ( colonist == null )
             {
                 return new FloatMenuOption( "Fluffy.MassAssignMasterNone".Translate(),
-                                            delegate { MassAssignMaster( null, animals ); } );
+                                            delegate
+                                            { MassAssignMaster( null, animals ); } );
             }
-            
+
             // get number of animals this pawn could be the master of.
             var skill = colonist.skills.GetSkill( SkillDefOf.Animals ).Level;
             var eligibleAnimals = animals.Where( p => Mathf.RoundToInt( p.GetStatValue( StatDefOf.MinimumHandlingSkill ) ) < skill );
-            Action action = delegate { MassAssignMaster( colonist, eligibleAnimals ); };
+            Action action = delegate
+            { MassAssignMaster( colonist, eligibleAnimals ); };
 
             return new FloatMenuOption( "Fluffy.MassAssignMaster".Translate( colonist.NameStringShort, skill, eligibleAnimals.Count(), animals.Count() ),
                 eligibleAnimals.Any() ? action : null );
-            
         }
 
         private static void MassAssignMaster( Pawn pawn, IEnumerable<Pawn> animals )
@@ -267,7 +268,7 @@ namespace Fluffy
             {
                 // get bond
                 var bond = animal.relations.GetFirstDirectRelationPawn( PawnRelationDefOf.Bond, p => p.Faction == Faction.OfPlayer );
-                if ( bond == null || bond.skills.GetSkill( SkillDefOf.Animals).Level < animal.GetStatValue( StatDefOf.MinimumHandlingSkill ))
+                if ( bond == null || bond.skills.GetSkill( SkillDefOf.Animals ).Level < animal.GetStatValue( StatDefOf.MinimumHandlingSkill ) )
                     continue;
                 animal.playerSettings.master = bond;
             }

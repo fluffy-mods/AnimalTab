@@ -2,21 +2,20 @@
 // // MainTabWindow_Animals.cs
 // // 2016-06-27
 
+using BetterAnimalsTab;
+using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
 using static BetterAnimalsTab.Resources;
-using BetterAnimalsTab;
 
 namespace Fluffy
 {
     public class MainTabWindow_Animals : MainTabWindow_PawnList
     {
-        
         public enum Orders
         {
             Default,
@@ -42,8 +41,6 @@ namespace Fluffy
             base.PostOpen();
             if ( Dialog_FilterAnimals.Sticky )
                 Find.WindowStack.Add( new Dialog_FilterAnimals() );
-
-            Log.Message( "PetFollow available?: " + Widgets_PetFollow.PetFollowAvailable );
         }
 
         protected override void BuildPawnList()
@@ -57,18 +54,21 @@ namespace Fluffy
                              orderby p.RaceProps.petness descending, p.RaceProps.baseBodySize, p.def.label
                              select p;
                     break;
+
                 case Orders.Name:
                     sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.Name.Numerical, p.Name.ToStringFull, p.def.label
                              select p;
                     break;
+
                 case Orders.Gender:
                     sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.KindLabel, p.gender
                              select p;
                     break;
+
                 case Orders.LifeStage:
                     sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
@@ -76,12 +76,14 @@ namespace Fluffy
                                  p.ageTracker.AgeBiologicalTicks descending
                              select p;
                     break;
+
                 case Orders.Pregnant:
                     sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.Pregnant() descending
                              select p;
                     break;
+
                 case Orders.Slaughter:
                     sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
@@ -90,6 +92,7 @@ namespace Fluffy
                                  descending, p.BodySize descending
                              select p;
                     break;
+
                 case Orders.Training:
                     bool dump;
                     sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
@@ -99,6 +102,7 @@ namespace Fluffy
                                  p.training.CanAssignToTrain( TrainingOrder, out dump ).Accepted descending
                              select p;
                     break;
+
                 default:
                     sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
@@ -127,11 +131,10 @@ namespace Fluffy
             base.DoWindowContents( fillRect );
             var position = new Rect( 0f, 0f, fillRect.width, 65f );
             GUI.BeginGroup( position );
-            
+
             // allow rebuilding pawnlist from outside of the maintab.
             if ( IsDirty )
                 BuildPawnList();
-
 
             var filterButton = new Rect( 0f, 0f, 200f, Mathf.Round( position.height / 2f ) );
             DrawFilterButton( filterButton );
@@ -145,11 +148,8 @@ namespace Fluffy
             var masterRect = new Rect( curX, nameRect.height - 30f, 90f, 30 );
             DrawColumnHeader_Master( ref curX, masterRect );
 
-            if ( Widgets_PetFollow.PetFollowAvailable )
-            {
-                var followRect = new Rect( curX, nameRect.height - 30f, 50f, 30f );
-                DrawColumnHeader_Follow( ref curX, followRect );
-            }
+            var followRect = new Rect( curX, nameRect.height - 30f, 50f, 30f );
+            DrawColumnHeader_Follow( ref curX, followRect );
 
             var genderRect = new Rect( curX, nameRect.height - 30f, 50f, 30f );
             DrawColumnHeader_Gender( ref curX, genderRect );
@@ -190,17 +190,17 @@ namespace Fluffy
             hunterRect.x += rect.width / 2f;
             hunterIconRect.x += rect.width / 2f;
 
-            GUI.DrawTexture( draftedIconRect, Widgets_PetFollow.FollowDraftIcon );
+            GUI.DrawTexture( draftedIconRect, Widgets_Follow.FollowDraftIcon );
             Widgets.DrawHighlightIfMouseover( draftedRect );
             TooltipHandler.TipRegion( draftedRect, "Fluffy.PetFollow.DraftedColumnTip".Translate() );
             if ( Widgets.ButtonInvisible( draftedRect ) && Event.current.shift )
-                Widgets_PetFollow.ToggleAllFollowsDrafted( Pawns );
+                Widgets_Follow.ToggleAllFollowsDrafted( Pawns );
 
-            GUI.DrawTexture( hunterIconRect, Widgets_PetFollow.FollowHuntIcon );
+            GUI.DrawTexture( hunterIconRect, Widgets_Follow.FollowHuntIcon );
             Widgets.DrawHighlightIfMouseover( hunterRect );
             TooltipHandler.TipRegion( hunterRect, "Fluffy.PetFollow.HunterColumnTip".Translate() );
             if ( Widgets.ButtonInvisible( hunterRect ) && Event.current.shift )
-                Widgets_PetFollow.ToggleAllFollowsHunter( Pawns );
+                Widgets_Follow.ToggleAllFollowsHunter( Pawns );
 
             curX += 50f;
         }
@@ -234,7 +234,6 @@ namespace Fluffy
 
             curX += 50f;
         }
-
 
         private void DrawColumnHeader_Areas( Rect rect, AllowedAreaMode mode = AllowedAreaMode.Animal )
         {
@@ -610,67 +609,64 @@ namespace Fluffy
             }
             curX += 90f;
 
-            if ( Widgets_PetFollow.PetFollowAvailable )
+            Rect draftedRect = new Rect( curX, 0f, 25f, 30f );
+            Rect hunterRect = new Rect( curX + 25f, 0f, 25f, 30f );
+            curX += 50f;
+
+            if ( p.training.IsCompleted( TrainableDefOf.Obedience ) )
             {
-                Rect draftedRect = new Rect( curX, 0f, 25f, 30f );
-                Rect hunterRect = new Rect( curX + 25f, 0f, 25f, 30f );
-                curX += 50f;
+                Rect draftedIconRect =
+                    new Rect( 0f, 0f, iconSize, iconSize ).CenteredOnYIn( draftedRect ).CenteredOnXIn( draftedRect );
+                Rect hunterIconRect =
+                    new Rect( 0f, 0f, iconSize, iconSize ).CenteredOnYIn( hunterRect ).CenteredOnXIn( hunterRect );
 
-                if ( p.CanFollow() )
+                // handle drafted follow
+                bool followDrafted = p.playerSettings.followDrafted;
+                string draftedTip = followDrafted
+                                        ? "Fluffy.PetFollow.FollowingDrafted".Translate()
+                                        : "Fluffy.PetFollow.NotFollowingDrafted".Translate();
+                TooltipHandler.TipRegion( draftedRect, draftedTip );
+
+                if ( followDrafted )
+                    GUI.DrawTexture( draftedIconRect, WorkBoxCheckTex );
+
+                if ( Mouse.IsOver( draftedRect ) )
+                    Widgets.DrawHighlight( draftedIconRect );
+
+                if ( Widgets.ButtonInvisible( draftedRect ) )
                 {
-                    Rect draftedIconRect =
-                        new Rect( 0f, 0f, iconSize, iconSize ).CenteredOnYIn( draftedRect ).CenteredOnXIn( draftedRect );
-                    Rect hunterIconRect =
-                        new Rect( 0f, 0f, iconSize, iconSize ).CenteredOnYIn( hunterRect ).CenteredOnXIn( hunterRect );
-
-                    // handle drafted follow
-                    bool followDrafted = p.FollowsDrafted();
-                    string draftedTip = followDrafted
-                                            ? "Fluffy.PetFollow.FollowingDrafted".Translate()
-                                            : "Fluffy.PetFollow.NotFollowingDrafted".Translate();
-                    TooltipHandler.TipRegion( draftedRect, draftedTip );
-
+                    p.playerSettings.followDrafted = !followDrafted;
                     if ( followDrafted )
-                        GUI.DrawTexture( draftedIconRect, WorkBoxCheckTex );
+                        SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                    else
+                        SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                }
 
-                    if ( Mouse.IsOver( draftedRect ) )
-                        Widgets.DrawHighlight( draftedIconRect );
+                // handle hunter follow
+                bool followHunter = p.playerSettings.followFieldwork;
+                string hunterTip = followHunter
+                                       ? "Fluffy.PetFollow.FollowingHunter".Translate()
+                                       : "Fluffy.PetFollow.NotFollowingHunter".Translate();
+                TooltipHandler.TipRegion( hunterRect, hunterTip );
 
-                    if ( Widgets.ButtonInvisible( draftedRect ) )
-                    {
-                        p.FollowsDrafted( !followDrafted );
-                        if ( followDrafted )
-                            SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
-                        else
-                            SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
-                    }
+                if ( followHunter )
+                    GUI.DrawTexture( hunterIconRect, WorkBoxCheckTex );
 
-                    // handle hunter follow
-                    bool followHunter = p.FollowsHunter();
-                    string hunterTip = followHunter
-                                           ? "Fluffy.PetFollow.FollowingHunter".Translate()
-                                           : "Fluffy.PetFollow.NotFollowingHunter".Translate();
-                    TooltipHandler.TipRegion( hunterRect, hunterTip );
+                if ( Mouse.IsOver( hunterRect ) )
+                    Widgets.DrawHighlight( hunterIconRect );
 
+                if ( Widgets.ButtonInvisible( hunterRect ) )
+                {
+                    p.playerSettings.followFieldwork = !followHunter;
                     if ( followHunter )
-                        GUI.DrawTexture( hunterIconRect, WorkBoxCheckTex );
-
-                    if ( Mouse.IsOver( hunterRect ) )
-                        Widgets.DrawHighlight( hunterIconRect );
-
-                    if ( Widgets.ButtonInvisible( hunterRect ) )
-                    {
-                        p.FollowsHunter( !followHunter );
-                        if ( followHunter )
-                            SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
-                        else
-                            SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
-                    }
+                        SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                    else
+                        SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 }
             }
 
             var recta = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
-            Texture2D labelSex = GenderTextures[(int) p.gender];
+            Texture2D labelSex = GenderTextures[(int)p.gender];
             TipSignal tipSex = p.gender.ToString();
             GUI.DrawTexture( recta, labelSex );
             TooltipHandler.TipRegion( recta, tipSex );
@@ -689,7 +685,7 @@ namespace Fluffy
             if ( p.Pregnant() )
             {
                 GUI.DrawTexture( pregnantRect, PregnantTex );
-                TooltipHandler.TipRegion( pregnantRect, "Fluffy.Pregnant".Translate( p.NameStringShort ));
+                TooltipHandler.TipRegion( pregnantRect, "Fluffy.Pregnant".Translate( p.NameStringShort ) );
             }
             curX += 50f;
 
