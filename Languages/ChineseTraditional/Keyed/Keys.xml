@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+	<!-- Work priority details -->
+	<Fluffy.WorkPrioritiesDetails>優先級詳情</Fluffy.WorkPrioritiesDetails>
+	<Fluffy.WorkPrioritiesDisclaimer>優先度詳情窗口可以更改工作類型的優先級（烹飪、建造等）和活動（攜帶材料、建造等）。\n\n免責聲明: 一些“緊急”工作的優先級被強行忽略，如滅火之類的工作都是第一位的。\n如果不小心調整優先級時把殖民地運行弄癱瘓了，可以點擊"重置優先度"按鈕恢復默認設置。</Fluffy.WorkPrioritiesDisclaimer>
+	<Fluffy.WorkPrioritiesDisclaimerTitle>優先級詳情</Fluffy.WorkPrioritiesDisclaimerTitle>
+	<Fluffy.ResetPriorities>將優先級重設為默認</Fluffy.ResetPriorities>
+
+	<!-- PetFollow integration -->
+	<Fluffy.PetFollow.DraftedColumnTip>點擊左鍵指定所有動物在主人被徵召時跟隨。</Fluffy.PetFollow.DraftedColumnTip>
+	<Fluffy.PetFollow.HunterColumnTip>點擊左鍵指定所有動物在主人狩獵時跟隨。</Fluffy.PetFollow.HunterColumnTip>
+	<Fluffy.PetFollow.NotFollowingDrafted>當主人被徵召時不跟隨。</Fluffy.PetFollow.NotFollowingDrafted>
+	<Fluffy.PetFollow.NotFollowingHunter>當主人狩獵時不跟隨。</Fluffy.PetFollow.NotFollowingHunter>
+	<Fluffy.PetFollow.FollowingDrafted>當主人被徵召時跟隨。</Fluffy.PetFollow.FollowingDrafted>
+	<Fluffy.PetFollow.FollowingHunter>當主人狩獵時跟隨。</Fluffy.PetFollow.FollowingHunter>
+
+	<!-- Dialog_FilterAnimals -->
+	<Fluffy.FilterByRace>按物種過濾</Fluffy.FilterByRace>
+	<Fluffy.FilterByAttributes>按特性過濾</Fluffy.FilterByAttributes>
+
+	<Fluffy.Yes>是</Fluffy.Yes>
+	<Fluffy.No>否</Fluffy.No>
+	<Fluffy.Both>全部</Fluffy.Both>
+
+	<Fluffy.genderLabel>性別</Fluffy.genderLabel>
+	<Fluffy.genderYes>女性</Fluffy.genderYes>
+	<Fluffy.genderNo>男性</Fluffy.genderNo>
+
+	<Fluffy.trainingLabel>已訓練順從</Fluffy.trainingLabel>
+	<Fluffy.trainingYes>是</Fluffy.trainingYes>
+	<Fluffy.trainingNo>否</Fluffy.trainingNo>
+
+	<Fluffy.reproductiveLabel>可繁殖</Fluffy.reproductiveLabel>
+	<Fluffy.reproductiveYes>是</Fluffy.reproductiveYes>
+	<Fluffy.reproductiveNo>否</Fluffy.reproductiveNo>
+
+	<Fluffy.pregnantLabel>已懷孕</Fluffy.pregnantLabel>
+	<Fluffy.pregnantYes>是</Fluffy.pregnantYes>
+	<Fluffy.pregnantNo>否</Fluffy.pregnantNo>
+
+	<Fluffy.oldLabel>年老</Fluffy.oldLabel>
+	<Fluffy.oldYes>瀕臨死亡</Fluffy.oldYes>
+	<Fluffy.oldNo>生命旺盛</Fluffy.oldNo>
+
+	<Fluffy.milkableLabel>可產奶</Fluffy.milkableLabel>
+	<Fluffy.milkableYes>是</Fluffy.milkableYes>
+	<Fluffy.milkableNo>否</Fluffy.milkableNo>
+
+	<Fluffy.shearableLabel>可產毛</Fluffy.shearableLabel>
+	<Fluffy.shearableYes>是</Fluffy.shearableYes>
+	<Fluffy.shearableNo>否</Fluffy.shearableNo>
+
+	<Fluffy.FilterSticky>粘性</Fluffy.FilterSticky>
+	<Fluffy.Clear>清除</Fluffy.Clear>
+	<Fluffy.Enable>啟用</Fluffy.Enable>
+	<Fluffy.Disable>禁用</Fluffy.Disable>
+
+	<!-- Dialog_RenamePet -->
+	<Fluffy.PetName>寵物名稱</Fluffy.PetName>
+	<Fluffy.PetRenamed>寵物已重命名！</Fluffy.PetRenamed>
+	<Fluffy.PetInvalidName>無效的名稱。</Fluffy.PetInvalidName>
+
+	<!-- MainTabWindow_Animals -->
+	<Fluffy.RestrictAllTo>所有限制為{0}</Fluffy.RestrictAllTo>
+	<Fluffy.SortByTrainables>點擊按{0}排序。</Fluffy.SortByTrainables>
+	<Fluffy.ShiftToTrainAll>按住Shift點擊以設為全部訓練</Fluffy.ShiftToTrainAll>
+	<Fluffy.TrainingCompleted>訓練已完成。</Fluffy.TrainingCompleted>
+	<Fluffy.NotTraining>不訓練。</Fluffy.NotTraining>
+	<Fluffy.CurrentlyTraining>當前訓練中。</Fluffy.CurrentlyTraining>
+	<Fluffy.StepsCompleted>已完成：{0}/{1}。</Fluffy.StepsCompleted>
+	<Fluffy.Pregnant>{0}懷孕了。</Fluffy.Pregnant>
+	<Fluffy.Filter>過濾</Fluffy.Filter>
+	<Fluffy.FilterTooltip>左鍵點擊以設置過濾。\n右鍵點擊設置快速篩除。</Fluffy.FilterTooltip>
+	<Fluffy.DisableFilter>禁用過濾</Fluffy.DisableFilter>
+	<Fluffy.EnableFilter>啟用過濾</Fluffy.EnableFilter>
+	<Fluffy.Name>名稱</Fluffy.Name>
+	<Fluffy.SortByName>點擊按名稱排序。</Fluffy.SortByName>
+	<Fluffy.SortByPetness>點擊按主人和是否有主排序。\n右鍵點擊以批量指定主人。</Fluffy.SortByPetness>
+	<Fluffy.SortByGender>點擊按性別排序。</Fluffy.SortByGender>
+	<Fluffy.SortByAge>點擊按生命階段和年齡排序。</Fluffy.SortByAge>
+	<Fluffy.SortByPregnancy>點擊按是否有孕排序。</Fluffy.SortByPregnancy>
+	<Fluffy.SortByBodysizeSlaughter>點擊按宰殺命令和身體尺寸排序。\n按住Shift點擊開關宰殺所有。</Fluffy.SortByBodysizeSlaughter>
+	<Fluffy.StopSlaughter>取消宰殺。</Fluffy.StopSlaughter>
+	<Fluffy.MarkSlaughter>標記為宰殺</Fluffy.MarkSlaughter>
+	<Fluffy.ClickToJump>左鍵點擊以跳轉。</Fluffy.ClickToJump>
+	<Fluffy.RightClickToRename>右鍵點擊以重命名。</Fluffy.RightClickToRename>
+	<Fluffy.MassAssignMasterNone>取消指定所有</Fluffy.MassAssignMasterNone>
+	<Fluffy.MassAssignMasterBonded>指定為已羈絆的殖民者</Fluffy.MassAssignMasterBonded>
+	<Fluffy.MassAssignMaster>指定為{0}（技能{1}，{2}/{3}可被指定）</Fluffy.MassAssignMaster>
+	<Fluffy.NoObedientAnimals>無已順從動物可指定。</Fluffy.NoObedientAnimals>
+</LanguageData>
