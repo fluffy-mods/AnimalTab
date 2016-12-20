@@ -51,3 +51,4 @@ Source/BetterAnimalsTab/obj/Debug/BetterAnimalsTab.pdb
 *.pxd
 /.mailmap
 /Source/ModConfig.json
+/Source/SteamConfig.vdf
