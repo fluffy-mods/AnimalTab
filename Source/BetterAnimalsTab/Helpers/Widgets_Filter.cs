@@ -13,7 +13,7 @@ namespace Fluffy
     public static class Widgets_Filter
     {
         public static List<PawnKindDef> FilterPawnKind =
-            Find.MapPawns.PawnsInFaction( Faction.OfPlayer ).Where( x => x.RaceProps.Animal )
+            Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer ).Where( x => x.RaceProps.Animal )
                 .Select( x => x.kindDef ).Distinct().ToList();
 
         public static readonly List<Filter> Filters = new List<Filter>
@@ -65,7 +65,7 @@ namespace Fluffy
 
         public static void ResetPawnKindFilter()
         {
-            FilterPawnKind = Find.MapPawns.PawnsInFaction( Faction.OfPlayer ).Where( x => x.RaceProps.Animal )
+            FilterPawnKind = Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer ).Where( x => x.RaceProps.Animal )
                                  .Select( x => x.kindDef ).Distinct().ToList();
         }
 

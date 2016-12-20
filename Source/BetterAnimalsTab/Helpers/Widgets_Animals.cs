@@ -22,7 +22,7 @@ namespace Fluffy
             return pawn.health.hediffSet.GetFirstHediffOfDef( HediffDefOf.Pregnant )?.Visible ?? false;
         }
 
-        public static IEnumerable<Pawn> AnimalsOfColony => Find.MapPawns.SpawnedPawnsInFaction( Faction.OfPlayer ).Where( p => p.RaceProps.Animal );
+        public static IEnumerable<Pawn> AnimalsOfColony => Find.VisibleMap.mapPawns.SpawnedPawnsInFaction( Faction.OfPlayer ).Where( p => p.RaceProps.Animal );
         public static IEnumerable<Pawn> ObedientAnimalsOfColony => AnimalsOfColony.Where( p => p.training.IsCompleted( TrainableDefOf.Obedience ) );
 
         public static List<TrainableDef> Trainables
@@ -32,17 +32,17 @@ namespace Fluffy
 
         public static void SlaughterAnimal( Pawn pawn )
         {
-            Find.DesignationManager.AddDesignation( new Designation( pawn, DesignationDefOf.Slaughter ) );
+            Find.VisibleMap.designationManager.AddDesignation( new Designation( pawn, DesignationDefOf.Slaughter ) );
         }
 
         public static void UnSlaughterAnimal( Pawn pawn )
         {
-            Find.DesignationManager.DesignationOn( pawn, DesignationDefOf.Slaughter ).Delete();
+            Find.VisibleMap.designationManager.DesignationOn( pawn, DesignationDefOf.Slaughter ).Delete();
         }
 
         public static void SlaughterAllAnimals( List<Pawn> pawns )
         {
-            if ( pawns.All( p => Find.DesignationManager.DesignationOn( p, DesignationDefOf.Slaughter ) != null ) )
+            if ( pawns.All( p => Find.VisibleMap.designationManager.DesignationOn( p, DesignationDefOf.Slaughter ) != null ) )
             {
                 SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                 foreach ( Pawn t in pawns )
@@ -55,7 +55,7 @@ namespace Fluffy
                 SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
                 foreach ( Pawn t in pawns )
                 {
-                    if ( Find.DesignationManager.DesignationOn( t, DesignationDefOf.Slaughter ) == null )
+                    if ( Find.VisibleMap.designationManager.DesignationOn( t, DesignationDefOf.Slaughter ) == null )
                         SlaughterAnimal( t );
                 }
             }
@@ -245,7 +245,7 @@ namespace Fluffy
             }
             
             // get number of animals this pawn could be the master of.
-            var skill = colonist.skills.GetSkill( SkillDefOf.Animals ).level;
+            var skill = colonist.skills.GetSkill( SkillDefOf.Animals ).Level;
             var eligibleAnimals = animals.Where( p => Mathf.RoundToInt( p.GetStatValue( StatDefOf.MinimumHandlingSkill ) ) < skill );
             Action action = delegate { MassAssignMaster( colonist, eligibleAnimals ); };
 
@@ -267,7 +267,7 @@ namespace Fluffy
             {
                 // get bond
                 var bond = animal.relations.GetFirstDirectRelationPawn( PawnRelationDefOf.Bond, p => p.Faction == Faction.OfPlayer );
-                if ( bond == null || bond.skills.GetSkill( SkillDefOf.Animals).level < animal.GetStatValue( StatDefOf.MinimumHandlingSkill ))
+                if ( bond == null || bond.skills.GetSkill( SkillDefOf.Animals).Level < animal.GetStatValue( StatDefOf.MinimumHandlingSkill ))
                     continue;
                 animal.playerSettings.master = bond;
             }

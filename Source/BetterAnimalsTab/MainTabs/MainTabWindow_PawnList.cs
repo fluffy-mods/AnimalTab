@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -46,7 +47,7 @@ namespace Fluffy
         protected virtual void BuildPawnList()
         {
             Pawns.Clear();
-            Pawns.AddRange( Find.MapPawns.FreeColonists );
+            Pawns.AddRange( Find.VisibleMap.mapPawns.FreeColonists );
         }
 
         public void Notify_PawnsChanged() { BuildPawnList(); }
@@ -89,7 +90,9 @@ namespace Fluffy
                 rect4.xMin -= 4f;
                 rect4.yMin += 4f;
                 rect4.yMax -= 6f;
-                Widgets.FillableBar( rect4, p.health.summaryHealth.SummaryHealthPercent, GenWorldUI.OverlayHealthTex,
+                Widgets.FillableBar( rect4, 
+                                     p.health.summaryHealth.SummaryHealthPercent,
+                                     GenMapUI.OverlayHealthTex,
                                      BaseContent.ClearTex, false );
             }
             if ( Mouse.IsOver( rect3 ) )

@@ -52,47 +52,47 @@ namespace Fluffy
             switch ( Order )
             {
                 case Orders.Default:
-                    sorted = from p in Find.MapPawns.PawnsInFaction( Faction.OfPlayer )
+                    sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.RaceProps.petness descending, p.RaceProps.baseBodySize, p.def.label
                              select p;
                     break;
                 case Orders.Name:
-                    sorted = from p in Find.MapPawns.PawnsInFaction( Faction.OfPlayer )
+                    sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.Name.Numerical, p.Name.ToStringFull, p.def.label
                              select p;
                     break;
                 case Orders.Gender:
-                    sorted = from p in Find.MapPawns.PawnsInFaction( Faction.OfPlayer )
+                    sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.KindLabel, p.gender
                              select p;
                     break;
                 case Orders.LifeStage:
-                    sorted = from p in Find.MapPawns.PawnsInFaction( Faction.OfPlayer )
+                    sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.ageTracker.CurLifeStageRace.minAge descending,
                                  p.ageTracker.AgeBiologicalTicks descending
                              select p;
                     break;
                 case Orders.Pregnant:
-                    sorted = from p in Find.MapPawns.PawnsInFaction( Faction.OfPlayer )
+                    sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.Pregnant() descending
                              select p;
                     break;
                 case Orders.Slaughter:
-                    sorted = from p in Find.MapPawns.PawnsInFaction( Faction.OfPlayer )
+                    sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby
-                                 Find.DesignationManager.DesignationOn( p, DesignationDefOf.Slaughter ) != null
+                                 Find.VisibleMap.designationManager.DesignationOn( p, DesignationDefOf.Slaughter ) != null
                                  descending, p.BodySize descending
                              select p;
                     break;
                 case Orders.Training:
                     bool dump;
-                    sorted = from p in Find.MapPawns.PawnsInFaction( Faction.OfPlayer )
+                    sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.training.IsCompleted( TrainingOrder ) descending,
                                  p.training.GetWanted( TrainingOrder ) descending,
@@ -100,7 +100,7 @@ namespace Fluffy
                              select p;
                     break;
                 default:
-                    sorted = from p in Find.MapPawns.PawnsInFaction( Faction.OfPlayer )
+                    sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
                              orderby p.playerSettings.master descending, p.RaceProps.petness descending
                              select p;
@@ -170,7 +170,7 @@ namespace Fluffy
             Text.Font = GameFont.Small;
             if ( Widgets.ButtonText( manageAreasRect, "ManageAreas".Translate() ) )
             {
-                Find.WindowStack.Add( new Dialog_ManageAreas() );
+                Find.WindowStack.Add( new Dialog_ManageAreas( Find.VisibleMap ) );
             }
 
             var areaLabelRect = new Rect( curX, position.height - 27f, 350f, 30f );
@@ -238,7 +238,7 @@ namespace Fluffy
 
         private void DrawColumnHeader_Areas( Rect rect, AllowedAreaMode mode = AllowedAreaMode.Animal )
         {
-            List<Area> allAreas = Find.AreaManager.AllAreas;
+            List<Area> allAreas = Find.VisibleMap.areaManager.AllAreas;
             var num = 1;
             foreach ( Area t in allAreas )
             {
@@ -488,7 +488,7 @@ namespace Fluffy
                                                           Widgets_Animals.MassAssignMasterBonded ) );
 
                         // loop over pawns
-                        foreach ( Pawn pawn in Find.MapPawns.FreeColonistsSpawned )
+                        foreach ( Pawn pawn in Find.VisibleMap.mapPawns.FreeColonistsSpawned )
                             options.Add( Widgets_Animals.MassAssignMaster_FloatMenuOption( pawn ) );
                     }
                     else
@@ -544,7 +544,7 @@ namespace Fluffy
                 else if ( Event.current.button == 1 )
                 {
                     List<PawnKindDef> list =
-                        Find.MapPawns.PawnsInFaction( Faction.OfPlayer ).Where( p => p.RaceProps.Animal )
+                        Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer ).Where( p => p.RaceProps.Animal )
                             .Select( p => p.kindDef ).Distinct().OrderBy( p => p.LabelCap ).ToList();
 
                     if ( list.Count > 0 )
@@ -695,7 +695,7 @@ namespace Fluffy
 
             var rectc = new Rect( curX, 0f, 50f, 30f );
             var rectc1 = new Rect( curX + 17f, heightOffset, iconSize, iconSize );
-            bool slaughter = Find.DesignationManager.DesignationOn( p, DesignationDefOf.Slaughter ) != null;
+            bool slaughter = Find.VisibleMap.designationManager.DesignationOn( p, DesignationDefOf.Slaughter ) != null;
 
             if ( slaughter )
             {
