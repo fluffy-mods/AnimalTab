@@ -17,9 +17,27 @@ namespace Fluffy
 {
     public static class Widgets_Animals
     {
-        public static bool Pregnant( this Pawn pawn )
+        public static bool IsPregnant( this Pawn pawn )
         {
-            return pawn.health.hediffSet.GetFirstHediffOfDef( HediffDefOf.Pregnant )?.Visible ?? false;
+            Hediff_Pregnant dump;
+            return pawn.Pregnant( out dump );
+        }
+
+        public static bool Pregnant( this Pawn pawn, out Hediff_Pregnant hediff )
+        {
+            // get hediff
+            var _hediff = pawn.health.hediffSet.GetFirstHediffOfDef( HediffDefOf.Pregnant );
+
+            // if pregnant, and pregnancy is far enough advanced to be visible
+            if ( _hediff?.Visible ?? false )
+            {
+                hediff = _hediff as Hediff_Pregnant;
+                return true;
+            }
+
+            // not (visibly) pregnant.
+            hediff = null;
+            return false;
         }
 
         public static IEnumerable<Pawn> AnimalsOfColony => Find.VisibleMap.mapPawns.SpawnedPawnsInFaction( Faction.OfPlayer ).Where( p => p.RaceProps.Animal );

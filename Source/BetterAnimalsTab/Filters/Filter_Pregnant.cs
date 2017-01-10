@@ -25,7 +25,7 @@ namespace Fluffy
 
         public override bool IsAllowed( Pawn p )
         {
-            bool pregnant = p.Pregnant();
+            bool pregnant = p.IsPregnant();
             if ( State == FilterType.None )
                 return true;
             if ( State == FilterType.True && pregnant )

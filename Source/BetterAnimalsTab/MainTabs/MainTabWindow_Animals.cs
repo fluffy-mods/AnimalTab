@@ -80,7 +80,7 @@ namespace Fluffy
                 case Orders.Pregnant:
                     sorted = from p in Find.VisibleMap.mapPawns.PawnsInFaction( Faction.OfPlayer )
                              where p.RaceProps.Animal
-                             orderby p.Pregnant() descending
+                             orderby p.IsPregnant() descending
                              select p;
                     break;
 
@@ -682,10 +682,13 @@ namespace Fluffy
             curX += 50f;
 
             var pregnantRect = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
-            if ( p.Pregnant() )
+            Hediff_Pregnant hediff;
+            if ( p.Pregnant( out hediff ) )
             {
                 GUI.DrawTexture( pregnantRect, PregnantTex );
-                TooltipHandler.TipRegion( pregnantRect, "Fluffy.Pregnant".Translate( p.NameStringShort ) );
+                int total = (int)p.RaceProps.gestationPeriodDays * GenDate.TicksPerDay;
+                int progress = (int)hediff.GestationProgress * total;
+                TooltipHandler.TipRegion( pregnantRect, "PregnantIconDesc".Translate( total.ToStringTicksToPeriod(), progress.ToStringTicksToPeriod() ) );
             }
             curX += 50f;
 
