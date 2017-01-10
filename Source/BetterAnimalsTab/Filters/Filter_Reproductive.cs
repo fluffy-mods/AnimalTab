@@ -25,7 +25,7 @@ namespace Fluffy
 
         public override bool IsAllowed( Pawn p )
         {
-            bool repro = p.ageTracker.CurLifeStage.reproductive;
+            bool repro = p.IsReproductive();
             if ( State == FilterType.None )
                 return true;
             if ( State == FilterType.True && repro )

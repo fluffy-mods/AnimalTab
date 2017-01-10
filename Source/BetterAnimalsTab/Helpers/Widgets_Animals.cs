@@ -23,6 +23,36 @@ namespace Fluffy
             return pawn.Pregnant( out dump );
         }
 
+
+        public static bool IsReproductive( this Pawn pawn )
+        {
+            bool reproductive = pawn.ageTracker.CurLifeStage.reproductive;
+
+            if ( reproductive && BirdsAndBeesActive )
+                return pawn.health.capacities.CapableOf( PawnCapacityDef_Reproductive );
+
+            return reproductive;
+        }
+
+        private static bool _birdsAndBeesChecked;
+        private static bool _birdsAndBeesActive;
+        public static PawnCapacityDef PawnCapacityDef_Reproductive;
+        public static bool BirdsAndBeesActive
+        {
+            get
+            {
+                if ( !_birdsAndBeesChecked )
+                {
+                    PawnCapacityDef_Reproductive = DefDatabase<PawnCapacityDef>.GetNamedSilentFail( "Reproduction" );
+                    _birdsAndBeesActive = PawnCapacityDef_Reproductive != null;
+                    _birdsAndBeesChecked = true;
+
+                    Log.Message( "AnimalTab :: BirdsAndBees detected, adding fertility capacityDef to fertility filter." );
+                }
+                return _birdsAndBeesActive;
+            }
+        }
+
         public static bool Pregnant( this Pawn pawn, out Hediff_Pregnant hediff )
         {
             // get hediff
