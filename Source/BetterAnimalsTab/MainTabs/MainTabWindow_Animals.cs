@@ -313,9 +313,6 @@ namespace Fluffy
                 if ( Mouse.IsOver( bg ) )
                 {
                     GUI.DrawTexture( bg, TexUI.HighlightTex );
-#if DEBUG
-                    Log.Message( trainables[i].label );
-#endif
                 }
                 var tooltip = new StringBuilder();
                 tooltip.AppendLine( "Fluffy.SortByTrainables".Translate( trainables[i].LabelCap ) );
