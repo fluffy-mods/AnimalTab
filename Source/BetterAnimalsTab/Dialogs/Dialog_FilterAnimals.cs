@@ -67,12 +67,6 @@ namespace Fluffy
 
         public override void DoWindowContents( Rect inRect )
         {
-            // Close if animals tab closed
-            if ( Find.WindowStack.WindowOfType<MainTabWindow_Animals>() == null )
-            {
-                Find.WindowStack.TryRemove( this );
-            }
-
             Text.Font = GameFont.Small;
 
             // Pawnkinds on the left.

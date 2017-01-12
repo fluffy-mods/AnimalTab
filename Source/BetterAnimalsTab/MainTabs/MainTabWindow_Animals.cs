@@ -295,6 +295,15 @@ namespace Fluffy
             GUI.color = Color.white;
         }
 
+
+        public override void PreClose()
+        {
+            base.PreClose();
+
+            if ( Find.WindowStack.IsOpen<Dialog_FilterAnimals>() )
+                Find.WindowStack.TryRemove( typeof( Dialog_FilterAnimals ), false );
+        }
+        
         private void DrawColumnHeader_Training( ref float curX, Rect rect )
         {
             List<TrainableDef> trainables = TrainableUtility.TrainableDefsInListOrder;

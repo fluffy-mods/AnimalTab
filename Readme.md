@@ -18,9 +18,9 @@ Rename (named) pets. Don't like the name Buttercup for your Warg? Change it!
 Mass assign masters, or assign all to bonded masters. 
 
 # Contributors
-duduluu	Chinese translations
-urty5656	Introduction to the magic of reflection & translations, Korean translation
-rgponce	Brazilian Portuguese translation
+ - duduluu:	Chinese translations
+ - urty5656:	Introduction to the magic of reflection & translations, Korean translation
+ - rgponce:	Brazilian Portuguese translation
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
