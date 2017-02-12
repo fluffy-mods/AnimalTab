@@ -64,7 +64,7 @@ namespace BetterAnimalsTab
 
             if ( texture == null )
             {
-                Log.Warning( $"Failed to get UI Icon for {trainable.LabelCap} (defName: {trainable.defName}). UI Icon should be placed in 'UI/Training/{trainable.defName}(.png)'." );
+                Log.Warning( $"Failed to get UI Icon for {trainable.LabelCap} (defName: {trainable.defName}). UI Icon should be placed at '[YourMod]/Textures/UI/Training/{trainable.defName}'." );
                 failedFindingTexture.Add( trainable );
                 return null;
             }

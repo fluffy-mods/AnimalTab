@@ -698,7 +698,7 @@ namespace Fluffy
             {
                 GUI.DrawTexture( pregnantRect, PregnantTex );
                 int total = (int) p.RaceProps.gestationPeriodDays * GenDate.TicksPerDay;
-                int progress = (int) hediff.GestationProgress * total;
+                int progress = (int) ( hediff.GestationProgress * total );
                 TooltipHandler.TipRegion( pregnantRect,
                                           "PregnantIconDesc".Translate( total.ToStringTicksToPeriod(),
                                                                         progress.ToStringTicksToPeriod() ) );
