@@ -2,11 +2,14 @@
 // // MainTabWindow_Animals.cs
 // // 2016-06-27
 
+using System;
 using BetterAnimalsTab;
 using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -30,7 +33,40 @@ namespace Fluffy
         public static Orders Order = Orders.Default;
         public static TrainableDef TrainingOrder;
         public static bool Asc;
-        public static bool IsDirty;
+        private static FieldInfo _dirtyField = typeof( MainTabWindow_PawnList ).GetField( "pawnListDirty", (BindingFlags) 60 );
+
+        public bool PawnsDirty
+        {
+            get
+            {
+                if (_dirtyField == null)
+                    throw new ArgumentNullException( "dirtyField" );
+
+                return (bool)_dirtyField.GetValue( this );
+            }
+            set
+            {
+                if ( _dirtyField == null )
+                    throw new ArgumentNullException( "dirtyField" );
+
+                _dirtyField.SetValue( this, value );
+            }
+        }
+
+        private static MainTabWindow_Animals _instance;
+        public static MainTabWindow_Animals Instance
+        {
+            get
+            {
+                if ( _instance == null )
+                    _instance = (MainTabWindow_Animals)DefDatabase<MainTabDef>.GetNamed( "Animals" )?.Window;
+
+                if ( _instance == null )
+                    throw new ArgumentNullException( "Def" );
+
+                return _instance;
+            }
+        }
 
         public static float iconSize = 16f;
 
@@ -111,30 +147,26 @@ namespace Fluffy
                     break;
             }
 
-            Pawns = sorted.ToList();
+            pawns = sorted.ToList();
 
             if ( Widgets_Filter.Filter )
-            {
-                Pawns = Widgets_Filter.FilterAnimals( Pawns );
-            }
+                pawns = Widgets_Filter.FilterAnimals( pawns );
 
-            if ( Asc && Pawns.Count > 1 )
-            {
-                Pawns.Reverse();
-            }
+            if ( Asc && pawns.Count > 1 )
+                pawns.Reverse();
 
-            IsDirty = false;
+            PawnsDirty = false;
         }
 
         public override void DoWindowContents( Rect fillRect )
         {
+            // allow rebuilding pawnlist from outside of the maintab.
+            if ( PawnsDirty )
+                BuildPawnList();
+            
             base.DoWindowContents( fillRect );
             var position = new Rect( 0f, 0f, fillRect.width, 65f );
             GUI.BeginGroup( position );
-
-            // allow rebuilding pawnlist from outside of the maintab.
-            if ( IsDirty )
-                BuildPawnList();
 
             var filterButton = new Rect( 0f, 0f, 200f, Mathf.Round( position.height / 2f ) );
             DrawFilterButton( filterButton );
@@ -163,8 +195,9 @@ namespace Fluffy
             var slaughterRect = new Rect( curX, nameRect.height - 30f, 50f, 30f );
             DrawColumnHeader_Slaughter( ref curX, slaughterRect );
 
-            var trainingRect = new Rect( curX, nameRect.height - 30f, 80f, 30f );
+            var trainingRect = new Rect( curX, nameRect.height - 30f, widthPerTrainable * TrainableUtility.TrainableDefsInListOrder.Count, 30f );
             DrawColumnHeader_Training( ref curX, trainingRect );
+            curX += 10f; // some margin
 
             var manageAreasRect = new Rect( curX, 0f, 350f, Mathf.Round( position.height / 2f ) );
             Text.Font = GameFont.Small;
@@ -194,13 +227,13 @@ namespace Fluffy
             Widgets.DrawHighlightIfMouseover( draftedRect );
             TooltipHandler.TipRegion( draftedRect, "Fluffy.PetFollow.DraftedColumnTip".Translate() );
             if ( Widgets.ButtonInvisible( draftedRect ) && Event.current.shift )
-                Widgets_Follow.ToggleAllFollowsDrafted( Pawns );
+                Widgets_Follow.ToggleAllFollowsDrafted( pawns );
 
             GUI.DrawTexture( hunterIconRect, Widgets_Follow.FollowHuntIcon );
             Widgets.DrawHighlightIfMouseover( hunterRect );
             TooltipHandler.TipRegion( hunterRect, "Fluffy.PetFollow.HunterColumnTip".Translate() );
             if ( Widgets.ButtonInvisible( hunterRect ) && Event.current.shift )
-                Widgets_Follow.ToggleAllFollowsHunter( Pawns );
+                Widgets_Follow.ToggleAllFollowsHunter( pawns );
 
             curX += 50f;
         }
@@ -254,7 +287,7 @@ namespace Fluffy
             Widgets.Label( rect2, "NoAreaAllowed".Translate() );
             if ( Widgets.ButtonInvisible( rect2 ) )
             {
-                foreach ( Pawn t in Pawns )
+                foreach ( Pawn t in pawns )
                 {
                     SoundDefOf.DesignateDragStandardChanged.PlayOneShotOnCamera();
                     t.playerSettings.AreaRestriction = null;
@@ -275,7 +308,7 @@ namespace Fluffy
                     Widgets.Label( rect3, area.Label );
                     if ( Widgets.ButtonInvisible( rect3 ) )
                     {
-                        foreach ( Pawn p in Pawns )
+                        foreach ( Pawn p in pawns )
                         {
                             SoundDefOf.DesignateDragStandardChanged.PlayOneShotOnCamera();
                             p.playerSettings.AreaRestriction = area;
@@ -295,7 +328,6 @@ namespace Fluffy
             GUI.color = Color.white;
         }
 
-
         public override void PreClose()
         {
             base.PreClose();
@@ -308,7 +340,6 @@ namespace Fluffy
         {
             List<TrainableDef> trainables = TrainableUtility.TrainableDefsInListOrder;
             float width = rect.width / trainables.Count;
-            var iconSize = 16f;
             float widthOffset = ( width - iconSize ) / 2;
             float heightOffset = ( rect.height - iconSize ) / 2;
             float x = rect.xMin;
@@ -316,20 +347,23 @@ namespace Fluffy
 
             for ( var i = 0; i < trainables.Count; i++ )
             {
-                var bg = new Rect( x, y, width, rect.height );
-                var icon = new Rect( x + widthOffset, y + heightOffset, iconSize, iconSize );
+                var bgRect = new Rect( x, y, width, rect.height );
+                var iconRect = new Rect( x + widthOffset, y + heightOffset, iconSize, iconSize );
                 x += width;
-                if ( Mouse.IsOver( bg ) )
+                if ( Mouse.IsOver( bgRect ) )
                 {
-                    GUI.DrawTexture( bg, TexUI.HighlightTex );
+                    GUI.DrawTexture( bgRect, TexUI.HighlightTex );
                 }
                 var tooltip = new StringBuilder();
                 tooltip.AppendLine( "Fluffy.SortByTrainables".Translate( trainables[i].LabelCap ) );
                 tooltip.AppendLine( "Fluffy.ShiftToTrainAll".Translate() ).AppendLine()
                        .Append( trainables[i].description );
-                TooltipHandler.TipRegion( bg, tooltip.ToString() );
-                GUI.DrawTexture( icon, TrainingTextures[i] );
-                if ( Widgets.ButtonInvisible( bg ) )
+                TooltipHandler.TipRegion( bgRect, tooltip.ToString() );
+
+                var iconTexture = trainables[i].GetUIIcon();
+                if ( iconTexture != null )
+                    GUI.DrawTexture( iconRect, iconTexture );
+                if ( Widgets.ButtonInvisible( bgRect ) )
                 {
                     if ( !Event.current.shift )
                     {
@@ -347,14 +381,14 @@ namespace Fluffy
                     }
                     else if ( Event.current.shift )
                     {
-                        Widgets_Animals.ToggleAllTraining( trainables[i], Pawns );
+                        Widgets_Animals.ToggleAllTraining( trainables[i], pawns );
                     }
                     SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                    MainTabWindow_Animals.IsDirty = true;
+                    PawnsDirty = true;
                 }
             }
 
-            curX += 90f;
+            curX += rect.width;
         }
 
         private void DrawColumnHeader_Slaughter( ref float curX, Rect slaughterRect )
@@ -365,7 +399,7 @@ namespace Fluffy
             {
                 if ( Event.current.shift )
                 {
-                    Widgets_Animals.SlaughterAllAnimals( Pawns );
+                    Widgets_Animals.SlaughterAllAnimals( pawns );
                 }
                 else
                 {
@@ -560,7 +594,7 @@ namespace Fluffy
                                                                                                        Widgets_Filter
                                                                                                            .QuickFilterPawnKind
                                                                                                            ( p );
-                                                                                                       IsDirty = true;
+                                                                                                       PawnsDirty = true;
                                                                                                    } ) ) );
                         Find.WindowStack.Add( new FloatMenu( list2 ) );
                     }
@@ -590,31 +624,110 @@ namespace Fluffy
             }
         }
 
-        protected override void DrawPawnRow( Rect rect, Pawn p )
+        protected override void DrawPawnRow( Rect canvas, Pawn pawn )
         {
             // sizes for stuff
-
-            float heightOffset = ( rect.height - iconSize ) / 2;
+            float heightOffset = ( canvas.height - iconSize ) / 2;
             float widthOffset = ( 50 - iconSize ) / 2;
 
-            GUI.BeginGroup( rect );
+            GUI.BeginGroup( canvas );
             var curX = 175f;
 
-            if ( p.training.IsCompleted( TrainableDefOf.Obedience ) )
+            DrawCell_Master( canvas, pawn, ref curX );
+            DrawCell_Follow( pawn, ref curX );
+
+            var genderRect = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
+            DrawCell_Gender( pawn, genderRect, ref curX );
+
+            var ageRect = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
+            DrawCell_Age( pawn, ageRect, ref curX );
+
+            var pregnantRect = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
+            DrawCell_Pregnant( pawn, pregnantRect, ref curX );
+            
+            var slaughterRect = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
+            DrawCell_Slaughter( pawn, slaughterRect, ref curX );
+            
+            Widgets_Animals.DoTrainingRow( ref curX, pawn );
+            curX += 10f; // some margin
+
+            var areaRect = new Rect( curX, 0f, 350f, canvas.height );
+            AreaAllowedGUI.DoAllowedAreaSelectors( areaRect, pawn, AllowedAreaMode.Animal );
+
+            GUI.EndGroup();
+        }
+
+        private static void DrawCell_Slaughter( Pawn p, Rect canvas, ref float curX )
+        {
+            bool slaughter = Find.VisibleMap.designationManager.DesignationOn( p, DesignationDefOf.Slaughter ) != null;
+
+            if ( slaughter )
             {
-                var rect2 = new Rect( curX, 0f, 90f, rect.height );
-                Rect rect3 = rect2.ContractedBy( 2f );
-                string label = p.playerSettings.master == null
-                                   ? "NoneLower".Translate()
-                                   : p.playerSettings.master.LabelShort;
-                Text.Font = GameFont.Small;
-                if ( Widgets.ButtonText( rect3, label ) )
+                GUI.DrawTexture( canvas, WorkBoxCheckTex );
+                TooltipHandler.TipRegion( canvas, "Fluffy.StopSlaughter".Translate() );
+            }
+            else
+            {
+                TooltipHandler.TipRegion( canvas, "Fluffy.MarkSlaughter".Translate() );
+            }
+            if ( Widgets.ButtonInvisible( canvas ) )
+            {
+                if ( slaughter )
                 {
-                    TrainableUtility.OpenMasterSelectMenu( p );
+                    Widgets_Animals.UnSlaughterAnimal( p );
+                    SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
+                }
+                else
+                {
+                    Widgets_Animals.SlaughterAnimal( p );
+                    SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 }
             }
-            curX += 90f;
+            if ( Mouse.IsOver( canvas ) )
+            {
+                GUI.DrawTexture( canvas, TexUI.HighlightTex );
+            }
 
+            curX += 50f;
+        }
+
+        private static void DrawCell_Pregnant( Pawn p, Rect pregnantRect, ref float curX )
+        {
+            Hediff_Pregnant hediff;
+            if ( p.Pregnant( out hediff ) )
+            {
+                GUI.DrawTexture( pregnantRect, PregnantTex );
+                int total = (int) p.RaceProps.gestationPeriodDays * GenDate.TicksPerDay;
+                int progress = (int) hediff.GestationProgress * total;
+                TooltipHandler.TipRegion( pregnantRect,
+                                          "PregnantIconDesc".Translate( total.ToStringTicksToPeriod(),
+                                                                        progress.ToStringTicksToPeriod() ) );
+            }
+            curX += 50f;
+        }
+
+        private static void DrawCell_Age( Pawn p, Rect rectb, ref float curX )
+        {
+            Texture2D labelAge = p.RaceProps.lifeStageAges.Count > 3
+                                     ? LifeStageTextures[3]
+                                     : LifeStageTextures[p.ageTracker.CurLifeStageIndex];
+            TipSignal tipAge = p.ageTracker.CurLifeStage.LabelCap + ", " + p.ageTracker.AgeBiologicalYears;
+            GUI.DrawTexture( rectb, labelAge );
+            TooltipHandler.TipRegion( rectb, tipAge );
+            curX += 50f;
+        }
+
+        private static void DrawCell_Gender( Pawn p, Rect recta, ref float curX )
+        {
+            Texture2D labelSex = GenderTextures[(int) p.gender];
+            TipSignal tipSex = p.gender.ToString();
+            GUI.DrawTexture( recta, labelSex );
+            TooltipHandler.TipRegion( recta, tipSex );
+            curX += 50f;
+        }
+
+        private static void DrawCell_Follow( Pawn p, ref float curX )
+        {
             Rect draftedRect = new Rect( curX, 0f, 25f, 30f );
             Rect hunterRect = new Rect( curX + 25f, 0f, 25f, 30f );
             curX += 50f;
@@ -670,75 +783,24 @@ namespace Fluffy
                         SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                 }
             }
+        }
 
-            var recta = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
-            Texture2D labelSex = GenderTextures[(int)p.gender];
-            TipSignal tipSex = p.gender.ToString();
-            GUI.DrawTexture( recta, labelSex );
-            TooltipHandler.TipRegion( recta, tipSex );
-            curX += 50f;
-
-            var rectb = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
-            Texture2D labelAge = p.RaceProps.lifeStageAges.Count > 3
-                                     ? LifeStageTextures[3]
-                                     : LifeStageTextures[p.ageTracker.CurLifeStageIndex];
-            TipSignal tipAge = p.ageTracker.CurLifeStage.LabelCap + ", " + p.ageTracker.AgeBiologicalYears;
-            GUI.DrawTexture( rectb, labelAge );
-            TooltipHandler.TipRegion( rectb, tipAge );
-            curX += 50f;
-
-            var pregnantRect = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
-            Hediff_Pregnant hediff;
-            if ( p.Pregnant( out hediff ) )
+        private static void DrawCell_Master( Rect rect, Pawn p, ref float curX )
+        {
+            if ( p.training.IsCompleted( TrainableDefOf.Obedience ) )
             {
-                GUI.DrawTexture( pregnantRect, PregnantTex );
-                int total = (int)p.RaceProps.gestationPeriodDays * GenDate.TicksPerDay;
-                int progress = (int)hediff.GestationProgress * total;
-                TooltipHandler.TipRegion( pregnantRect, "PregnantIconDesc".Translate( total.ToStringTicksToPeriod(), progress.ToStringTicksToPeriod() ) );
-            }
-            curX += 50f;
-
-            var rectc = new Rect( curX, 0f, 50f, 30f );
-            var rectc1 = new Rect( curX + 17f, heightOffset, iconSize, iconSize );
-            bool slaughter = Find.VisibleMap.designationManager.DesignationOn( p, DesignationDefOf.Slaughter ) != null;
-
-            if ( slaughter )
-            {
-                GUI.DrawTexture( rectc1, WorkBoxCheckTex );
-                TooltipHandler.TipRegion( rectc, "Fluffy.StopSlaughter".Translate() );
-            }
-            else
-            {
-                TooltipHandler.TipRegion( rectc, "Fluffy.MarkSlaughter".Translate() );
-            }
-            if ( Widgets.ButtonInvisible( rectc ) )
-            {
-                if ( slaughter )
+                var rect2 = new Rect( curX, 0f, 90f, rect.height );
+                Rect rect3 = rect2.ContractedBy( 2f );
+                string label = p.playerSettings.master == null
+                                   ? "NoneLower".Translate()
+                                   : p.playerSettings.master.LabelShort;
+                Text.Font = GameFont.Small;
+                if ( Widgets.ButtonText( rect3, label ) )
                 {
-                    Widgets_Animals.UnSlaughterAnimal( p );
-                    SoundDefOf.CheckboxTurnedOff.PlayOneShotOnCamera();
-                }
-                else
-                {
-                    Widgets_Animals.SlaughterAnimal( p );
-                    SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
+                    TrainableUtility.OpenMasterSelectMenu( p );
                 }
             }
-            if ( Mouse.IsOver( rectc ) )
-            {
-                GUI.DrawTexture( rectc1, TexUI.HighlightTex );
-            }
-
-            curX += 50f;
-
-            var trainingRect = new Rect( curX, 0f, 80f, 30f );
-            Widgets_Animals.DoTrainingRow( trainingRect, p );
-
             curX += 90f;
-
-            var rect4 = new Rect( curX, 0f, 350f, rect.height );
-            AreaAllowedGUI.DoAllowedAreaSelectors( rect4, p, AllowedAreaMode.Animal );
-            GUI.EndGroup();
         }
     }
 }

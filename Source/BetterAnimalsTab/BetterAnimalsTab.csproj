@@ -64,7 +64,6 @@
     <Compile Include="Dialogs\Dialog_FilterAnimals.cs" />
     <Compile Include="Helpers\Widgets_Animals.cs" />
     <Compile Include="Helpers\Widgets_Follow.cs" />
-    <Compile Include="MainTabs\MainTabWindow_PawnList.cs" />
     <Compile Include="Dialogs\Dialog_RenamePet.cs" />
     <Compile Include="MainTabs\MainTabWindow_Animals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,8 +72,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Saveables\Saveable_WorkGiverDef.cs" />
-    <Compile Include="Saveables\Saveable_WorkTypeDef.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">

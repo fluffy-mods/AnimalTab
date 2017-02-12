@@ -126,7 +126,7 @@ namespace Fluffy
             {
                 Widgets_Filter.ResetFilter();
                 Widgets_Filter.DisableFilter();
-                MainTabWindow_Animals.IsDirty = true;
+                MainTabWindow_Animals.Instance.PawnsDirty = true;
                 Event.current.Use();
             }
 
@@ -136,7 +136,7 @@ namespace Fluffy
                                          "Fluffy.Enable".Translate() ) )
                 {
                     Widgets_Filter.EnableFilter();
-                    MainTabWindow_Animals.IsDirty = true;
+                    MainTabWindow_Animals.Instance.PawnsDirty = true;
                     Event.current.Use();
                 }
             }
@@ -146,7 +146,7 @@ namespace Fluffy
                                          "Fluffy.Disable".Translate() ) )
                 {
                     Widgets_Filter.DisableFilter();
-                    MainTabWindow_Animals.IsDirty = true;
+                    MainTabWindow_Animals.Instance.PawnsDirty = true;
                     Event.current.Use();
                 }
             }
@@ -210,7 +210,7 @@ namespace Fluffy
                 {
                     filter.Bump();
                     SoundDefOf.AmountIncrement.PlayOneShotOnCamera();
-                    MainTabWindow_Animals.IsDirty = true;
+                    MainTabWindow_Animals.Instance.PawnsDirty = true;
                 }
                 if ( Mouse.IsOver( rect ) )
                 {
@@ -245,7 +245,7 @@ namespace Fluffy
                         SoundDefOf.CheckboxTurnedOn.PlayOneShotOnCamera();
                     }
                     Widgets_Filter.TogglePawnKindFilter( pawnKind, inList );
-                    MainTabWindow_Animals.IsDirty = true;
+                    MainTabWindow_Animals.Instance.PawnsDirty = true;
                 }
             }
             _y += _rowHeight;

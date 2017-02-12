@@ -22,8 +22,7 @@ namespace Fluffy
             Hediff_Pregnant dump;
             return pawn.Pregnant( out dump );
         }
-
-
+        
         public static bool IsReproductive( this Pawn pawn )
         {
             bool reproductive = pawn.ageTracker.CurLifeStage.reproductive;
@@ -109,21 +108,18 @@ namespace Fluffy
             }
         }
 
-        public static void DoTrainingRow( Rect rect, Pawn pawn )
+        public static void DoTrainingRow( ref float curX, Pawn pawn )
         {
             List<TrainableDef> trainableDefs = TrainableUtility.TrainableDefsInListOrder;
-            float width = rect.width / trainableDefs.Count;
             var iconSize = 16f;
-            float widthOffset = ( width - iconSize ) / 2;
-            float heightOffset = ( rect.height - iconSize ) / 2;
-            float x = rect.xMin;
-            float y = rect.yMin;
+            float widthOffset = ( widthPerTrainable - iconSize ) / 2;
+            float heightOffset = ( rowHeight - iconSize ) / 2;
 
             foreach ( TrainableDef t in trainableDefs )
             {
-                var bg = new Rect( x, y, width, rect.height );
-                var icon = new Rect( x + widthOffset, y + heightOffset, iconSize, iconSize );
-                x += width;
+                var bg = new Rect( curX, 0, widthPerTrainable, rowHeight );
+                var icon = new Rect( curX + widthOffset, heightOffset, iconSize, iconSize );
+                curX += widthPerTrainable;
                 bool vis;
                 AcceptanceReport report = pawn.training.CanAssignToTrain( t, out vis );
                 TooltipHandler.TipRegion( bg, GetTrainingTip( pawn, t, report ) );

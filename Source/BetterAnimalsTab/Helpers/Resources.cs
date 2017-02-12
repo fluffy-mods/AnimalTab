@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace BetterAnimalsTab
@@ -7,6 +9,10 @@ namespace BetterAnimalsTab
     public static class Resources
     {
         #region Fields
+
+        public const float rowHeight = 30f;
+        public const float widthPerTrainable = 20f;
+        public const float iconSize = 16f;
 
         public static readonly Texture2D BarBg = SolidColorMaterials.NewSolidColorTexture( 0f, 1f, 0f, 0.8f );
 
@@ -35,16 +41,42 @@ namespace BetterAnimalsTab
 
         public static readonly Texture2D SlaughterTex = ContentFinder<Texture2D>.Get( "UI/Buttons/slaughter" );
 
-        public static readonly Texture2D[] TrainingTextures =
+        private static Dictionary<TrainableDef, Texture2D> trainableTextures = new Dictionary<TrainableDef, Texture2D>();
+        private static HashSet<TrainableDef> failedFindingTexture = new HashSet<TrainableDef>();
+
+        public static Texture2D GetUIIcon( this TrainableDef trainable )
         {
-            ContentFinder<Texture2D>.Get( "UI/Training/obedience" ),
-            ContentFinder<Texture2D>.Get( "UI/Training/release" ),
-            ContentFinder<Texture2D>.Get( "UI/Training/rescue" ),
-            ContentFinder<Texture2D>.Get( "UI/Training/haul" )
-        };
+            // did we fail finding this before?
+            if ( failedFindingTexture.Contains( trainable ) )
+                return null;
+
+            // try get from cache
+            Texture2D texture;
+            if ( trainableTextures.TryGetValue( trainable, out texture ) )
+                return texture;
+
+            // first time trying to get this texture
+#if DEBUG
+            texture = ContentFinder<Texture2D>.Get( $"UI/Training/{trainable.defName}", true );
+#else
+            texture = ContentFinder<Texture2D>.Get($"UI/Training/{trainable.defName}", false);
+#endif
+
+            if ( texture == null )
+            {
+                Log.Warning( $"Failed to get UI Icon for {trainable.LabelCap} (defName: {trainable.defName}). UI Icon should be placed in 'UI/Training/{trainable.defName}(.png)'." );
+                failedFindingTexture.Add( trainable );
+                return null;
+            }
+            else
+            {
+                trainableTextures.Add( trainable, texture );
+                return texture;
+            }
+        }
 
         public static readonly Texture2D WorkBoxCheckTex = ContentFinder<Texture2D>.Get( "UI/Widgets/WorkBoxCheck" );
 
-        #endregion Fields
+#endregion Fields
     }
 }
