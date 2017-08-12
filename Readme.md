@@ -1,4 +1,4 @@
-[![RimWorld Alpha 16](https://img.shields.io/badge/RimWorld-Alpha%2016-brightgreen.svg)](http://rimworldgame.com/)
+[![RimWorld Alpha 17](https://img.shields.io/badge/RimWorld-Alpha%2017-brightgreen.svg)](http://rimworldgame.com/)
 
 Adds extra functionality to the Animals tab 
 
@@ -42,4 +42,4 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [![Buy Me a Coffee](http://i.imgur.com/EjWiUwx.gif)](https://ko-fi.com/fluffymods)
 
 # Version
-This is version v0.16.1.7
+This is version v0.17.0.0
