@@ -3,7 +3,7 @@
   <name>Animal Tab</name>
   <author>Fluffy</author>
   <url>https://ludeon.com/forums/index.php?topic=16120.0</url>
-  <targetVersion>0.16.1393</targetVersion>
+  <targetVersion>0.17.1557</targetVersion>
   <description>Adds extra functionality to the Animals tab 
 
 &lt;size=24&gt;Important&lt;/size&gt;
@@ -28,7 +28,8 @@ urty5656:    Introduction to the magic of reflection &amp; translations, Korean 
 rgponce:    Brazilian Portuguese translation
 frenchiveruti:    
 
-tag:Fluffylicious
+&lt;size=24&gt;Version&lt;/size&gt;
+This is version v0.16.1.6
 
 </description>
 </ModMetaData>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <AnimalTab.AnimalRenamed>{0} is now known as {1}.</AnimalTab.AnimalRenamed>
+    <AnimalTab.CtrlClickToRename>Ctrl + click: rename</AnimalTab.CtrlClickToRename>
+
+</LanguageData>
