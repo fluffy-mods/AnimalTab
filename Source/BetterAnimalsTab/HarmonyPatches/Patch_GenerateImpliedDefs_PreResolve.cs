@@ -18,10 +18,13 @@ namespace AnimalTab
             var columns = animalTable.columns;
 
             // replace label column
-            // NOTE: We can't simply replace the workerType, as the label column is used in multiple tabs.
+            // NOTE: We can't simply replace the workerType, as these columns are used in multiple tabs.
             var labelIndex = columns.IndexOf( Label );
             columns.RemoveAt( labelIndex );
             columns.Insert( labelIndex, AnimalTabLabel );
+            var areaIndex = columns.IndexOf( AllowedAreaWide );
+            columns.RemoveAt( areaIndex );
+            columns.Insert( areaIndex, AnimalTabAllowedArea );
 
             // move master and follow columns after lifestage
             var lifeStageIndex = columns.FindIndex( c => c.workerClass == typeof( PawnColumnWorker_LifeStage ) );
@@ -45,24 +48,25 @@ namespace AnimalTab
             columns.RemoveAll( c => c == GapTiny );
             columns.Insert( lifeStageIndex + 1, GapTiny );
             columns.Insert( columns.IndexOf( followFieldworkColumn ) + 1, GapTiny );
-            columns.Insert( columns.FindLastIndex( c => c.workerClass == typeof( PawnColumnWorker_Trainable ) ) + 1, GapTiny );
+            columns.Insert( columns.FindLastIndex( c => c.workerClass == typeof( PawnColumnWorker_Trainable ) ) + 1,
+                GapTiny );
             columns.Insert( slaughterIndex + 1, GapTiny );
 
             // make all icons the same size.
             foreach ( var column in columns )
                 column.headerIconSize = HeaderIconSize;
 
-            // set new worker for slaughter column
+            // set new worker for master, slaughter, follow and pregnant columns
+            Master.workerClass = typeof( PawnColumnWorker_Master );
             Slaughter.workerClass = typeof( PawnColumnWorker_Slaughter );
+            FollowDrafted.workerClass = typeof( PawnColumnWorker_FollowDrafted );
+            FollowFieldwork.workerClass = typeof( PawnColumnWorker_FollowFieldwork );
+            Pregnant.workerClass = typeof( PawnColumnWorker_Pregnant );
 
             // set new workers for trainable columns
             foreach ( var column in columns.Where( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_Trainable ) )
             )
                 column.workerClass = typeof( PawnColumnWorker_Trainable );
-
-            // set new workers for follow columns
-            FollowDrafted.workerClass = typeof( PawnColumnWorker_FollowDrafted );
-            FollowFieldwork.workerClass = typeof( PawnColumnWorker_FollowFieldwork );
 
             // reset all workers to make sure they are resolved to the new type
             // NOTE: Vanilla inserts columns by checking for 'Worker', which resolves some workers - we need to reset that.

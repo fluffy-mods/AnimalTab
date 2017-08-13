@@ -2,11 +2,14 @@
 // Copyright Karel Kroeze, 2017-2017
 
 using RimWorld;
+using UnityEngine;
 
 namespace AnimalTab
 {
     public class MainTabWindow_Animals : RimWorld.MainTabWindow_Animals
     {
         protected override PawnTableDef PawnTableDef => PawnTableDefOf.Animals;
+        
+
     }
 }

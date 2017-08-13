@@ -54,6 +54,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Filters\FilterState.cs" />
+    <Compile Include="Filters\FilterWorker_Age.cs" />
+    <Compile Include="Filters\FilterWorker_Gender.cs" />
+    <Compile Include="Filters\FilterWorker_Milkable.cs" />
+    <Compile Include="Filters\FilterWorker_Pregnant.cs" />
+    <Compile Include="Filters\FilterWorker_Reproductive.cs" />
+    <Compile Include="Filters\FilterWorker_Shearable.cs" />
+    <Compile Include="Filters\PawnTableFilterDef.cs" />
+    <Compile Include="Filters\FilterWorker.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_AllowedArea.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_Master.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Meat.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Wool.cs" />
     <Compile Include="Utilities\DefOf.cs" />
