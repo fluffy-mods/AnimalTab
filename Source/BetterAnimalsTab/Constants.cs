@@ -8,5 +8,6 @@ namespace AnimalTab
     public class Constants
     {
         public static Vector2 HeaderIconSize = new Vector2( 16, 16 );
+        public static float CheckBoxSize = 16;
     }
 }

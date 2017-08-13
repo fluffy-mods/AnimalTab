@@ -11,7 +11,7 @@
 
   <PawnColumnDef>
     <defName>AnimalTabLabel</defName>
-    <workerClass>AnimalTab.PawnColumnWorker_AnimalTabLabel</workerClass>
+    <workerClass>AnimalTab.PawnColumnWorker_Label</workerClass>
     <widthPriority>100</widthPriority>
   </PawnColumnDef>
 </Defs>

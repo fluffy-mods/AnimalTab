@@ -7,7 +7,7 @@ using Verse;
 
 namespace AnimalTab
 {
-    public class PawnColumnWorker_AnimalTabLabel : PawnColumnWorker_Label
+    public class PawnColumnWorker_Label : RimWorld.PawnColumnWorker_Label
     {
         public override void DoCell( Rect rect, Pawn pawn, PawnTable table )
         {
