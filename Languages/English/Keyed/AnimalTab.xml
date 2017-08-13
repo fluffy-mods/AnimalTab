@@ -3,5 +3,5 @@
 
     <AnimalTab.AnimalRenamed>{0} is now known as {1}.</AnimalTab.AnimalRenamed>
     <AnimalTab.CtrlClickToRename>Ctrl + click: rename</AnimalTab.CtrlClickToRename>
-
+    <AnimalTab.GatherableTip>{0} x{1}</AnimalTab.GatherableTip>
 </LanguageData>
