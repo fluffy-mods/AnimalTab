@@ -1,6 +1,7 @@
 ﻿// PawnTableFilterWorker.cs
 // Copyright Karel Kroeze, 2017-2017
 
+using System;
 using System.Resources;
 using UnityEngine;
 using Verse;
@@ -42,9 +43,11 @@ namespace AnimalTab
                     return;
 
                 _state = value;
-                // TODO: Rebuild table
+                MainTabWindow_Animals.Instance.Notify_PawnsChanged();
             }
         }
+
+        public virtual FilterState NextState => (FilterState) ( ( (int)State + 1 ) % Enum.GetValues( typeof( FilterState ) ).Length );
 
         public virtual Color Colour
         {
@@ -53,9 +56,9 @@ namespace AnimalTab
                 switch ( State )
                 {
                     case FilterState.Inclusive:
-                        return Color.white;
+                        return GenUI.MouseoverColor;
                     case FilterState.Exclusive:
-                        return Color.red;
+                        return Constants.DarkRed;
                     default:
                         return Color.grey;
                 }
@@ -66,28 +69,18 @@ namespace AnimalTab
 
         public virtual string GetTooltip()
         {
-            return "AnimalTab.FilterTip".Translate( Adjective( State ) );
+            return "AnimalTab.FilterTip".Translate( Adjective( State ), Adjective( NextState ) );
         }
 
         public virtual void Clicked()
         {
-            switch ( State )
-            {
-                case FilterState.Inactive:
-                    State = FilterState.Inclusive;
-                    break;
-                case FilterState.Inclusive:
-                    State = FilterState.Exclusive;
-                    break;
-                case FilterState.Exclusive:
-                    State = FilterState.Inactive;
-                    break;
-            }
+            State = NextState;
         }
 
         public virtual void Draw( Rect rect )
         {
-            if ( Widgets.ButtonImage( rect, Icon, Colour, GenUI.MouseoverColor ) )
+            TooltipHandler.TipRegion( rect, GetTooltip, (int)rect.center.x * 541 );
+            if ( Widgets.ButtonImage( rect, Icon, Colour, Colour * 1.5f ) )
                 Clicked();
         }
 

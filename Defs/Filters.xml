@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+    <AnimalTab.FilterDef>
+        <defName>Filter_Training</defName>
+        <label>training</label>
+        <workerClass>AnimalTab.FilterWorker_Training</workerClass>
+        <icon>UI/Icons/Filters/Training</icon>
+    </AnimalTab.FilterDef>
 
     <AnimalTab.FilterDef>
         <defName>Filter_Age</defName>
@@ -28,12 +34,12 @@
     </AnimalTab.FilterDef>
     
     <AnimalTab.FilterDef>
-        <defName>Filter_Pregnant</defName>
-        <label>pregnant</label>
-        <workerClass>AnimalTab.FilterWorker_Age</workerClass>
-        <icon>UI/Icons/Filters/Pregnant</icon>
+        <defName>Filter_Shearable</defName>
+        <label>shearable</label>
+        <workerClass>AnimalTab.FilterWorker_Shearable</workerClass>
+        <icon>UI/Icons/Filters/Shearable</icon>
     </AnimalTab.FilterDef>
-    
+
     <AnimalTab.FilterDef>
         <defName>Filter_Reproductive</defName>
         <label>reproductive</label>
@@ -42,10 +48,10 @@
     </AnimalTab.FilterDef>
     
     <AnimalTab.FilterDef>
-        <defName>Filter_Shearable</defName>
-        <label>shearable</label>
-        <workerClass>AnimalTab.FilterWorker_Shearable</workerClass>
-        <icon>UI/Icons/Filters/Age</icon>
+        <defName>Filter_Pregnant</defName>
+        <label>pregnant</label>
+        <workerClass>AnimalTab.FilterWorker_Age</workerClass>
+        <icon>UI/Icons/Filters/Pregnant</icon>
     </AnimalTab.FilterDef>
-    
+        
 </Defs>

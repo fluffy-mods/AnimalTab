@@ -4,8 +4,8 @@ namespace AnimalTab
 {
     public enum FilterState
     {
-        Inclusive,
-        Exclusive,
-        Inactive
+        Inclusive = 0,
+        Exclusive = 1,
+        Inactive = 2
     }
 }

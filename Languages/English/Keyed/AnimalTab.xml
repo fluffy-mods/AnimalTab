@@ -11,4 +11,16 @@
 	<AnimalTab.MassAssignMaster>Assign all to {0} ( Skill {1}, {2}/{3} can be assigned )</AnimalTab.MassAssignMaster>
 	<AnimalTab.NoObedientAnimals>No obedient animals to assign</AnimalTab.NoObedientAnimals>
 
+    <AnimalTab.Not>not {0}</AnimalTab.Not>
+    <AnimalTab.Any>any</AnimalTab.Any>
+    <AnimalTab.All>All</AnimalTab.All>
+    <AnimalTab.And> and </AnimalTab.And>
+    <AnimalTab.Or> or </AnimalTab.Or>
+    <AnimalTab.Comma>, </AnimalTab.Comma>
+
+    <AnimalTab.FilterTip>Showing {0} pawns\n\nClick to show {1} pawns</AnimalTab.FilterTip>
+    <AnimalTab.TrainableFilterTip>Showing pawns trained in {0}\n\nClick to change filter</AnimalTab.TrainableFilterTip>
+    <AnimalTab.TrainableFilterInactiveTip>Showing all pawns\n\nClick to change filter</AnimalTab.TrainableFilterInactiveTip>
+    <AnimalTab.PawnKindFilterTip>Showing {0}\n\nClick to change filter</AnimalTab.PawnKindFilterTip>
+
 </LanguageData>

@@ -61,6 +61,7 @@
     <Compile Include="Filters\FilterWorker_Pregnant.cs" />
     <Compile Include="Filters\FilterWorker_Reproductive.cs" />
     <Compile Include="Filters\FilterWorker_Shearable.cs" />
+    <Compile Include="Filters\FilterWorker_Training.cs" />
     <Compile Include="Filters\PawnTableFilterDef.cs" />
     <Compile Include="Filters\FilterWorker.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_AllowedArea.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="MainTabWindow_Animals.cs" />
     <Compile Include="Dialog_RenameAnimal.cs" />
     <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\FloatMenuOption_Persistent.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="HarmonyPatches\Patch_GenerateImpliedDefs_PreResolve.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_AnimalTabLabel.cs" />
