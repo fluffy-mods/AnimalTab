@@ -12,7 +12,8 @@ namespace AnimalTab
         public static Texture2D CheckboxBackground,
             CheckboxBackground_Danger,
             CheckOnWhite,
-            Filter;
+            Filter,
+            Pregnant;
 
         static Resources()
         {
@@ -20,6 +21,7 @@ namespace AnimalTab
             CheckboxBackground_Danger = SolidColorMaterials.NewSolidColorTexture(0.8f, 0f, 0f, .2f);
             CheckOnWhite = ContentFinder<Texture2D>.Get("UI/Icons/Animal/CheckOnWhite");
             Filter = ContentFinder<Texture2D>.Get( "UI/Icons/Filters/Filter" );
-        }
+            Pregnant = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Pregnant");
+    }
     }
 }

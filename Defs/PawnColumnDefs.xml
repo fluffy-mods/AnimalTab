@@ -4,6 +4,7 @@
     <defName>AnimalTabLabel</defName>
     <workerClass>AnimalTab.PawnColumnWorker_Label</workerClass>
     <widthPriority>100</widthPriority>
+    <sortable>true</sortable>
   </PawnColumnDef>
 
   <PawnColumnDef>

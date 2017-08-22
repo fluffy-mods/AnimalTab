@@ -55,6 +55,11 @@ namespace AnimalTab
             }
         }
 
+        // ugh, Tynan, please.
+        public IEnumerable<Pawn> FilteredPawns => Pawns;
+
+        public IEnumerable<Pawn> UnfilteredPawns => base.Pawns;
+
         private void DoFilterBar( Rect rect )
         {
             var barWidth = Filters.Count() * ( FilterButtonSize + Margin ) + Margin;

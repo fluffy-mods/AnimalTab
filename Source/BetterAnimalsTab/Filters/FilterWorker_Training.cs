@@ -18,15 +18,17 @@ namespace AnimalTab
         public override FilterState State
         {
             get { return allowed.Values().Any( v => v ) ? FilterState.Inclusive : FilterState.Inactive; }
-            set => throw new InvalidOperationException( "FilterWorker_Trainer.set_State() should never be called" );
+            set => throw new InvalidOperationException( "FilterWorker_Training.set_State() should never be called" );
         }
 
         public override bool Allows( Pawn pawn )
         {
             if ( State == FilterState.Inactive )
                 return true;
+            if ( pawn?.training == null )
+                return false;
             foreach ( var trainable in Trainables)
-                if ( allowed[trainable] && ( pawn.training?.IsCompleted( trainable ) ?? false ) )
+                if ( allowed[trainable] && pawn.training.IsCompleted( trainable ) )
                     return true;
             return false;
         }
@@ -55,11 +57,9 @@ namespace AnimalTab
 
         private bool DrawOptionExtra( Rect rect, TrainableDef trainable )
         {
-            Logger.Debug( "DrawOptionExtra called with " + rect );
             if ( State == FilterState.Inclusive && allowed[trainable] )
             {
-                Rect checkRect = new Rect(rect.xMax - rect.height, rect.yMin + Constants.Margin, rect.height, rect.height).ContractedBy(7f);
-                Logger.Debug( "CheckRect is " + checkRect );
+                Rect checkRect = new Rect(rect.xMax - rect.height + Constants.Margin, rect.yMin, rect.height, rect.height).ContractedBy(7f);
                 GUI.DrawTexture(checkRect, Widgets.CheckboxOnTex);
             }
             return false;
@@ -68,7 +68,7 @@ namespace AnimalTab
         public override string GetTooltip()
         {
             if ( State == FilterState.Inactive )
-                return "AnimalTab.TrainableFilterInactiveTip".Translate();
+                return "AnimalTab.FilterInactiveTip".Translate();
 
             var _allowed = new List<string>();
             foreach ( var trainable in Trainables )

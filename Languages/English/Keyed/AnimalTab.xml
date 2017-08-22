@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+    <AnimalTab.LabelHeaderTip>Click: sort by name\nCtrl + click: sort by kind</AnimalTab.LabelHeaderTip>
     <AnimalTab.AnimalRenamed>{0} is now known as {1}.</AnimalTab.AnimalRenamed>
     <AnimalTab.CtrlClickToRename>Ctrl + click: rename</AnimalTab.CtrlClickToRename>
     <AnimalTab.GatherableTip>{0} x{1}</AnimalTab.GatherableTip>
@@ -18,9 +19,9 @@
     <AnimalTab.Or> or </AnimalTab.Or>
     <AnimalTab.Comma>, </AnimalTab.Comma>
 
-    <AnimalTab.FilterTip>Showing {0} pawns\n\nClick to show {1} pawns</AnimalTab.FilterTip>
-    <AnimalTab.TrainableFilterTip>Showing pawns trained in {0}\n\nClick to change filter</AnimalTab.TrainableFilterTip>
-    <AnimalTab.TrainableFilterInactiveTip>Showing all pawns\n\nClick to change filter</AnimalTab.TrainableFilterInactiveTip>
+    <AnimalTab.FilterTip>Showing {0} animals\n\nClick to show {1} animals</AnimalTab.FilterTip>
+    <AnimalTab.TrainableFilterTip>Showing animals trained in {0}\n\nClick to change filter</AnimalTab.TrainableFilterTip>
     <AnimalTab.PawnKindFilterTip>Showing {0}\n\nClick to change filter</AnimalTab.PawnKindFilterTip>
+    <AnimalTab.FilterInactiveTip>Showing all animals\n\nClick to change filter</AnimalTab.FilterInactiveTip>
 
 </LanguageData>

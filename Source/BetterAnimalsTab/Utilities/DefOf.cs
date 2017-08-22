@@ -20,5 +20,7 @@ namespace AnimalTab
         public static PawnColumnDef Milk;
         public static PawnColumnDef Meat;
         public static PawnColumnDef Pregnant;
+        public static PawnColumnDef Gender;
+        public static PawnColumnDef LifeStage;
     }
 }

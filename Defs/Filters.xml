@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
     <AnimalTab.FilterDef>
+        <defName>Filter_PawnKind</defName>
+        <label>pawnkinf</label>
+        <workerClass>AnimalTab.FilterWorker_PawnKind</workerClass>
+        <icon>UI/Icons/Filters/PawnKind</icon>
+    </AnimalTab.FilterDef>
+
+    <AnimalTab.FilterDef>
         <defName>Filter_Training</defName>
         <label>training</label>
         <workerClass>AnimalTab.FilterWorker_Training</workerClass>
@@ -50,7 +57,7 @@
     <AnimalTab.FilterDef>
         <defName>Filter_Pregnant</defName>
         <label>pregnant</label>
-        <workerClass>AnimalTab.FilterWorker_Age</workerClass>
+        <workerClass>AnimalTab.FilterWorker_Pregnant</workerClass>
         <icon>UI/Icons/Filters/Pregnant</icon>
     </AnimalTab.FilterDef>
         

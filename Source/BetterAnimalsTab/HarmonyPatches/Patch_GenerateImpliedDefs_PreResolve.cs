@@ -12,7 +12,7 @@ namespace AnimalTab
     [HarmonyPatch( typeof( DefGenerator ), "GenerateImpliedDefs_PreResolve" )]
     public class Patch_GenerateImpliedDefs_PreResolve
     {
-        private static void Postfix()
+        public static void Postfix()
         {
             var animalTable = PawnTableDefOf.Animals;
             var columns = animalTable.columns;
@@ -26,17 +26,16 @@ namespace AnimalTab
             columns.RemoveAt( areaIndex );
             columns.Insert( areaIndex, AnimalTabAllowedArea );
 
-            // move master and follow columns after lifestage
+            // move pregnant, master and follow columns after lifestage
             var lifeStageIndex = columns.FindIndex( c => c.workerClass == typeof( PawnColumnWorker_LifeStage ) );
-            var masterColumn = columns.Find( c => c == Master );
-            var followDraftedColumn = columns.Find( c => c == FollowDrafted );
-            var followFieldworkColumn = columns.Find( c => c == FollowFieldwork );
-            columns.Remove( masterColumn );
-            columns.Insert( lifeStageIndex + 1, masterColumn );
-            columns.Remove( followDraftedColumn );
-            columns.Insert( lifeStageIndex + 2, followDraftedColumn );
-            columns.Remove( followFieldworkColumn );
-            columns.Insert( lifeStageIndex + 3, followFieldworkColumn );
+            columns.Remove( Pregnant );
+            columns.Insert( lifeStageIndex + 1, Pregnant );
+            columns.Remove( Master );
+            columns.Insert( lifeStageIndex + 2, Master );
+            columns.Remove( FollowDrafted );
+            columns.Insert( lifeStageIndex + 3, FollowDrafted );
+            columns.Remove( FollowFieldwork );
+            columns.Insert( lifeStageIndex + 4, FollowFieldwork );
 
             // insert wool, milk & meat columns before slaughter
             var slaughterIndex = columns.IndexOf( Slaughter );
@@ -47,10 +46,14 @@ namespace AnimalTab
             // remove all gaps, insert new ones at appropriate places
             columns.RemoveAll( c => c == GapTiny );
             columns.Insert( lifeStageIndex + 1, GapTiny );
-            columns.Insert( columns.IndexOf( followFieldworkColumn ) + 1, GapTiny );
-            columns.Insert( columns.FindLastIndex( c => c.workerClass == typeof( PawnColumnWorker_Trainable ) ) + 1,
-                GapTiny );
+            columns.Insert( columns.IndexOf( FollowFieldwork ) + 1, GapTiny );
+            columns.Insert( columns.FindLastIndex( c => c.workerClass == typeof( PawnColumnWorker_Trainable ) ) + 1, GapTiny );
             columns.Insert( slaughterIndex + 1, GapTiny );
+
+            // add header tips to gender, lifestage and pregnant
+            Gender.headerTip = "Gender";
+            LifeStage.headerTip = "Lifestage";
+            Pregnant.headerTip = "Pregnant";
 
             // make all icons the same size.
             foreach ( var column in columns )
@@ -61,11 +64,9 @@ namespace AnimalTab
             Slaughter.workerClass = typeof( PawnColumnWorker_Slaughter );
             FollowDrafted.workerClass = typeof( PawnColumnWorker_FollowDrafted );
             FollowFieldwork.workerClass = typeof( PawnColumnWorker_FollowFieldwork );
-            Pregnant.workerClass = typeof( PawnColumnWorker_Pregnant );
 
             // set new workers for trainable columns
-            foreach ( var column in columns.Where( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_Trainable ) )
-            )
+            foreach ( var column in columns.Where( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_Trainable ) ) )
                 column.workerClass = typeof( PawnColumnWorker_Trainable );
 
             // reset all workers to make sure they are resolved to the new type
