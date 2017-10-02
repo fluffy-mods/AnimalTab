@@ -13,7 +13,7 @@ namespace AnimalTab
     public class FilterWorker_PawnKind : FilterWorker
     {
         DefMap<PawnKindDef, bool> allowed = new DefMap<PawnKindDef, bool>();
-        private IEnumerable<PawnKindDef> PawnKinds => MainTabWindow_Animals.Instance.UnfilteredPawns.Select( p => p.kindDef ).Distinct();
+        private IEnumerable<PawnKindDef> PawnKinds => MainTabWindow_Animals.Instance.AllPawns.Select( p => p.kindDef ).Distinct();
 
         public override FilterState State
         {

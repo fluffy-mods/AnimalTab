@@ -50,25 +50,37 @@ namespace AnimalTab
             get
             {
                 if (Filter)
-                    return base.Pawns.Where( p => Filters.All( f => f.Allows( p ) ) );
-                return base.Pawns;
+                    return AllPawns.Where( p => Filters.All( f => f.Allows( p ) ) );
+                return AllPawns;
             }
         }
 
-        // ugh, Tynan, please.
-        public IEnumerable<Pawn> FilteredPawns => Pawns;
-
-        public IEnumerable<Pawn> UnfilteredPawns => base.Pawns;
+        public IEnumerable<Pawn> AllPawns => base.Pawns;
 
         private void DoFilterBar( Rect rect )
         {
             var barWidth = Filters.Count() * ( FilterButtonSize + Margin ) + Margin;
             Rect buttonRect = new Rect(rect.xMax - Margin - ButtonSize, rect.yMin + Margin, ButtonSize, ButtonSize);
             Rect barRect = new Rect( buttonRect.xMin - Margin - barWidth, rect.yMin + Margin, barWidth, ButtonSize );
+            Rect countRect = new Rect( rect.xMin + Margin, barRect.yMax + Margin, rect.width - ButtonSize - Margin * 3, ButtonSize );
 
             DrawFilterButton( buttonRect );
-            if (Filter)
+            if ( Filter )
+            {
                 DrawFilters(barRect, Filters);
+                DrawCounts( countRect );
+            }
+        }
+
+        private void DrawCounts( Rect rect )
+        {
+            Text.Anchor = TextAnchor.UpperRight;
+            Text.Font = GameFont.Tiny;
+            GUI.color = Color.grey;
+            Widgets.Label( rect, "AnimalTab.XofYShown".Translate( Pawns.Count(), AllPawns.Count() ) );
+            GUI.color = Color.white;
+            Text.Font = GameFont.Medium;
+            Text.Anchor = TextAnchor.UpperLeft;
         }
 
         private void DrawFilters( Rect rect, IEnumerable<FilterWorker> filters )
@@ -97,9 +109,6 @@ namespace AnimalTab
             get => _filter;
             set
             {
-                if ( _filter == value )
-                    return;
-
                 _filter = value;
                 Notify_PawnsChanged();
             }
