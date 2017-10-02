@@ -2,7 +2,7 @@
 <Defs>
     <AnimalTab.FilterDef>
         <defName>Filter_PawnKind</defName>
-        <label>pawnkinf</label>
+        <label>pawnkind</label>
         <workerClass>AnimalTab.FilterWorker_PawnKind</workerClass>
         <icon>UI/Icons/Filters/PawnKind</icon>
     </AnimalTab.FilterDef>

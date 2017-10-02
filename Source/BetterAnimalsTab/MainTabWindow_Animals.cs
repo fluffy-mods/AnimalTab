@@ -138,6 +138,9 @@ namespace AnimalTab
             get => _filter;
             set
             {
+                if ( _filter == value )
+                    return;
+
                 _filter = value;
                 Notify_PawnsChanged();
             }
