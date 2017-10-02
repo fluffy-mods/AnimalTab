@@ -15,6 +15,13 @@
     </AnimalTab.FilterDef>
 
     <AnimalTab.FilterDef>
+        <defName>Filter_Intelligence</defName>
+        <label>intelligence</label>
+        <workerClass>AnimalTab.FilterWorker_Intelligence</workerClass>
+        <icon>UI/Icons/Filters/Intelligence</icon>
+    </AnimalTab.FilterDef>
+
+    <AnimalTab.FilterDef>
         <defName>Filter_Age</defName>
         <label>age</label>
         <workerClass>AnimalTab.FilterWorker_Age</workerClass>

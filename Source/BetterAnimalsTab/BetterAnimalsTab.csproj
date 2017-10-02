@@ -57,6 +57,7 @@
     <Compile Include="Filters\FilterState.cs" />
     <Compile Include="Filters\FilterWorker_Age.cs" />
     <Compile Include="Filters\FilterWorker_Gender.cs" />
+    <Compile Include="Filters\FilterWorker_Intelligence.cs" />
     <Compile Include="Filters\FilterWorker_Milkable.cs" />
     <Compile Include="Filters\FilterWorker_PawnKind.cs" />
     <Compile Include="Filters\FilterWorker_Pregnant.cs" />

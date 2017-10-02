@@ -70,10 +70,7 @@ namespace AnimalTab
             if ( State == FilterState.Inactive )
                 return "AnimalTab.FilterInactiveTip".Translate();
 
-            var _allowed = new List<string>();
-            foreach ( var trainable in Trainables )
-                if (allowed[trainable])
-                    _allowed.Add( trainable.label );
+            var _allowed = ( from trainable in Trainables where allowed[trainable] select trainable.label ).ToList();
             return "AnimalTab.TrainableFilterTip".Translate( _allowed.ToStringList( "AnimalTab.Or".Translate() ) );
         }
     }
