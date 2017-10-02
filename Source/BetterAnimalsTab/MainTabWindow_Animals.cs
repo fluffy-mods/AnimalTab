@@ -45,17 +45,46 @@ namespace AnimalTab
             }
         }
 
-        protected override IEnumerable<Pawn> Pawns
+        protected override IEnumerable<Pawn> Pawns => Filter ? FilteredPawns : AllPawns;
+
+        public IEnumerable<Pawn> FilteredPawns
         {
             get
             {
-                if (Filter)
-                    return AllPawns.Where( p => Filters.All( f => f.Allows( p ) ) );
-                return AllPawns;
+                if (_filteredPawns == null)
+                    RecachePawns();
+                return _filteredPawns;
             }
         }
+        private IEnumerable<Pawn> _filteredPawns;
 
-        public IEnumerable<Pawn> AllPawns => base.Pawns;
+        public IEnumerable<Pawn> AllPawns
+        {
+            get
+            {
+                if (_allPawns == null)
+                    RecachePawns();
+                return _filteredPawns;
+            }
+        }
+        private IEnumerable<Pawn> _allPawns;
+
+        // Note that we're overriding this _only_ because it's called from Notify_PawnsChanged, and unlike that method,
+        // this one is virtual.
+        protected override void SetInitialSizeAndPosition()
+        {
+            // don't give a damn about this part.
+            base.SetInitialSizeAndPosition();
+
+            // cache our pawn lists.
+            RecachePawns();
+        }
+
+        public void RecachePawns()
+        {
+            _allPawns = base.Pawns;
+            _filteredPawns = base.Pawns.Where( p => Filters.All( f => f.Allows( p ) ) );
+        }
 
         private void DoFilterBar( Rect rect )
         {
