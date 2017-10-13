@@ -64,7 +64,7 @@ namespace AnimalTab
             {
                 if (_allPawns == null)
                     RecachePawns();
-                return _filteredPawns;
+                return _allPawns;
             }
         }
         private IEnumerable<Pawn> _allPawns;
