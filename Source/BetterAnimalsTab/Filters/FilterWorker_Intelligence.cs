@@ -57,7 +57,7 @@ namespace AnimalTab
 
         private FloatMenuOption_Persistent GetOption( TrainableIntelligenceDef intelligence )
         {
-            var label = "TrainableIntelligence".Translate() + ": " + intelligence.GetLabel().CapitalizeFirst();
+            var label = "TrainableIntelligence".Translate() + ": " + intelligence.LabelCap;
             return new FloatMenuOption_Persistent( label, () => Toggle( intelligence ), extraPartWidth: 30f,
                 extraPartOnGUI: rect => DrawOptionExtra( rect, intelligence ) );
         }
@@ -80,7 +80,7 @@ namespace AnimalTab
 
             var allowed = ( from intelligence in Intelligences
                 where _allowed[intelligence]
-                select intelligence.GetLabel() ).ToList();
+                select intelligence.label ).ToList();
             return "AnimalTab.IntelligenceFilterTip".Translate( allowed.ToStringList( "AnimalTab.Or".Translate() ) );
         }
     }

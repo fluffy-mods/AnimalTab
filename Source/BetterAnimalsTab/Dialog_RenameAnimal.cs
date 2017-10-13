@@ -2,6 +2,7 @@
 // Copyright Karel Kroeze, 2017-2017
 
 using Verse;
+using RimWorld;
 
 namespace AnimalTab
 {
@@ -20,7 +21,7 @@ namespace AnimalTab
         protected override void SetName( string name )
         {
             animal.Name = new NameSingle( curName );
-            Messages.Message( "AnimalTab.AnimalRenamed".Translate( oldName, curName ), MessageSound.Benefit );
+            Messages.Message( "AnimalTab.AnimalRenamed".Translate( oldName, curName ), MessageTypeDefOf.SilentInput );
         }
     }
 }
