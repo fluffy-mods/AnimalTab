@@ -12,7 +12,8 @@ namespace AnimalTab
         public static readonly Color DarkRed = new Color( .6f, 0f, 0f, 1f );
         public const float CheckBoxSize = 16;
         public const int TextCellWidth = 50;
-        public const int ExtraTopSpace = 50;
+        public const int ExtraTopSpace = 0;
+        public const int ExtraBottomSpace = 300;
         public const int FilterButtonSize = 16;
         public const int Margin = 6;
         public const int ButtonSize = 32;

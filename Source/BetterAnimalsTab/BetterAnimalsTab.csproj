@@ -67,6 +67,7 @@
     <Compile Include="Filters\PawnTableFilterDef.cs" />
     <Compile Include="Filters\FilterWorker.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_AllowedArea.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_LifeStage.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Master.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Meat.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Wool.cs" />

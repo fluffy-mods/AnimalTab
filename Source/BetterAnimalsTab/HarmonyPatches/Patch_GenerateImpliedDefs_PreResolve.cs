@@ -27,7 +27,7 @@ namespace AnimalTab
             columns.Insert( areaIndex, AnimalTabAllowedArea );
 
             // move pregnant, master and follow columns after lifestage
-            var lifeStageIndex = columns.FindIndex( c => c.workerClass == typeof( PawnColumnWorker_LifeStage ) );
+            var lifeStageIndex = columns.FindIndex( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_LifeStage ) );
             columns.Remove( Pregnant );
             columns.Insert( lifeStageIndex + 1, Pregnant );
             columns.Remove( Master );
@@ -59,11 +59,12 @@ namespace AnimalTab
             foreach ( var column in columns )
                 column.headerIconSize = HeaderIconSize;
 
-            // set new worker for master, slaughter, follow and pregnant columns
+            // set new worker for master, slaughter, follow and lifestage columns
             Master.workerClass = typeof( PawnColumnWorker_Master );
             Slaughter.workerClass = typeof( PawnColumnWorker_Slaughter );
             FollowDrafted.workerClass = typeof( PawnColumnWorker_FollowDrafted );
             FollowFieldwork.workerClass = typeof( PawnColumnWorker_FollowFieldwork );
+            LifeStage.workerClass = typeof( PawnColumnWorker_LifeStage );
 
             // set new workers for trainable columns
             foreach ( var column in columns.Where( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_Trainable ) ) )

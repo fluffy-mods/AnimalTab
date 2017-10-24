@@ -20,11 +20,9 @@ namespace AnimalTab
         }
 
         public static MainTabWindow_Animals Instance => _instance;
-
         protected override PawnTableDef PawnTableDef => PawnTableDefOf.Animals;
-
         protected override float ExtraTopSpace => Constants.ExtraTopSpace;
-
+        protected override float ExtraBottomSpace => Constants.ExtraBottomSpace;
         private bool drawFilters;
 
         public override void DoWindowContents( Rect rect )
@@ -89,14 +87,14 @@ namespace AnimalTab
         private void DoFilterBar( Rect rect )
         {
             var barWidth = Filters.Count() * ( FilterButtonSize + Margin ) + Margin;
-            Rect buttonRect = new Rect(rect.xMax - Margin - ButtonSize, rect.yMin + Margin, ButtonSize, ButtonSize);
-            Rect barRect = new Rect( buttonRect.xMin - Margin - barWidth, rect.yMin + Margin, barWidth, ButtonSize );
-            Rect countRect = new Rect( rect.xMin + Margin, barRect.yMax + Margin, rect.width - ButtonSize - Margin * 3, ButtonSize );
+            Rect buttonRect = new Rect(rect.xMax - Margin - ButtonSize, rect.yMax - Margin - ButtonSize, ButtonSize, ButtonSize);
+            Rect barRect = new Rect( buttonRect.xMin - Margin - barWidth, rect.yMax - Margin - ButtonSize, barWidth, ButtonSize );
+            Rect countRect = new Rect( rect.xMin + Margin, barRect.yMin - Margin - ButtonSize, rect.width - ButtonSize - Margin * 3, ButtonSize );
 
             DrawFilterButton( buttonRect );
             if ( Filter )
             {
-                DrawFilters(barRect, Filters);
+                DrawFilters( barRect, Filters );
                 DrawCounts( countRect );
             }
         }
