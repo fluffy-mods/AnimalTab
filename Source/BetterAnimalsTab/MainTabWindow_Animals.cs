@@ -22,7 +22,16 @@ namespace AnimalTab
         public static MainTabWindow_Animals Instance => _instance;
         protected override PawnTableDef PawnTableDef => PawnTableDefOf.Animals;
         protected override float ExtraTopSpace => Constants.ExtraTopSpace;
-        protected override float ExtraBottomSpace => Constants.ExtraBottomSpace;
+
+        protected override float ExtraBottomSpace
+        {
+            get
+            {
+                if ( Filter )
+                    return Constants.ExtraBottomSpace + Constants.ExtraFilterSpace;
+                return Constants.ExtraBottomSpace;
+            }
+        } 
         private bool drawFilters;
 
         public override void DoWindowContents( Rect rect )
@@ -89,7 +98,7 @@ namespace AnimalTab
             var barWidth = Filters.Count() * ( FilterButtonSize + Margin ) + Margin;
             Rect buttonRect = new Rect(rect.xMax - Margin - ButtonSize, rect.yMax - Margin - ButtonSize, ButtonSize, ButtonSize);
             Rect barRect = new Rect( buttonRect.xMin - Margin - barWidth, rect.yMax - Margin - ButtonSize, barWidth, ButtonSize );
-            Rect countRect = new Rect( rect.xMin + Margin, barRect.yMin - Margin - ButtonSize, rect.width - ButtonSize - Margin * 3, ButtonSize );
+            Rect countRect = new Rect( rect.xMin + Margin, barRect.yMin - Margin - ButtonSize * 2/3f, rect.width - ButtonSize - Margin * 3, ButtonSize * 2/3f );
 
             DrawFilterButton( buttonRect );
             if ( Filter )
@@ -141,6 +150,7 @@ namespace AnimalTab
 
                 _filter = value;
                 Notify_PawnsChanged();
+                Notify_ResolutionChanged();
             }
         }
         private void DrawFilterButton( Rect rect )
