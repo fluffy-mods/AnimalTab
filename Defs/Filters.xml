@@ -67,5 +67,12 @@
         <workerClass>AnimalTab.FilterWorker_Pregnant</workerClass>
         <icon>UI/Icons/Filters/Pregnant</icon>
     </AnimalTab.FilterDef>
+
+    <AnimalTab.FilterDef>
+        <defName>Filter_PackAnimal</defName>
+        <label>pack</label>
+        <workerClass>AnimalTab.FilterWorker_PackAnimal</workerClass>
+        <icon>UI/Icons/Filters/PackAnimal</icon>
+    </AnimalTab.FilterDef>
         
 </Defs>
