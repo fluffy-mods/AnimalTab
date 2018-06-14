@@ -2,7 +2,6 @@
 // Copyright Karel Kroeze, 2017-2017
 
 using System;
-using System.Resources;
 using UnityEngine;
 using Verse;
 

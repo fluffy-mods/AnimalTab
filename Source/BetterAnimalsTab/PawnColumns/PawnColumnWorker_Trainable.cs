@@ -28,7 +28,7 @@ namespace AnimalTab
             GUI.DrawTexture(checkboxRect, Resources.CheckboxBackground);
 
             // if completed, draw white checkmark
-            var completed = pawn.training.IsCompleted( def.trainable );
+            var completed = pawn.training.HasLearned( def.trainable );
             if ( completed )
                 GUI.DrawTexture( checkboxRect, Resources.CheckOnWhite );
 

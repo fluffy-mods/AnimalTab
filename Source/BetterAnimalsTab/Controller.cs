@@ -3,11 +3,7 @@
 
 using System.Reflection;
 using Harmony;
-using RimWorld;
-using UnityEngine;
 using Verse;
-using static AnimalTab.Constants;
-using static AnimalTab.PawnColumnDefOf;
 
 namespace AnimalTab.Properties
 {

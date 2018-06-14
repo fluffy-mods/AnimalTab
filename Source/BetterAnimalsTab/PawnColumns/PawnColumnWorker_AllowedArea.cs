@@ -54,7 +54,7 @@ namespace AnimalTab
         {
             if ( pawn.Faction != Faction.OfPlayer )
                 return;
-            AreaAllowedGUI.DoAllowedAreaSelectors( rect, pawn, AllowedAreaMode.Animal );
+            AreaAllowedGUI.DoAllowedAreaSelectors( rect, pawn );
         }
 
         protected override string GetHeaderTip( PawnTable table )
@@ -65,16 +65,15 @@ namespace AnimalTab
         protected override void HeaderClicked( Rect headerRect, PawnTable table )
         {
             if ( Event.current.control )
-                Find.WindowStack.Add( new Dialog_ManageAreas( Find.VisibleMap ) );
+                Find.WindowStack.Add( new Dialog_ManageAreas( Find.CurrentMap ) );
             else
                 base.HeaderClicked( headerRect, table );
         }
 
         public void DoMassAreaSelector( Rect rect, PawnTable table )
         {
-            var map = Find.VisibleMap;
-            var mode = AllowedAreaMode.Animal;
-            var areas = map.areaManager.AllAreas.Where( a => a.AssignableAsAllowed( mode ) );
+            var map = Find.CurrentMap;
+            var areas = map.areaManager.AllAreas.Where( a => a.AssignableAsAllowed() );
             var areaCount = areas.Count() + 1;
             var widthPerArea = rect.width / areaCount;
             var areaRect = new Rect( rect.x, rect.y, widthPerArea, rect.height );
@@ -116,7 +115,7 @@ namespace AnimalTab
                 area?.MarkForDraw();
                 if ( Input.GetMouseButton( 0 ) )
                 {
-                    SoundDefOf.DesignateDragStandardChanged.PlayOneShotOnCamera();
+                    SoundDefOf.Designate_DragStandard_Changed.PlayOneShotOnCamera();
                     return true;
                 }
             }

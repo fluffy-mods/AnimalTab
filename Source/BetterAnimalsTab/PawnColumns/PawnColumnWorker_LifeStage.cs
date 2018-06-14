@@ -3,7 +3,6 @@
 
 using System.Text;
 using Verse;
-using RimWorld;
 
 namespace AnimalTab {
     public class PawnColumnWorker_LifeStage : RimWorld.PawnColumnWorker_LifeStage {

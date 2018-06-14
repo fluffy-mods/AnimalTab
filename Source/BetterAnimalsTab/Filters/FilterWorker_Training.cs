@@ -28,7 +28,7 @@ namespace AnimalTab
             if ( pawn?.training == null )
                 return false;
             foreach ( var trainable in Trainables)
-                if ( allowed[trainable] && pawn.training.IsCompleted( trainable ) )
+                if ( allowed[trainable] && pawn.training.HasLearned( trainable ) )
                     return true;
             return false;
         }
@@ -38,7 +38,7 @@ namespace AnimalTab
             var options = new List<FloatMenuOption>();
             options.Add( new FloatMenuOption( "AnimalTab.All".Translate(), Deactivate ) );
             foreach ( var trainable in Trainables )
-                options.Add( new FloatMenuOption_Persistent( trainable.LabelCap, () => Toggle( trainable ), extraPartWidth: 30f, extraPartOnGUI: (rect) => DrawOptionExtra( rect, trainable ) ) );
+                options.Add( new FloatMenuOption_Persistent( trainable.LabelCap, () => Toggle( trainable ), extraPartWidth: 30f, extraPartOnGUI: rect => DrawOptionExtra( rect, trainable ) ) );
 
             Find.WindowStack.Add( new FloatMenu( options ) );
         }

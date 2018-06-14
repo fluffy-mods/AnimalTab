@@ -14,7 +14,7 @@ namespace AnimalTab
     {
         public static IEnumerable<Pawn> ObedientAnimals( PawnTable table )
         {
-            return table.PawnsListForReading.Where( p => p.training?.IsCompleted( TrainableDefOf.Obedience ) ?? false );
+            return table.PawnsListForReading.Where( p => p.training?.HasLearned( TrainableDefOf.Obedience ) ?? false );
         } 
 
         protected override void HeaderClicked( Rect headerRect, PawnTable table )
@@ -44,7 +44,7 @@ namespace AnimalTab
                     () => MassAssignMasterBonded( table ) ) );
 
                 // loop over pawns
-                foreach ( var pawn in Find.VisibleMap.mapPawns.FreeColonistsSpawned )
+                foreach ( var pawn in Find.CurrentMap.mapPawns.FreeColonistsSpawned )
                     options.Add( MassAssignMaster_FloatMenuOption( pawn, table ) );
             }
             else
@@ -69,7 +69,7 @@ namespace AnimalTab
             Action action = () => MassAssignMaster( colonist, eligibleAnimals );
 
             return new FloatMenuOption(
-                "AnimalTab.MassAssignMaster".Translate( colonist.NameStringShort, skill, eligibleAnimals.Count(),
+                "AnimalTab.MassAssignMaster".Translate( colonist.Name.ToStringShort, skill, eligibleAnimals.Count(),
                     animals.Count() ),
                 eligibleAnimals.Any() ? action : null );
         }
@@ -77,7 +77,7 @@ namespace AnimalTab
         private static void MassAssignMaster( Pawn pawn, IEnumerable<Pawn> animals )
         {
             foreach ( var animal in animals )
-                animal.playerSettings.master = pawn;
+                animal.playerSettings.Master = pawn;
         }
 
         public static void MassAssignMasterBonded( PawnTable table )
@@ -91,7 +91,7 @@ namespace AnimalTab
                 if ( bond == null || bond.skills.GetSkill( SkillDefOf.Animals ).Level <
                      animal.GetStatValue( StatDefOf.MinimumHandlingSkill ) )
                     continue;
-                animal.playerSettings.master = bond;
+                animal.playerSettings.Master = bond;
             }
         }
     }

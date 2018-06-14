@@ -1,8 +1,8 @@
 ﻿// Dialog_RenameAnimal.cs
 // Copyright Karel Kroeze, 2017-2017
 
-using Verse;
 using RimWorld;
+using Verse;
 
 namespace AnimalTab
 {

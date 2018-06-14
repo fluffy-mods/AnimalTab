@@ -1,4 +1,3 @@
-using System.ComponentModel.Design;
 using Verse;
 
 namespace AnimalTab

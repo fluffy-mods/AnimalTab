@@ -28,7 +28,7 @@ namespace AnimalTab
             get
             {
                 if ( Filter )
-                    return Constants.ExtraBottomSpace + Constants.ExtraFilterSpace;
+                    return Constants.ExtraBottomSpace + ExtraFilterSpace;
                 return Constants.ExtraBottomSpace;
             }
         } 

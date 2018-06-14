@@ -1,7 +1,6 @@
 ﻿// FilterWorker_CaravanCarryingCapacity.cs
 // Copyright Karel Kroeze, 2018-2018
 
-using RimWorld;
 using Verse;
 
 namespace AnimalTab

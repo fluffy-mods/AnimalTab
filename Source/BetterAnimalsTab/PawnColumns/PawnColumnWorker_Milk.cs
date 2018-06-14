@@ -1,8 +1,6 @@
 ﻿// PawnColumnWorker_Wool.cs
 // Copyright Karel Kroeze, 2017-2017
 
-using System.Collections.Generic;
-using RimWorld;
 using Verse;
 
 namespace AnimalTab

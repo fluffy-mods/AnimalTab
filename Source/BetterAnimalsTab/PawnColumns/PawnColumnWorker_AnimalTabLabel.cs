@@ -52,7 +52,7 @@ namespace AnimalTab
                     return string.Compare( a.KindLabel, b.KindLabel, StringComparison.CurrentCultureIgnoreCase );
                 case SortMode.Name:
                 default:
-                    return string.Compare( a.NameStringShort, b.NameStringShort, StringComparison.CurrentCultureIgnoreCase );
+                    return string.Compare( a.Name.ToStringShort, b.Name.ToStringShort, StringComparison.CurrentCultureIgnoreCase );
             }
         }
 

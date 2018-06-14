@@ -1,5 +1,6 @@
 ﻿// DefOf.cs
 // Copyright Karel Kroeze, 2017-2017
+
 using RimWorld;
 
 namespace AnimalTab

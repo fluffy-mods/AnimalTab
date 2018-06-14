@@ -1,11 +1,9 @@
 ﻿// PawnColumnWorker_Slaughter.cs
 // Copyright Karel Kroeze, 2017-2017
 
-using System;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using static AnimalTab.Constants;
 
 namespace AnimalTab
 {

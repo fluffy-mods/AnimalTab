@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -33,7 +32,7 @@ namespace AnimalTab
             var options = new List<FloatMenuOption>();
             options.Add(new FloatMenuOption("AnimalTab.All".Translate(), Deactivate));
             foreach (var pawnkind in PawnKinds)
-                options.Add(new FloatMenuOption_Persistent(pawnkind.LabelCap, () => Toggle( pawnkind ), extraPartWidth: 30f, extraPartOnGUI: (rect) => DrawOptionExtra(rect, pawnkind)));
+                options.Add(new FloatMenuOption_Persistent(pawnkind.LabelCap, () => Toggle( pawnkind ), extraPartWidth: 30f, extraPartOnGUI: rect => DrawOptionExtra(rect, pawnkind)));
 
             Find.WindowStack.Add(new FloatMenu(options));
         }

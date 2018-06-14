@@ -10,8 +10,8 @@ namespace AnimalTab
 {
     public class FilterWorker_Intelligence: FilterWorker
     {
-        private DefMap<TrainableIntelligenceDef, bool> _allowed = new DefMap<TrainableIntelligenceDef, bool>();
-        private IEnumerable<TrainableIntelligenceDef> Intelligences => DefDatabase<TrainableIntelligenceDef>.AllDefsListForReading;
+        private DefMap<TrainabilityDef, bool> _allowed = new DefMap<TrainabilityDef, bool>();
+        private IEnumerable<TrainabilityDef> Trainabilities => DefDatabase<TrainabilityDef>.AllDefsListForReading;
         
         public override FilterState State
         {
@@ -22,12 +22,12 @@ namespace AnimalTab
         public override bool Allows( Pawn pawn )
         {
             if ( State == FilterState.Inclusive )
-                return Allows( pawn.RaceProps.TrainableIntelligence );
+                return Allows( pawn.RaceProps.trainability );
 
             return true;
         }
 
-        public bool Allows( TrainableIntelligenceDef intelligence )
+        public bool Allows( TrainabilityDef intelligence )
         {
             return _allowed[intelligence];
         }
@@ -36,7 +36,7 @@ namespace AnimalTab
         {
             var options = new List<FloatMenuOption>();
             options.Add( new FloatMenuOption( "AnimalTab.All".Translate(), Disable ) );
-            foreach ( var trainableIntelligence in Intelligences.OrderBy( i => i.intelligenceOrder ) )
+            foreach ( var trainableIntelligence in Trainabilities.OrderBy( i => i.intelligenceOrder ) )
                 options.Add( GetOption( trainableIntelligence ) );
 
             Find.WindowStack.Add(new FloatMenu(options));
@@ -44,25 +44,25 @@ namespace AnimalTab
 
         private void Disable()
         {
-            foreach ( var intelligence in Intelligences )
+            foreach ( var intelligence in Trainabilities )
                 _allowed[intelligence] = false;
             MainTabWindow_Animals.Instance.Notify_PawnsChanged();
         }
 
-        private void Toggle( TrainableIntelligenceDef intelligence )
+        private void Toggle( TrainabilityDef intelligence )
         {
             _allowed[intelligence] = !_allowed[intelligence];
             MainTabWindow_Animals.Instance.Notify_PawnsChanged();
         }
 
-        private FloatMenuOption_Persistent GetOption( TrainableIntelligenceDef intelligence )
+        private FloatMenuOption_Persistent GetOption( TrainabilityDef intelligence )
         {
             var label = "TrainableIntelligence".Translate() + ": " + intelligence.LabelCap;
             return new FloatMenuOption_Persistent( label, () => Toggle( intelligence ), extraPartWidth: 30f,
                 extraPartOnGUI: rect => DrawOptionExtra( rect, intelligence ) );
         }
 
-        private bool DrawOptionExtra(Rect rect, TrainableIntelligenceDef intelligence )
+        private bool DrawOptionExtra(Rect rect, TrainabilityDef intelligence )
         {
             if ( State == FilterState.Inclusive && Allows( intelligence ) )
             {
@@ -78,7 +78,7 @@ namespace AnimalTab
             if (State == FilterState.Inactive)
                 return "AnimalTab.FilterInactiveTip".Translate();
 
-            var allowed = ( from intelligence in Intelligences
+            var allowed = ( from intelligence in Trainabilities
                 where _allowed[intelligence]
                 select intelligence.label ).ToList();
             return "AnimalTab.IntelligenceFilterTip".Translate( allowed.ToStringList( "AnimalTab.Or".Translate() ) );
