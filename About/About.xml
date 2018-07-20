@@ -3,7 +3,7 @@
   <name>Animal Tab</name>
   <author>Fluffy</author>
   <url>https://ludeon.com/forums/index.php?topic=16120.0</url>
-  <targetVersion>1.0.1937</targetVersion>
+  <targetVersion>1.0.1970</targetVersion>
   <description>Adds extra functionality to the Animals tab 
 
 &lt;size=24&gt;Important&lt;/size&gt;
@@ -29,7 +29,7 @@ rgponce:    Brazilian Portuguese translation
 frenchiveruti:    
 
 &lt;size=24&gt;Version&lt;/size&gt;
-This is version 2.4.40, for RimWorld 1.0.1937.
+This is version 2.4.45, for RimWorld 1.0.1970.
 
 </description>
 </ModMetaData>

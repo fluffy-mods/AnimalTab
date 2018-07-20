@@ -18,10 +18,10 @@ namespace AnimalTab
         {
         }
 
-        public override bool DoGUI( Rect rect, bool colonistOrdering )
+        public override bool DoGUI( Rect rect, bool colonistOrdering, FloatMenu floatMenu )
         {
             // everything in base is fine and dandy.
-            base.DoGUI( rect, colonistOrdering );
+            base.DoGUI( rect, colonistOrdering, floatMenu );
 
             // just return false so the parent window isn't removed.
             return false;

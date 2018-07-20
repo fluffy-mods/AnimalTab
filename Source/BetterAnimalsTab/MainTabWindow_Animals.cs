@@ -32,7 +32,6 @@ namespace AnimalTab
                 return Constants.ExtraBottomSpace;
             }
         } 
-        private bool drawFilters;
 
         public override void DoWindowContents( Rect rect )
         {
