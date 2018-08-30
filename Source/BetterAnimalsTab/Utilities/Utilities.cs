@@ -73,7 +73,7 @@ namespace AnimalTab
                     throw new Exception( "Could not find DoTrainableTooltip()" );
             }
 
-            _doTrainableTooltipMethodInfo.Invoke( null, new object[] {rect, pawn, td, canTrain} );
+            _doTrainableTooltipMethodInfo.Invoke( null, new object[] { rect, pawn, td, canTrain } );
         }
     }
 }

@@ -7,6 +7,9 @@ Can safely be enabled/disabled in ongoing saves.
 # Notes
 First released back in A12 (or was it 11?) this mod vastly improved the vanilla animals tab. Evidently, Tynan agreed and the mod is now (mostly) part of the vanilla game. I still feel this mod looks better, and adds enough extra functionality (sorting, filters, renaming) to make it a worthwhile replacement. 
 
+# Known Issues
+Domestication (wildness) and the loss over training over time is not visible in the tab. I plan on adding some kind of indicator to show this, but don't know when I'll have time. Note that this information is also not shown in the vanilla animals tab.
+
 # Features
 Gender and lifestage icons on the animals tab. Easily keep track of your chickenfarm! 
 Butchery designation right from the animals tab. 
