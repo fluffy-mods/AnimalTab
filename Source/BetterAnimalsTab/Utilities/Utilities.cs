@@ -40,40 +40,92 @@ namespace AnimalTab
 
         public static Rect GetCheckboxRect( Rect rect )
         {
-            return new Rect( rect.x + ( rect.width - CheckBoxSize ) / 2, rect.y + ( rect.height - CheckBoxSize ) / 2, CheckBoxSize, CheckBoxSize );
+            return new Rect( rect.x + ( rect.width - CheckBoxSize ) / 2, rect.y + ( rect.height - CheckBoxSize ) / 2,
+                CheckBoxSize, CheckBoxSize );
         }
 
-        private static MethodInfo _getStepsMethodInfo;
-        public static int GetTrainingProgress( Pawn pawn, TrainableDef trainable )
+        public static IntRange GetTrainingProgress( Pawn pawn, TrainableDef trainable )
         {
-            if ( _getStepsMethodInfo == null )
-            {
-                _getStepsMethodInfo = AccessTools.Method( typeof( Pawn_TrainingTracker ), "GetSteps" );
-                if ( _getStepsMethodInfo == null )
-                    throw new Exception( "GetSteps not found" );
-            }
-            return (int) _getStepsMethodInfo.Invoke( pawn.training, new object[] {trainable} );
+            var cur = Traverse.Create( pawn.training ).Method( "GetSteps", trainable ).GetValue<int>();
+            var max = trainable.steps;
+            return new IntRange( cur, max );
         }
 
-        public static void DrawTrainingProgress( Rect rect, Pawn pawn, TrainableDef trainable )
+        public static void DrawCheckColoured( Rect rect, Color color )
         {
+            var curColor = GUI.color;
+            GUI.color = color;
+            GUI.DrawTexture( rect, CheckOnWhite );
+            GUI.color = curColor;
+        }
+
+        public static void DrawTrainingProgress( Rect rect, Pawn pawn, TrainableDef trainable, Color color )
+        {
+            var steps = GetTrainingProgress( pawn, trainable );
             var progressRect = new Rect( rect.xMin, rect.yMax - rect.height / 5f,
-                rect.width / trainable.steps * GetTrainingProgress( pawn, trainable ), rect.height / 5f );
+                rect.width / steps.max * steps.min, rect.height / 5f );
 
-            Widgets.DrawBoxSolid( progressRect, Color.green );
+            Widgets.DrawBoxSolid( progressRect, color );
         }
 
-        private static MethodInfo _doTrainableTooltipMethodInfo;
         public static void DoTrainableTooltip( Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport canTrain )
         {
-            if ( _doTrainableTooltipMethodInfo == null )
-            {
-                _doTrainableTooltipMethodInfo = AccessTools.Method(typeof(TrainingCardUtility), "DoTrainableTooltip");
-                if ( _doTrainableTooltipMethodInfo == null )
-                    throw new Exception( "Could not find DoTrainableTooltip()" );
-            }
+            Traverse.Create( typeof( TrainingCardUtility ) )
+                .Method( "DoTrainableTooltip", rect, pawn, td, canTrain )
+                .GetValue(); // invoke
+        }
 
-            _doTrainableTooltipMethodInfo.Invoke( null, new object[] { rect, pawn, td, canTrain } );
+
+
+        public static void DoTrainableTooltip( Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport canTrain,
+            bool wanted, bool completed, IntRange steps )
+        {
+            // copy pasta from TrainingCardUtility.DoTrainableTooltip
+            TooltipHandler.TipRegion( rect, () =>
+            {
+                string text = td.LabelCap + "\n\n" + td.description;
+                if ( !canTrain.Accepted )
+                {
+                    text = text + "\n\n" + canTrain.Reason;
+                }
+                else if ( !td.prerequisites.NullOrEmpty<TrainableDef>() )
+                {
+                    text += "\n";
+                    for ( int i = 0; i < td.prerequisites.Count; i++ )
+                    {
+                        if ( !pawn.training.HasLearned( td.prerequisites[i] ) )
+                        {
+                            text = text + "\n" + "TrainingNeedsPrerequisite".Translate( td.prerequisites[i].LabelCap );
+                        }
+                    }
+                }
+                if ( completed && steps.min == steps.max )
+                {
+                    text += "\n" + "Fluffy.AnimalTab.XHasMasteredY".Translate( pawn.Name.ToStringShort, td.LabelCap );
+                }
+                if ( wanted && !completed )
+                {
+                    text += "\n" + "Fluffy.AnimalTab.XHasLearnedYOutOfZ".Translate( pawn.Name.ToStringShort, steps.min,
+                                steps.max );
+                }
+                if ( completed && steps.min < steps.max )
+                {
+                    text += "\n" + "Fluffy.AnimalTab.XHasForgottenYOutOfZ".Translate( pawn.Name.ToStringShort,
+                                steps.max - steps.min, steps.max );
+                }
+                if ( wanted )
+                {
+                    text += "\n" + "Fluffy.AnimalTab.XIsDesignatedTrainY".Translate( pawn.Name.ToStringShort,
+                                td.LabelCap );
+                }
+                else if ( completed || steps.min > 0 )
+                {
+                    text += "\n" + "Fluffy.AnimalTab.XIsNotDesignatedTrainY".Translate( pawn.Name.ToStringShort,
+                                td.LabelCap );
+                }
+
+                return text;
+            }, (int) ( rect.y * 612 + rect.x ) );
         }
     }
 }

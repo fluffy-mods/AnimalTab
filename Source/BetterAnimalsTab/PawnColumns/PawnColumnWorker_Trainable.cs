@@ -14,39 +14,45 @@ namespace AnimalTab
             if (pawn.training == null)
                 return;
 
-            bool visible;
-            AcceptanceReport canTrain = pawn.training.CanAssignToTrain( def.trainable, out visible);
+            AcceptanceReport canTrain = pawn.training.CanAssignToTrain( def.trainable, out bool visible);
             if (!visible )
                 return;
 
             // basic stuff
             Rect checkboxRect = Utilities.GetCheckboxRect(rect);
-            Utilities.DoTrainableTooltip(checkboxRect, pawn, def.trainable, canTrain);
             if ( !canTrain.Accepted )
+            {
+                Utilities.DoTrainableTooltip( checkboxRect, pawn, def.trainable, canTrain );
                 return;
+            }
 
             GUI.DrawTexture(checkboxRect, Resources.CheckboxBackground);
 
-            // if completed, draw white checkmark
+            var steps = Utilities.GetTrainingProgress(pawn, def.trainable);
             var completed = pawn.training.HasLearned( def.trainable );
-            if ( completed )
-                GUI.DrawTexture( checkboxRect, Resources.CheckOnWhite );
+            var wanted = pawn.training.GetWanted(def.trainable);
+            Utilities.DoTrainableTooltip( checkboxRect, pawn, def.trainable, canTrain, wanted, completed, steps );
 
-            // if in progress, draw green checkmark + progress bar
-            var wanted = pawn.training.GetWanted( def.trainable );
-            if ( !completed && wanted )
+
+            if ( wanted )
             {
-                GUI.DrawTexture( checkboxRect, Widgets.CheckboxOnTex );
-                Utilities.DrawTrainingProgress( checkboxRect, pawn, def.trainable );
+                Utilities.DrawCheckColoured( checkboxRect, completed ? Color.white : Color.green );
+                if ( steps.min < steps.max )
+                    Utilities.DrawTrainingProgress( checkboxRect, pawn, def.trainable, completed ? Color.white : Color.green );
+            }
+            // not wanted anymore 
+            if ( !wanted )
+            {
+                if ( completed )
+                    Utilities.DrawCheckColoured( checkboxRect, Color.grey );
+                if ( steps.min > 0 && steps.min < steps.max )
+                    Utilities.DrawTrainingProgress( checkboxRect, pawn, def.trainable, Color.grey );
             }
 
             // interaction
-            if ( !completed )
-            {
-                Widgets.DrawHighlightIfMouseover(checkboxRect);
-                if ( Widgets.ButtonInvisible( checkboxRect ) )
-                    pawn.training.SetWantedRecursive( def.trainable, !wanted );
-            }
+            Widgets.DrawHighlightIfMouseover(checkboxRect);
+            if ( Widgets.ButtonInvisible( checkboxRect ) )
+                pawn.training.SetWantedRecursive( def.trainable, !wanted );
         }
     }
 }

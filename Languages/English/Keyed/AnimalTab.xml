@@ -29,4 +29,11 @@
     <!-- Because for some odd reason, TrainableIntelligendeDefs have their labels defined with keyed translations
     and vanilla doesn't define the label for 'Super Advanced', presumably because it is not used. -->
     <TrainableIntelligence_SuperAdvanced>super advanced</TrainableIntelligence_SuperAdvanced>
+
+    <!-- training tooltip status lines -->
+    <Fluffy.AnimalTab.XHasMasteredY>{0} has mastered {1}</Fluffy.AnimalTab.XHasMasteredY>
+    <Fluffy.AnimalTab.XHasLearnedYOutOfZ>{0} has learned {1}/{2} of this skill</Fluffy.AnimalTab.XHasLearnedYOutOfZ>
+    <Fluffy.AnimalTab.XHasForgottenYOutOfZ>{0} has forgotten {1}/{2} of this skill</Fluffy.AnimalTab.XHasForgottenYOutOfZ>
+    <Fluffy.AnimalTab.XIsDesignatedTrainY>{0} is designated to train {1}</Fluffy.AnimalTab.XIsDesignatedTrainY>
+    <Fluffy.AnimalTab.XIsNotDesignatedTrainY>{0} is not designated to train {2}, and will loose the skill over time</Fluffy.AnimalTab.XIsNotDesignatedTrainY>
 </LanguageData>
