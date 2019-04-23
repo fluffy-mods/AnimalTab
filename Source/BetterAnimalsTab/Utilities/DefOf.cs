@@ -22,6 +22,7 @@ namespace AnimalTab
         public static PawnColumnDef Meat;
         public static PawnColumnDef Pregnant;
         public static PawnColumnDef Gender;
+        public static PawnColumnDef Age;
         public static PawnColumnDef LifeStage;
     }
 }

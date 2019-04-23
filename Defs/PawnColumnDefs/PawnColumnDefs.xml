@@ -38,4 +38,12 @@
     <headerTip>Expected meat amount</headerTip>
   </PawnColumnDef>
 
+  <PawnColumnDef>
+    <defName>Age</defName>
+    <workerClass>AnimalTab.PawnColumnWorker_Age</workerClass>
+    <sortable>true</sortable>
+    <headerIcon>UI/Icons/Animal/Age</headerIcon>
+    <headerTip>Age in years</headerTip>
+  </PawnColumnDef>
+
 </Defs>

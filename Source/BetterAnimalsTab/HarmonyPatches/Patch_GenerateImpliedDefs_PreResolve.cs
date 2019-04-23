@@ -43,6 +43,10 @@ namespace AnimalTab
             columns.Insert( slaughterIndex, Milk );
             columns.Insert( slaughterIndex, Wool );
 
+            // insert age before lifestage and set width to same as lifestage
+            var ageIndex = lifeStageIndex;
+            columns.Insert( ageIndex, Age );
+
             // remove all gaps, insert new ones at appropriate places
             columns.RemoveAll( c => c == GapTiny );
             columns.Insert( lifeStageIndex + 1, GapTiny );
