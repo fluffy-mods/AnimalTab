@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Manifest>
-  <version>3.4.123</version>
-  <manifestUri>https://rawgit.com/FluffierThanThou/AnimalTab/master/About/Manifest.xml</manifestUri>
-  <downloadUri>https://github.com/FluffierThanThou/AnimalTab/releases/v3.4.123</downloadUri>
+  <version>3.5.135</version>
+  <manifestUri>https://cdn.jsdelivr.net/gh/FluffierThanThou/AnimalTab/About/Manifest.xml</manifestUri>
+  <downloadUri>https://github.com/FluffierThanThou/AnimalTab/releases/v3.5.135</downloadUri>
 </Manifest>
