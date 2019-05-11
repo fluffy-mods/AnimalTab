@@ -3,7 +3,6 @@
   <name>Animal Tab</name>
   <author>Fluffy</author>
   <url>https://ludeon.com/forums/index.php?topic=16120.0</url>
-  <targetVersion>1.0.2059</targetVersion>
   <description>Adds extra functionality to the Animals tab 
 
 &lt;size=24&gt;Important&lt;/size&gt;
@@ -30,11 +29,15 @@ duduluu:    Chinese translations
 urty5656:    Introduction to the magic of reflection &amp; translations, Korean translation
 rgponce:    Brazilian Portuguese translation
 frenchiveruti:    
-Suh. Junmin:    
-rw-chaos:    
+Suh. Junmin:    Korean translation (update)
+rw-chaos:    German translation
+BlakkM9:    
 
 &lt;size=24&gt;Version&lt;/size&gt;
-This is version 3.4.123, for RimWorld 1.0.2059.
+This is version 3.4.134, for RimWorld 1.0.2231.
 
 </description>
+  <supportedVersions>
+    <li>1.0</li>
+  </supportedVersions>
 </ModMetaData>

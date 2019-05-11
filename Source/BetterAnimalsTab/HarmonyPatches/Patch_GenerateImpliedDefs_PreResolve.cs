@@ -17,6 +17,9 @@ namespace AnimalTab
             var animalTable = PawnTableDefOf.Animals;
             var columns = animalTable.columns;
 
+            // remove all gaps, we'll insert new ones at appropriate places
+            columns.RemoveAll(c => c == GapTiny);
+
             // replace label column
             // NOTE: We can't simply replace the workerType, as these columns are used in multiple tabs.
             var labelIndex = columns.IndexOf( Label );
@@ -27,7 +30,7 @@ namespace AnimalTab
             columns.Insert( areaIndex, AnimalTabAllowedArea );
 
             // move pregnant, master and follow columns after lifestage
-            var lifeStageIndex = columns.FindIndex( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_LifeStage ) );
+            var lifeStageIndex = columns.IndexOf( LifeStage );
             columns.Remove( Pregnant );
             columns.Insert( lifeStageIndex + 1, Pregnant );
             columns.Remove( Master );
@@ -37,22 +40,19 @@ namespace AnimalTab
             columns.Remove( FollowFieldwork );
             columns.Insert( lifeStageIndex + 4, FollowFieldwork );
 
+            // insert gaps
+            columns.Insert( lifeStageIndex + 1, GapTiny);
+            columns.Insert( columns.IndexOf(FollowFieldwork) + 1, GapTiny);
+
             // insert wool, milk & meat columns before slaughter
             var slaughterIndex = columns.IndexOf( Slaughter );
             columns.Insert( slaughterIndex, Meat );
             columns.Insert( slaughterIndex, Milk );
             columns.Insert( slaughterIndex, Wool );
 
-            // insert age before lifestage and set width to same as lifestage
-            var ageIndex = lifeStageIndex;
+            // insert age before gender
+            var ageIndex = columns.FindIndex( c => c.workerClass == typeof( PawnColumnWorker_Gender ) );
             columns.Insert( ageIndex, Age );
-
-            // remove all gaps, insert new ones at appropriate places
-            columns.RemoveAll( c => c == GapTiny );
-            columns.Insert( lifeStageIndex + 1, GapTiny );
-            columns.Insert( columns.IndexOf( FollowFieldwork ) + 1, GapTiny );
-            columns.Insert( columns.FindLastIndex( c => c.workerClass == typeof( PawnColumnWorker_Trainable ) ) + 1, GapTiny );
-            columns.Insert( slaughterIndex + 1, GapTiny );
 
             // add header tips to gender, lifestage and pregnant
             Gender.headerTip = "Gender";
@@ -63,16 +63,18 @@ namespace AnimalTab
             foreach ( var column in columns )
                 column.headerIconSize = HeaderIconSize;
 
-            // set new worker for master, slaughter, follow and lifestage columns
+            // set new worker for master, slaughter and follow columns
             Master.workerClass = typeof( PawnColumnWorker_Master );
             Slaughter.workerClass = typeof( PawnColumnWorker_Slaughter );
             FollowDrafted.workerClass = typeof( PawnColumnWorker_FollowDrafted );
             FollowFieldwork.workerClass = typeof( PawnColumnWorker_FollowFieldwork );
-            LifeStage.workerClass = typeof( PawnColumnWorker_LifeStage );
 
             // set new workers for trainable columns
             foreach ( var column in columns.Where( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_Trainable ) ) )
                 column.workerClass = typeof( PawnColumnWorker_Trainable );
+
+            // insert gap after trainables
+            columns.Insert(columns.FindLastIndex(c => c.workerClass == typeof(PawnColumnWorker_Trainable)) + 1, GapTiny);
 
             // reset all workers to make sure they are resolved to the new type
             // NOTE: Vanilla inserts columns by checking for 'Worker', which resolves some workers - we need to reset that.
