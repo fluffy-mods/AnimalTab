@@ -28,17 +28,19 @@ namespace AnimalTab
             var areaIndex = columns.IndexOf( AllowedAreaWide );
             columns.RemoveAt( areaIndex );
             columns.Insert( areaIndex, AnimalTabAllowedArea );
-
-            // move pregnant, master and follow columns after lifestage
+            
+            // move pregnant, master, bond and follow columns after lifestage
             var lifeStageIndex = columns.IndexOf( LifeStage );
             columns.Remove( Pregnant );
             columns.Insert( lifeStageIndex + 1, Pregnant );
             columns.Remove( Master );
             columns.Insert( lifeStageIndex + 2, Master );
+            columns.Remove( Bond );
+            columns.Insert( lifeStageIndex + 3, Bond );
             columns.Remove( FollowDrafted );
-            columns.Insert( lifeStageIndex + 3, FollowDrafted );
+            columns.Insert( lifeStageIndex + 4, FollowDrafted );
             columns.Remove( FollowFieldwork );
-            columns.Insert( lifeStageIndex + 4, FollowFieldwork );
+            columns.Insert( lifeStageIndex + 5, FollowFieldwork );
 
             // insert gaps
             columns.Insert( lifeStageIndex + 1, GapTiny);
@@ -53,6 +55,10 @@ namespace AnimalTab
             // insert age before gender
             var ageIndex = columns.FindIndex( c => c.workerClass == typeof( PawnColumnWorker_Gender ) );
             columns.Insert( ageIndex, Age );
+
+            // insert handler column before trainables
+            var handlerIndex = columns.FindIndex( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_Trainable ) );
+            columns.Insert( handlerIndex, PawnColumnDefOf.Handler );
 
             // add header tips to gender, lifestage and pregnant
             Gender.headerTip = "Gender";
@@ -85,6 +91,9 @@ namespace AnimalTab
             foreach ( var column in columns )
                 Logger.Debug(
                     $"{column.defName} <{column.workerClass.FullName}> | <{column.Worker?.GetType().FullName ?? "NULL"}>" );
+
+            // add handler column to Wildlife tab
+            PawnTableDefOf.Wildlife.columns.Add( Handler );
         }
     }
 }

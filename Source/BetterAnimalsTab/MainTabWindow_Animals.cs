@@ -10,7 +10,7 @@ using static AnimalTab.Constants;
 
 namespace AnimalTab
 {
-    public class MainTabWindow_Animals : RimWorld.MainTabWindow_Animals
+    public class MainTabWindow_Animals: RimWorld.MainTabWindow_Animals
     {
         private static MainTabWindow_Animals _instance;
 

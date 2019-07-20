@@ -3,6 +3,7 @@
 
 using System.Reflection;
 using Harmony;
+using RimWorld;
 using Verse;
 
 namespace AnimalTab.Properties
@@ -11,6 +12,7 @@ namespace AnimalTab.Properties
     {
         public Controller( ModContentPack content ) : base( content )
         {
+            // execute them patches.
             var harmony = HarmonyInstance.Create( "Fluffy.AnimalTab" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
         }

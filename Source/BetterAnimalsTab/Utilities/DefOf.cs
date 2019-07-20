@@ -24,5 +24,7 @@ namespace AnimalTab
         public static PawnColumnDef Gender;
         public static PawnColumnDef Age;
         public static PawnColumnDef LifeStage;
+        public static PawnColumnDef Handler;
+        public static PawnColumnDef Bond;
     }
 }

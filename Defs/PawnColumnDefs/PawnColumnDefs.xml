@@ -44,5 +44,12 @@
     <sortable>true</sortable>
     <headerTip>Age in years</headerTip>
   </PawnColumnDef>
-
+ 
+  <PawnColumnDef>
+    <defName>Handler</defName>
+    <label>Handler</label>
+    <workerClass>AnimalTab.PawnColumnWorker_Handler</workerClass>
+    <sortable>true</sortable>
+    <headerTip>Handler assignment</headerTip>
+  </PawnColumnDef>
 </Defs>
