@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using RimWorld;
 using Verse;
@@ -28,6 +29,11 @@ namespace AnimalTab
         {
             var minSkill = TrainableUtility.MinimumHandlingSkill( target );
             return new IntRange( Math.Max( level.min, minSkill ), Math.Max( level.max, minSkill ) );
+        }
+
+        public static bool Contains( this IntRange range, int level )
+        {
+            return level >= range.min && level <= range.max;
         }
         
         public static IEnumerable<Pawn> HandlersOrdered( Map map )
@@ -58,18 +64,20 @@ namespace AnimalTab
             return handler.workSettings.GetPriority( WorkTypeDefOf.Handling ) > 0;
         }
 
-        public static int HandlingSkill( Pawn handler )
+        public static int HandlingSkill( this Pawn handler )
         {
             return (int)handler.skills.AverageOfRelevantSkillsFor( WorkTypeDefOf.Handling );
         }
 
-        public static string HandlerLabel( Pawn handler )
+        public static string HandlerLabel( Pawn handler, int minSkill = 0 )
         {
             string label = handler.Name.ToStringShort + " (" + HandlingSkill( handler );
             if ( HandlingDisabled( handler ) )
                 label += "Fluffy.AnimalTab.CanNeverDoHandling".Translate();
             else if ( !HandlingAssigned( handler ) )
                 label += "Fluffy.AnimalTab.NotAssignedToHandling".Translate();
+            else if ( handler.skills.GetSkill( SkillDefOf.Animals ).Level < minSkill )
+                label += "Fluffy.AnimalTab.InsufficientSkill".Translate();
             label += ")";
 
             return label;

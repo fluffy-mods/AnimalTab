@@ -67,6 +67,8 @@
     <Compile Include="Filters\FilterWorker_Training.cs" />
     <Compile Include="Filters\PawnTableFilterDef.cs" />
     <Compile Include="Filters\FilterWorker.cs" />
+    <Compile Include="Handler\Alert_HandlerInvalid.cs" />
+    <Compile Include="Handler\Alert_NoHandlerInRange.cs" />
     <Compile Include="Handler\HandlerUtility.cs" />
     <Compile Include="HarmonyPatches\Patch_InjectTrainerSettingsComp.cs" />
     <Compile Include="HarmonyPatches\Patch_InjectTrainerSettingsGizmo.cs" />

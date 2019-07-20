@@ -46,10 +46,17 @@
     <Fluffy.AnimalTab.Level>skill {0}-{1}</Fluffy.AnimalTab.Level>
     <Fluffy.AnimalTab.CanNeverDoHandling>, can never do handling</Fluffy.AnimalTab.CanNeverDoHandling>
     <Fluffy.AnimalTab.NotAssignedToHandling>, not assigned to handling</Fluffy.AnimalTab.NotAssignedToHandling>
+    <Fluffy.AnimalTab.InsufficientSkill>, skill too low</Fluffy.AnimalTab.InsufficientSkill>
     <Fluffy.AnimalTab.NotAllowed.SpecificHandler>can't handle {0}, only {1} is allowed.</Fluffy.AnimalTab.NotAllowed.SpecificHandler>
     <Fluffy.AnimalTab.NotAllowed.SkillTooLow>can't handle {0}, skill too low ({1}&lt;{2})</Fluffy.AnimalTab.NotAllowed.SkillTooLow>
     <Fluffy.AnimalTab.NotAllowed.SkillTooHigh>can't handle {0}, skill too high ({1}&gt;{2})</Fluffy.AnimalTab.NotAllowed.SkillTooHigh>
     <Fluffy.AnimalTab.RightClickToChangeHandler>Right click: change handler</Fluffy.AnimalTab.RightClickToChangeHandler>
     <Fluffy.AnimalTab.HandlerHeaderTip>Shift + click: mass assign handler</Fluffy.AnimalTab.HandlerHeaderTip>
     <Fluffy.AnimalTab.HandlerHeaderTip_RightClick>Shift + right click: mass assign handler</Fluffy.AnimalTab.HandlerHeaderTip_RightClick>
+
+    <Fluffy.AnimalTab.NoHandlerInRange>No valid handler</Fluffy.AnimalTab.NoHandlerInRange>
+    <Fluffy.AnimalTab.NoHandlerInRange.Tip>There are no handlers with a skill in the range set for:\n\n    {0}\n\nYou may want to loosen handler restrictions.</Fluffy.AnimalTab.NoHandlerInRange.Tip>
+ 
+    <Fluffy.AnimalTab.InvalidHandlers>Invalid handler</Fluffy.AnimalTab.InvalidHandlers>
+    <Fluffy.AnimalTab.InvalidHandlers.Tip>The handlers assigned to these animals are not able to do the job:\n\n    {0}\n\nYou may want to assign more capable handlers, and enable the handling job.</Fluffy.AnimalTab.InvalidHandlers.Tip>
 </LanguageData>

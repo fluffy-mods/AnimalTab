@@ -148,9 +148,10 @@ namespace AnimalTab
             {
                 var options = new List<FloatMenuOption>();
                 var handlers = HandlerUtility.HandlersOrdered( comp.parent.Map );
+                var minSkill = TrainableUtility.MinimumHandlingSkill( comp.Target );
 
                 foreach ( var handler in handlers )
-                    options.Add( new FloatMenuOption( HandlerUtility.HandlerLabel( handler ), () => MassSetHandler( handler ) ) );
+                    options.Add( new FloatMenuOption( HandlerUtility.HandlerLabel( handler, minSkill ), () => MassSetHandler( handler ) ) );
 
                 return new FloatMenu( options );
             }

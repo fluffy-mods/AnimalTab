@@ -50,12 +50,13 @@ namespace AnimalTab
         private void DoHandlerFloatMenu( Pawn target )
         {
             var settings = target.handlerSettings();
+            var minSkill = TrainableUtility.MinimumHandlingSkill( target );
             var options = new List<FloatMenuOption>();
             options.Add( new FloatMenuOption( HandlerMode.Any.Label(), () => settings.Mode   = HandlerMode.Any ) );
             options.Add( new FloatMenuOption( HandlerMode.Level.Label(), () => settings.Mode = HandlerMode.Level ) );
 
             foreach ( var handler in HandlerUtility.HandlersOrdered( target.Map ) )
-                options.Add( new FloatMenuOption( HandlerUtility.HandlerLabel( handler ),
+                options.Add( new FloatMenuOption( HandlerUtility.HandlerLabel( handler, minSkill ),
                                                   () => settings.Handler = handler ) );
 
             Find.WindowStack.Add( new FloatMenu( options ) );
