@@ -10,6 +10,53 @@ namespace AnimalTab
 {
     class PawnColumnWorker_Pregnant : RimWorld.PawnColumnWorker_Pregnant
     {
+
+        public override int Compare(Pawn a, Pawn b)
+        {
+            var aP = PregnantProgress(a);
+            var aB = PregnantProgress(b);
+
+            if (aP != null && aB != null)
+                return aP.Value.CompareTo(aB.Value);
+            if (aP != null && aB == null)
+                return -1;
+            if (aP == null && aB != null)
+                return 1;
+
+            var eggA = EggProgress(a);
+            var eggB = EggProgress(b);
+
+            return eggA.CompareTo(eggB);
+        }
+
+        private static bool? PregnantProgress(Pawn p)
+        {
+            var _hediff = p.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Pregnant);
+            if (_hediff == null)
+                return null;
+            return _hediff.Visible;
+        }
+
+        private static float EggProgress(Pawn p)
+        {
+            var egg = p.AllComps.OfType<CompEggLayer>().FirstOrDefault();
+            if (egg != null)
+            {
+                var fullString = egg.CompInspectStringExtra();
+
+                string textFor = fullString?
+                    .Replace("EggProgress".Translate() + ": ", "")?
+                    .Replace("%", "")?
+                    .Replace("Fertilized".Translate(), "")?
+                    .Replace("ProgressStoppedUntilFertilized".Translate(), "")?
+                    .Replace("\n", "");
+
+                if (float.TryParse(textFor, out float progress))
+                    return progress;
+            }
+            return 0;
+        }
+
         public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
             var egg = pawn.AllComps.OfType<CompEggLayer>().FirstOrDefault();
