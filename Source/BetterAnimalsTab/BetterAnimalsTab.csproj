@@ -80,6 +80,7 @@
     <Compile Include="PawnColumns\PawnColumnWorker_Handler.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Master.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Meat.cs" />
+    <Compile Include="PawnColumns\PawnColumnWorker_Pregnant.cs" />
     <Compile Include="PawnColumns\PawnColumnWorker_Wool.cs" />
     <Compile Include="Handler\Command_HandlerSettings.cs" />
     <Compile Include="Handler\HandlerMode.cs" />

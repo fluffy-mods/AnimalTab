@@ -69,6 +69,8 @@ namespace AnimalTab
             foreach ( var column in columns )
                 column.headerIconSize = HeaderIconSize;
 
+            Pregnant.sortable = true;
+            Pregnant.workerClass = typeof( PawnColumnWorker_Pregnant );
             // set new worker for master, slaughter and follow columns
             Master.workerClass = typeof( PawnColumnWorker_Master );
             Slaughter.workerClass = typeof( PawnColumnWorker_Slaughter );
