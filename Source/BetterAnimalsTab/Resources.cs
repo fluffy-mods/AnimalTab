@@ -15,6 +15,7 @@ namespace AnimalTab
                                 CheckOnWhite,
                                 Filter,
                                 Pregnant,
+                                Egg,
                                 Handling;
 
         static Resources()
@@ -25,6 +26,7 @@ namespace AnimalTab
             Filter = ContentFinder<Texture2D>.Get( "UI/Icons/Filters/Filter" );
             Pregnant = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Pregnant");
             Handling = ContentFinder<Texture2D>.Get( "UI/Icons/Filters/Training" );
+            Egg = ContentFinder<Texture2D>.Get( "UI/Icons/Animal/Egg" );
         }
     }
 }
