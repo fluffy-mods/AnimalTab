@@ -35,7 +35,7 @@ namespace AnimalTab
 
         public static void DrawCheckboxBackground( Rect rect, Texture2D background = null )
         {
-            GUI.DrawTexture( rect, background ?? CheckboxBackground );
+            GUI.DrawTexture( rect, background ?? Background_Dark );
         }
 
         public static Rect GetCheckboxRect( Rect rect )

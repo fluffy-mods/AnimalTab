@@ -18,7 +18,7 @@ namespace AnimalTab
             bool value = GetValue(pawn);
             bool flag = value;
 
-            Utilities.DoCheckbox(checkboxRect, ref value, () => GetTip( pawn ), backgroundTexture: IsBonded( pawn ) ? Resources.CheckboxBackground_Danger : null );
+            Utilities.DoCheckbox(checkboxRect, ref value, () => GetTip( pawn ), backgroundTexture: IsBonded( pawn ) ? Resources.Background_Danger : null );
 
             if ( flag != value )
                 SetValue( pawn, value );
