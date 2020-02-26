@@ -13,6 +13,7 @@ $RECYCLE.BIN/
 **/obj
 **/.vs
 **/.idea
+**/packages
 
 # Windows Installer files
 *.cab

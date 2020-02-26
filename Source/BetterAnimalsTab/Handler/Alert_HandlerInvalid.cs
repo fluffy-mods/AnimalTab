@@ -32,7 +32,7 @@ namespace AnimalTab
 
         public override AlertReport GetReport()
         {
-            return AlertReport.CulpritsAre( invalidHandlers );
+            return AlertReport.CulpritsAre( invalidHandlers.ToList() );
         }
 
         public override string GetLabel()
@@ -40,7 +40,7 @@ namespace AnimalTab
             return "Fluffy.AnimalTab.InvalidHandlers".Translate();
         }
 
-        public override string GetExplanation()
+        public override TaggedString GetExplanation()
         {
             return "Fluffy.AnimalTab.InvalidHandlers.Tip".Translate(
                 string.Join( "\n    ", invalidHandlers.Select( p => p.LabelShort ).ToArray() ) );

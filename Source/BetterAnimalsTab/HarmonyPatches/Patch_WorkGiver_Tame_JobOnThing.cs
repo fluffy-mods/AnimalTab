@@ -1,7 +1,7 @@
 ﻿// Patch_WorkGiver_Tame_JobOnThing.cs
 // Copyright Karel Kroeze, 2019-2019
 
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 using Verse.AI;

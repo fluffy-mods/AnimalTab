@@ -55,8 +55,8 @@ namespace AnimalTab
 
         public static bool HandlingDisabled( Pawn handler )
         {
-            return handler.story.WorkTagIsDisabled( WorkTags.Animals ) ||
-                   handler.story.WorkTypeIsDisabled( WorkTypeDefOf.Handling );
+            return handler.WorkTagIsDisabled( WorkTags.Animals ) ||
+                   handler.WorkTypeIsDisabled( WorkTypeDefOf.Handling );
         }
 
         public static bool HandlingAssigned( Pawn handler )

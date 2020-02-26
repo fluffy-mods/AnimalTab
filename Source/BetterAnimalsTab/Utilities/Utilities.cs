@@ -2,8 +2,7 @@
 // Copyright Karel Kroeze, 2017-2017
 
 using System;
-using System.Reflection;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;

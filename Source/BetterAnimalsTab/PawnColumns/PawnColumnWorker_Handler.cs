@@ -41,7 +41,7 @@ namespace AnimalTab
             else
             {
                 string label = settings.Handler?.LabelShort ??
-                               $"({"Fluffy.AnimalTab.HandlerMode.Any".Translate().ToLowerInvariant()})";
+                               $"({"Fluffy.AnimalTab.HandlerMode.Any".Translate().RawText.ToLowerInvariant()})";
                 if ( Widgets.ButtonText( rect.ContractedBy( 2f ), label ) )
                     DoHandlerFloatMenu( target );
             }

@@ -1,15 +1,15 @@
 ﻿// Patch_ThingSelectionUtility.cs
 // Copyright Karel Kroeze, 2018-2018
 
-using Harmony;
+using HarmonyLib;
 using UnityEngine;
+using Verse;
 
 namespace AnimalTab
 {
     public class Patch_ThingSelectionUtility
     {
-        [HarmonyPatch( typeof( RimWorld.ThingSelectionUtility ) )]
-        [HarmonyPatch("SelectNextColonist")]
+        [HarmonyPatch( typeof( RimWorld.ThingSelectionUtility ), nameof( RimWorld.ThingSelectionUtility.SelectNextColonist ) )]
         public static class Pre_SelectNextColonist
         {
             public static bool Prefix()

@@ -1,7 +1,7 @@
 ﻿// Patch_InjectTrainerSettingsComp.cs
 // Copyright Karel Kroeze, 2019-2019
 
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using Verse;
 

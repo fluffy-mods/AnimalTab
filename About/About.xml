@@ -35,13 +35,13 @@ BlakkM9:    Age column
 Jorge Martínez:    Spanish and Latin Spanish translations
 urty5656:    
 Bryan Aldrich:    Add egg progress to pregnancy column
-okradonkey:    
+okradonkey:    Fix a translation error
 
 &lt;size=24&gt;Version&lt;/size&gt;
-This is version 3.9.233, for RimWorld 1.0.2408.
+This is version 3.9.233, for RimWorld 1.1.2552.
 
 </description>
   <supportedVersions>
-    <li>1.0</li>
+    <li>1.1</li>
   </supportedVersions>
 </ModMetaData>

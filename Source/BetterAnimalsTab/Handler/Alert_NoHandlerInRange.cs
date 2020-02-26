@@ -36,7 +36,7 @@ namespace AnimalTab
 
         public override AlertReport GetReport()
         {
-            return AlertReport.CulpritsAre( invalidRanges );
+            return AlertReport.CulpritsAre( invalidRanges.ToList() );
         }
 
         public override string GetLabel()
@@ -44,7 +44,7 @@ namespace AnimalTab
             return "Fluffy.AnimalTab.NoHandlerInRange".Translate( invalidRanges.Count() );
         }
 
-        public override string GetExplanation()
+        public override TaggedString GetExplanation()
         {
             return "Fluffy.AnimalTab.NoHandlerInRange.Tip".Translate( string.Join( "\n    ", invalidRanges.Select( p => p.LabelShort ).ToArray()) );
         }

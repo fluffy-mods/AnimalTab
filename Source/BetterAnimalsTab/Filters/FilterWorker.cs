@@ -23,7 +23,7 @@ namespace AnimalTab
                     case FilterState.Exclusive:
                         return !def.exclusiveAdjective.NullOrEmpty()
                             ? def.exclusiveAdjective
-                            : "AnimalTab.Not".Translate( Adjective( FilterState.Inclusive ) );
+                            : "AnimalTab.Not".Translate( Adjective( FilterState.Inclusive ) ).Resolve();
                     case FilterState.Inactive:
                     default:
                         return !def.inactiveAdjective.NullOrEmpty()

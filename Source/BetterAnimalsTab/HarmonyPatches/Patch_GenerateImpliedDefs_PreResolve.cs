@@ -2,7 +2,7 @@
 // Copyright Karel Kroeze, 2017-2017
 
 using System.Linq;
-using Harmony;
+using HarmonyLib;
 using RimWorld;
 using static AnimalTab.PawnColumnDefOf;
 using static AnimalTab.Constants;
