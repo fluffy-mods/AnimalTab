@@ -38,11 +38,11 @@ Bryan Aldrich:    Add egg progress to pregnancy column
 okradonkey:    Fix a translation error
 
 &lt;size=24&gt;Version&lt;/size&gt;
-This is version 4.1.235, for RimWorld 1.1.2558.
+This is version 4.2.236, for RimWorld 1.1.2559.
 
 </description>
   <supportedVersions>
-    <li>1</li>
+    <li>1.1</li>
   </supportedVersions>
   <packageId>fluffy.animaltab</packageId>
   <modDependencies>
