@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <AnimalTabAllowedArea.label>Área permitida</AnimalTabAllowedArea.label>
+    <Age.headerTip>Idade</Age.headerTip>
+    <Gender.headerTip>Genero</Gender.headerTip>
+    <Wool.headerTip>Produção de lã</Wool.headerTip>
+    <Milk.headerTip>Produção de leite</Milk.headerTip>
+    <Meat.headerTip>Quantidade de carne</Meat.headerTip>
+
+</LanguageData>
