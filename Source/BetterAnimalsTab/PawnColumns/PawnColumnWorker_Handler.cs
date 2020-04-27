@@ -79,7 +79,7 @@ namespace AnimalTab
             var settingsA = a.handlerSettings();
             var settingsB = b.handlerSettings();
             if ( settingsA.Mode != settingsB.Mode )
-                return settingsA.Mode.CompareTo( (int) settingsB.Mode );
+                return settingsA.Mode.CompareTo( settingsB.Mode );
 
             if ( settingsA.Mode == HandlerMode.Specific )
                 return string.Compare( settingsA.Handler.LabelShort, settingsB.Handler.LabelShort, StringComparison.Ordinal );
