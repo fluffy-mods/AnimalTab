@@ -52,6 +52,11 @@ namespace AnimalTab
             {
                 value = !value;
             }
+            else if ( Widgets.ButtonInvisible( rect ) )
+            {
+                // just to add right-click interactions as well. Ugh.
+                value = !value;
+            }
 
             if ( button == Widgets.DraggableResult.Dragged )
             {
@@ -64,12 +69,6 @@ namespace AnimalTab
                  value != CheckboxPaintingState )
             {
                 value = CheckboxPaintingState;
-            }
-            
-            if ( Widgets.ButtonInvisible( rect ) )
-            {
-                // just to add right-click interactions as well. Ugh.
-                value = !value;
             }
         }
 

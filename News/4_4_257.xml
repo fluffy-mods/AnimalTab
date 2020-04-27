@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Defs>
+  <HugsLib.UpdateFeatureDef>
+    <modNameReadable>Animal Tab</modNameReadable>
+    <modIdentifier>fluffy.animaltab</modIdentifier>
+    <defName>Animal_Tab_4_4_257</defName>
+    <assemblyVersion>4.4.257</assemblyVersion>
+    <content>|img:4_4_257test_commi|caption:test commit [nolog]</content>
+  </HugsLib.UpdateFeatureDef>
+</Defs>
