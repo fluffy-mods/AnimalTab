@@ -3,18 +3,29 @@
 
 using System.Reflection;
 using HarmonyLib;
-using RimWorld;
+using UnityEngine;
 using Verse;
 
-namespace AnimalTab.Properties
+namespace AnimalTab
 {
     public class Controller : Mod
     {
+        public static Settings Settings { get; private set; }
+
         public Controller( ModContentPack content ) : base( content )
         {
+            Settings = GetSettings<Settings>();
+
             // execute them patches.
             var harmony = new Harmony( "Fluffy.AnimalTab" );
             harmony.PatchAll( Assembly.GetExecutingAssembly() );
+        }
+
+        public override string SettingsCategory() => "Fluffy.AnimalTab".Translate();
+
+        public override void DoSettingsWindowContents( Rect canvas )
+        {
+            Settings.DoWindowContents( canvas );
         }
     }
 }

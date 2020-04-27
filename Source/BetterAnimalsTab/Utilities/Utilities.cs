@@ -65,7 +65,7 @@ namespace AnimalTab
             {
                 value = CheckboxPaintingState;
             }
-
+            
             if ( Widgets.ButtonInvisible( rect ) )
             {
                 // just to add right-click interactions as well. Ugh.
@@ -76,6 +76,13 @@ namespace AnimalTab
         public static void DrawCheckboxBackground( Rect rect, Texture2D background = null )
         {
             GUI.DrawTexture( rect, background ?? Background_Dark );
+            if ( Controller.Settings.HighContrast )
+            {
+                var color = GUI.color;
+                GUI.color = new Color( .3f, .3f, .3f, 1f );
+                Widgets.DrawBox( rect );
+                GUI.color = color;
+            }
         }
 
         public static Rect GetCheckboxRect( Rect rect )

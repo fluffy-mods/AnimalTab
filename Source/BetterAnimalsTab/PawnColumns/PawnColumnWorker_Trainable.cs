@@ -26,7 +26,7 @@ namespace AnimalTab
                 return;
             }
 
-            GUI.DrawTexture(checkboxRect, Resources.Background_Dark);
+            Utilities.DrawCheckboxBackground( checkboxRect );
 
             var steps = Utilities.GetTrainingProgress(pawn, def.trainable);
             var completed = pawn.training.HasLearned( def.trainable );

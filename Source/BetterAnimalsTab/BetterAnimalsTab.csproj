@@ -100,6 +100,7 @@
     <Compile Include="PawnColumns\PawnColumnWorker_Wool.cs" />
     <Compile Include="Handler\Command_HandlerSettings.cs" />
     <Compile Include="Handler\HandlerMode.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Utilities\DefOf.cs" />
     <Compile Include="MainTabWindow_Animals.cs" />
     <Compile Include="Dialog_RenameAnimal.cs" />
