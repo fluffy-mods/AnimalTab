@@ -24,12 +24,10 @@ Mass assign masters, or assign all to bonded masters.
  - duduluu:	Chinese translations
  - Latta:	Introduction to the magic of reflection & translations, Korean translation
  - rgponce:	Brazilian Portuguese translation
- - frenchiveruti:	
  - Suh. Junmin:	Korean translation (update)
  - rw-chaos:	German translation
  - BlakkM9:	Age column
  - Jorge Martínez:	Spanish and Latin Spanish translations
- - urty5656:	
  - Bryan Aldrich:	Add egg progress to pregnancy column
  - okradonkey:	Fix a translation error
 
@@ -54,4 +52,4 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [![I Have a Black Dog](https://i.ibb.co/ss59Rwy/New-Project-2.png)](https://www.youtube.com/watch?v=XiCrniLQGYc)
 
 # Version
-This is version 4.2.236, for RimWorld 1.1.2559.
+This is version 4.2.244, for RimWorld 1.1.2610.

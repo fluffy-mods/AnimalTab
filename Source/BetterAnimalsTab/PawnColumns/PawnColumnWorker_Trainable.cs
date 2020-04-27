@@ -51,6 +51,24 @@ namespace AnimalTab
 
             // interaction
             Widgets.DrawHighlightIfMouseover(checkboxRect);
+            var button = Widgets.ButtonInvisibleDraggable(checkboxRect );
+            if ( button == Widgets.DraggableResult.Pressed )
+            {
+                pawn.training.SetWantedRecursive( def.trainable, !wanted );
+            }
+
+            if ( button == Widgets.DraggableResult.Dragged )
+            {
+                pawn.training.SetWantedRecursive( def.trainable, !wanted );
+                Utilities.CheckboxPainting      = true;
+                Utilities.CheckboxPaintingState = !wanted;
+            }
+
+            if ( Mouse.IsOver(checkboxRect ) && Utilities.CheckboxPainting && Input.GetMouseButton( 0 ) 
+               && wanted != Utilities.CheckboxPaintingState )
+            {
+                pawn.training.SetWantedRecursive( def.trainable, Utilities.CheckboxPaintingState );
+            }
             if ( Widgets.ButtonInvisible( checkboxRect ) )
                 pawn.training.SetWantedRecursive( def.trainable, !wanted );
         }

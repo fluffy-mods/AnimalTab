@@ -2,6 +2,7 @@
 // Copyright Karel Kroeze, 2017-2017
 
 using System;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -13,9 +14,25 @@ namespace AnimalTab
 {
     public static class Utilities
     {
+        private static FieldInfo checkboxPaintingFieldInfo = AccessTools.Field( typeof( Widgets ), "checkboxPainting" );
+
+        public static bool CheckboxPainting
+        {
+            get => (bool) checkboxPaintingFieldInfo.GetValue( null );
+            set => checkboxPaintingFieldInfo.SetValue( null, value );
+        }
+
+        private static FieldInfo checkboxPaintingStateFieldInfo = AccessTools.Field( typeof( Widgets ), "checkboxPaintingState");
+
+        public static bool CheckboxPaintingState
+        {
+            get => (bool) checkboxPaintingStateFieldInfo.GetValue( null );
+            set => checkboxPaintingStateFieldInfo.SetValue( null, value );
+        }
+
         public static void DoCheckbox( Rect rect, ref bool value, Func<string> tipGetter = null, bool background = true,
-            bool mouseover = true, Texture2D backgroundTexture = null,
-            Texture2D checkOn = null, Texture2D checkOff = null )
+                                       bool mouseover = true, Texture2D backgroundTexture = null,
+                                       Texture2D checkOn = null, Texture2D checkOff = null )
         {
             // background and hover
             if ( background )
@@ -25,11 +42,35 @@ namespace AnimalTab
             if ( tipGetter != null )
                 TooltipHandler.TipRegion( rect, tipGetter, DesignationDefOf.Slaughter.shortHash ^ rect.GetHashCode() );
 
-            // draw textures and click
+            // draw textures
             if ( value || checkOff != null )
                 GUI.DrawTexture( rect, value ? checkOn ?? Widgets.CheckboxOnTex : checkOff );
-            if ( Widgets.ButtonInvisible( rect ) )
+
+            // interactions
+            var button = Widgets.ButtonInvisibleDraggable( rect );
+            if ( button == Widgets.DraggableResult.Pressed )
+            {
                 value = !value;
+            }
+
+            if ( button == Widgets.DraggableResult.Dragged )
+            {
+                value                 = !value;
+                CheckboxPainting      = true;
+                CheckboxPaintingState = value;
+            }
+
+            if ( Mouse.IsOver( rect ) && CheckboxPainting && Input.GetMouseButton( 0 ) &&
+                 value != CheckboxPaintingState )
+            {
+                value = CheckboxPaintingState;
+            }
+
+            if ( Widgets.ButtonInvisible( rect ) )
+            {
+                // just to add right-click interactions as well. Ugh.
+                value = !value;
+            }
         }
 
         public static void DrawCheckboxBackground( Rect rect, Texture2D background = null )
