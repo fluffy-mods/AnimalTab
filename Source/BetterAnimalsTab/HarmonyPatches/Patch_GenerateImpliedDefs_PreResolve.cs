@@ -51,11 +51,7 @@ namespace AnimalTab
             columns.Insert( slaughterIndex, Meat );
             columns.Insert( slaughterIndex, Milk );
             columns.Insert( slaughterIndex, Wool );
-
-            // insert age before gender
-            var ageIndex = columns.FindIndex( c => c.workerClass == typeof( PawnColumnWorker_Gender ) );
-            columns.Insert( ageIndex, Age );
-
+            
             // insert handler column before trainables
             var handlerIndex = columns.FindIndex( c => c.workerClass == typeof( RimWorld.PawnColumnWorker_Trainable ) );
             columns.Insert( handlerIndex, PawnColumnDefOf.Handler );
