@@ -30,6 +30,7 @@ Mass assign masters, or assign all to bonded masters.
  - Jorge Martínez:	Spanish and Latin Spanish translations
  - Bryan Aldrich:	Add egg progress to pregnancy column
  - okradonkey:	Fix a translation error
+ - Han Yaodong:	Simplified Chinese translation
 
 # Think you found a bug? 
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
@@ -52,4 +53,4 @@ Show your appreciation by buying me a coffee (or contribute towards a nice singl
 [![I Have a Black Dog](https://i.ibb.co/ss59Rwy/New-Project-2.png)](https://www.youtube.com/watch?v=XiCrniLQGYc)
 
 # Version
-This is version 4.5.262, for RimWorld 1.1.2610.
+This is version 4.6.264, for RimWorld 1.1.2618.
