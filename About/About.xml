@@ -2,7 +2,7 @@
 <ModMetaData>
   <name>Animal Tab</name>
   <author>Fluffy</author>
-  <url>https://ludeon.com/forums/index.php?topic=16120.0</url>
+  <url>https://ludeon.com/forums/index.php?topic=16120</url>
   <description>Adds extra functionality to the Animals tab 
 
 &lt;size=24&gt;Important&lt;/size&gt;
@@ -37,7 +37,7 @@ okradonkey:    Fix a translation error
 Han Yaodong:    Simplified Chinese translation
 
 &lt;size=24&gt;Version&lt;/size&gt;
-This is version 4.6.264, for RimWorld 1.1.2618.
+This is version 4.6.264, for RimWorld 1.1.2652.
 
 </description>
   <supportedVersions>
