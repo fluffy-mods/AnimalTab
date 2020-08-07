@@ -1,36 +1,42 @@
-[![RimWorld 1.1](https://img.shields.io/badge/RimWorld-1.1-brightgreen.svg)](http://rimworldgame.com/)
+[![RimWorld 1.2](https://img.shields.io/badge/RimWorld-1.2-brightgreen.svg)](http://rimworldgame.com/)
 
-Adds extra functionality to the Animals tab 
+Adds extra functionality to the Animals tab
 
 
   
   
 ![Important](https://banners.karel-kroeze.nl/title/Important.png)
-Does not require a new save game. 
-Can safely be enabled/disabled in ongoing saves. 
+
+Does not require a new save game.
+Can safely be enabled/disabled in ongoing saves.
 
 
   
   
 ![Notes](https://banners.karel-kroeze.nl/title/Notes.png)
-First released back in A12 (or was it 11?) this mod vastly improved the vanilla animals tab. Evidently, Tynan agreed and the mod is now (mostly) part of the vanilla game. I still feel this mod looks better, and adds enough extra functionality (sorting, filters, renaming) to make it a worthwhile replacement. 
+
+First released back in A12 (or was it 11?) this mod vastly improved the vanilla animals tab. Evidently, Tynan agreed and the mod is now (mostly) part of the vanilla game. I still feel this mod looks better, and adds enough extra functionality (sorting, filters, renaming) to make it a worthwhile replacement.
 
 
   
   
 ![Known Issues](https://banners.karel-kroeze.nl/title/Known%20Issues.png)
+
 Domestication (wildness) and the loss over training over time is not visible in the tab. I plan on adding some kind of indicator to show this, but don't know when I'll have time. Note that this information is also not shown in the vanilla animals tab.
+This mod uses a relatively thin 'wrapper' around the vanilla animal tab to implement filtering. This wrapper cannot co-exist with other mods that depend on overriding the vanilla animal tab, e.g. Better Pawn Control.
 
 
   
   
 ![Features](https://banners.karel-kroeze.nl/title/Features.png)
-Gender and lifestage icons on the animals tab. Easily keep track of your chickenfarm! 
-Butchery designation right from the animals tab. 
-Sort by name, gender, lifestage/age, and bodysize (meat). 
-Filter by race, and a variety of attributes. 
-Rename (named) pets. Don't like the name Buttercup for your Warg? Change it! 
-Mass assign masters, or assign all to bonded masters. 
+
+Gender and lifestage icons on the animals tab. Easily keep track of your chickenfarm!
+Butchery designation right from the animals tab.
+Sort by name, gender, lifestage/age, and bodysize (meat).
+Filter by race, and a variety of attributes.
+Rename (named) pets. Don't like the name Buttercup for your Warg? Change it!
+Mass assign masters, or assign all to bonded masters.
+
 
 
   
@@ -90,4 +96,4 @@ Become a supporter and show your appreciation by buying me a coffee (or contribu
   
   
 ![Version](https://banners.karel-kroeze.nl/title/Version.png)
-This is version 4.6.264, for RimWorld 1.1.2654.
+This is version 4.7.272, for RimWorld 1.2.2719.

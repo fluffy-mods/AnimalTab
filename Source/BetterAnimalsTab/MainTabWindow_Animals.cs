@@ -28,15 +28,35 @@ namespace AnimalTab
             get
             {
                 if ( Filter )
-                    return Constants.ExtraBottomSpace + ExtraFilterSpace;
+                    return Constants.ExtraBottomSpace + Constants.ExtraFilterSpace;
                 return Constants.ExtraBottomSpace;
             }
         } 
 
         public override void DoWindowContents( Rect rect )
         {
+            rect = DoExtraDrawers( rect );
             DoFilterBar( rect );
             base.DoWindowContents( rect );
+        }
+
+        private List<DefModExtension_DrawerExtra> _extraDrawers;
+        public List<DefModExtension_DrawerExtra> ExtraDrawers
+        {
+            get
+            {
+                return _extraDrawers ??= MainButtonDefOf.Animals.modExtensions?.OfType<DefModExtension_DrawerExtra>()
+                                                        .ToList() 
+                                      ?? new List<DefModExtension_DrawerExtra>();
+            }
+        }
+
+        private Rect DoExtraDrawers( Rect rect )
+        {
+            foreach ( var extraDrawer in ExtraDrawers )
+                rect.yMin += extraDrawer.Worker.Draw( rect );
+
+            return rect;
         }
 
         private static IEnumerable<FilterWorker> _filters;

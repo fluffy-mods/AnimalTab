@@ -27,4 +27,10 @@ namespace AnimalTab
         public static PawnColumnDef Handler;
         public static PawnColumnDef Bond;
     }
+
+    [DefOf]
+    public static class MainButtonDefOf
+    {
+        public static MainButtonDef Animals;
+    }
 }
