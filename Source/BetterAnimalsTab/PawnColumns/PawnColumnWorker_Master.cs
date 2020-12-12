@@ -88,8 +88,7 @@ namespace AnimalTab
                 // get bond
                 var bond = animal.relations.GetFirstDirectRelationPawn( PawnRelationDefOf.Bond,
                     p => p.Faction == Faction.OfPlayer );
-                if ( bond == null || bond.skills.GetSkill( SkillDefOf.Animals ).Level <
-                     animal.GetStatValue( StatDefOf.MinimumHandlingSkill ) )
+                if ( bond == null )
                     continue;
                 animal.playerSettings.Master = bond;
             }
