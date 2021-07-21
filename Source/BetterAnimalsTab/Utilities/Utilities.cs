@@ -30,6 +30,14 @@ namespace AnimalTab
             set => checkboxPaintingStateFieldInfo.SetValue(null, value);
         }
 
+        public static bool IsBonded(this Pawn pawn)
+        {
+            if (!pawn.RaceProps.IsFlesh)
+                return false;
+
+            return pawn.relations.GetFirstDirectRelationPawn(PawnRelationDefOf.Bond) != null;
+        }
+
         public static void DoCheckbox(Rect rect, ref bool value, Func<string> tipGetter = null, bool background = true,
                                        bool mouseover = true, Texture2D backgroundTexture = null,
                                        Texture2D checkOn = null, Texture2D checkOff = null)

@@ -1,13 +1,10 @@
-﻿// PawnColumnWorker_Slaughter.cs
-// Copyright Karel Kroeze, 2017-2017
-
 using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace AnimalTab
 {
-    public class PawnColumnWorker_Slaughter : RimWorld.PawnColumnWorker_Slaughter
+    public class PawnColumnWorker_Release : PawnColumnWorker_ReleaseAnimalToWild
     {
         public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
@@ -23,6 +20,5 @@ namespace AnimalTab
             if (flag != value)
                 SetValue(pawn, value, table);
         }
-
     }
 }
