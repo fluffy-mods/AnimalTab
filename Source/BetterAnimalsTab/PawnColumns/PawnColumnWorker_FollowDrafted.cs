@@ -18,10 +18,10 @@ namespace AnimalTab
             bool value = GetValue(pawn);
             bool flag = value;
 
-            Utilities.DoCheckbox(checkboxRect, ref value);
+            Utilities.DoCheckbox(checkboxRect, ref value );
 
             if (flag != value)
-                SetValue(pawn, value, table);
+                SetValue(pawn, value);
         }
     }
 }
