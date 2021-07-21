@@ -14,164 +14,164 @@ namespace AnimalTab
 {
     public static class Utilities
     {
-        private static FieldInfo checkboxPaintingFieldInfo = AccessTools.Field( typeof( Widgets ), "checkboxPainting" );
+        private static FieldInfo checkboxPaintingFieldInfo = AccessTools.Field(typeof(Widgets), "checkboxPainting");
 
         public static bool CheckboxPainting
         {
-            get => (bool) checkboxPaintingFieldInfo.GetValue( null );
-            set => checkboxPaintingFieldInfo.SetValue( null, value );
+            get => (bool)checkboxPaintingFieldInfo.GetValue(null);
+            set => checkboxPaintingFieldInfo.SetValue(null, value);
         }
 
-        private static FieldInfo checkboxPaintingStateFieldInfo = AccessTools.Field( typeof( Widgets ), "checkboxPaintingState");
+        private static FieldInfo checkboxPaintingStateFieldInfo = AccessTools.Field(typeof(Widgets), "checkboxPaintingState");
 
         public static bool CheckboxPaintingState
         {
-            get => (bool) checkboxPaintingStateFieldInfo.GetValue( null );
-            set => checkboxPaintingStateFieldInfo.SetValue( null, value );
+            get => (bool)checkboxPaintingStateFieldInfo.GetValue(null);
+            set => checkboxPaintingStateFieldInfo.SetValue(null, value);
         }
 
-        public static void DoCheckbox( Rect rect, ref bool value, Func<string> tipGetter = null, bool background = true,
+        public static void DoCheckbox(Rect rect, ref bool value, Func<string> tipGetter = null, bool background = true,
                                        bool mouseover = true, Texture2D backgroundTexture = null,
-                                       Texture2D checkOn = null, Texture2D checkOff = null )
+                                       Texture2D checkOn = null, Texture2D checkOff = null)
         {
             // background and hover
-            if ( background )
-                DrawCheckboxBackground( rect, backgroundTexture );
-            if ( mouseover )
-                Widgets.DrawHighlightIfMouseover( rect );
-            if ( tipGetter != null )
-                TooltipHandler.TipRegion( rect, tipGetter, DesignationDefOf.Slaughter.shortHash ^ rect.GetHashCode() );
+            if (background)
+                DrawCheckboxBackground(rect, backgroundTexture);
+            if (mouseover)
+                Widgets.DrawHighlightIfMouseover(rect);
+            if (tipGetter != null)
+                TooltipHandler.TipRegion(rect, tipGetter, rect.GetHashCode());
 
             // draw textures
-            if ( value || checkOff != null )
-                GUI.DrawTexture( rect, value ? checkOn ?? Widgets.CheckboxOnTex : checkOff );
+            if (value || checkOff != null)
+                GUI.DrawTexture(rect, value ? checkOn ?? Widgets.CheckboxOnTex : checkOff);
 
             // interactions
-            var button = Widgets.ButtonInvisibleDraggable( rect );
-            if ( button == Widgets.DraggableResult.Pressed )
+            var button = Widgets.ButtonInvisibleDraggable(rect);
+            if (button == Widgets.DraggableResult.Pressed)
             {
                 value = !value;
             }
-            else if ( Widgets.ButtonInvisible( rect ) )
+            else if (Widgets.ButtonInvisible(rect))
             {
                 // just to add right-click interactions as well. Ugh.
                 value = !value;
             }
 
-            if ( button == Widgets.DraggableResult.Dragged )
+            if (button == Widgets.DraggableResult.Dragged)
             {
-                value                 = !value;
-                CheckboxPainting      = true;
+                value = !value;
+                CheckboxPainting = true;
                 CheckboxPaintingState = value;
             }
 
-            if ( Mouse.IsOver( rect ) && CheckboxPainting && Input.GetMouseButton( 0 ) &&
-                 value != CheckboxPaintingState )
+            if (Mouse.IsOver(rect) && CheckboxPainting && Input.GetMouseButton(0) &&
+                 value != CheckboxPaintingState)
             {
                 value = CheckboxPaintingState;
             }
         }
 
-        public static void DrawCheckboxBackground( Rect rect, Texture2D background = null )
+        public static void DrawCheckboxBackground(Rect rect, Texture2D background = null)
         {
-            GUI.DrawTexture( rect, background ?? Background_Dark );
-            if ( Controller.Settings.HighContrast )
+            GUI.DrawTexture(rect, background ?? Background_Dark);
+            if (Controller.Settings.HighContrast)
             {
                 var color = GUI.color;
-                GUI.color = new Color( .3f, .3f, .3f, 1f );
-                Widgets.DrawBox( rect );
+                GUI.color = new Color(.3f, .3f, .3f, 1f);
+                Widgets.DrawBox(rect);
                 GUI.color = color;
             }
         }
 
-        public static Rect GetCheckboxRect( Rect rect )
+        public static Rect GetCheckboxRect(Rect rect)
         {
-            return new Rect( rect.x + ( rect.width - CheckBoxSize ) / 2, rect.y + ( rect.height - CheckBoxSize ) / 2,
-                CheckBoxSize, CheckBoxSize );
+            return new Rect(rect.x + (rect.width - CheckBoxSize) / 2, rect.y + (rect.height - CheckBoxSize) / 2,
+                CheckBoxSize, CheckBoxSize);
         }
 
-        public static IntRange GetTrainingProgress( Pawn pawn, TrainableDef trainable )
+        public static IntRange GetTrainingProgress(Pawn pawn, TrainableDef trainable)
         {
-            var cur = Traverse.Create( pawn.training ).Method( "GetSteps", trainable ).GetValue<int>();
+            var cur = Traverse.Create(pawn.training).Method("GetSteps", trainable).GetValue<int>();
             var max = trainable.steps;
-            return new IntRange( cur, max );
+            return new IntRange(cur, max);
         }
 
-        public static void DrawCheckColoured( Rect rect, Color color )
+        public static void DrawCheckColoured(Rect rect, Color color)
         {
             var curColor = GUI.color;
             GUI.color = color;
-            GUI.DrawTexture( rect, CheckOnWhite );
+            GUI.DrawTexture(rect, CheckOnWhite);
             GUI.color = curColor;
         }
 
-        public static void DrawTrainingProgress( Rect rect, Pawn pawn, TrainableDef trainable, Color color )
+        public static void DrawTrainingProgress(Rect rect, Pawn pawn, TrainableDef trainable, Color color)
         {
-            var steps = GetTrainingProgress( pawn, trainable );
-            var progressRect = new Rect( rect.xMin, rect.yMax - rect.height / 5f,
-                rect.width / steps.max * steps.min, rect.height / 5f );
+            var steps = GetTrainingProgress(pawn, trainable);
+            var progressRect = new Rect(rect.xMin, rect.yMax - rect.height / 5f,
+                rect.width / steps.max * steps.min, rect.height / 5f);
 
-            Widgets.DrawBoxSolid( progressRect, color );
+            Widgets.DrawBoxSolid(progressRect, color);
         }
 
-        public static void DoTrainableTooltip( Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport canTrain )
+        public static void DoTrainableTooltip(Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport canTrain)
         {
-            Traverse.Create( typeof( TrainingCardUtility ) )
-                .Method( "DoTrainableTooltip", rect, pawn, td, canTrain )
+            Traverse.Create(typeof(TrainingCardUtility))
+                .Method("DoTrainableTooltip", rect, pawn, td, canTrain)
                 .GetValue(); // invoke
         }
 
 
 
-        public static void DoTrainableTooltip( Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport canTrain,
-            bool wanted, bool completed, IntRange steps )
+        public static void DoTrainableTooltip(Rect rect, Pawn pawn, TrainableDef td, AcceptanceReport canTrain,
+            bool wanted, bool completed, IntRange steps)
         {
             // copy pasta from TrainingCardUtility.DoTrainableTooltip
-            TooltipHandler.TipRegion( rect, () =>
-            {
-                string text = td.LabelCap + "\n\n" + td.description;
-                if ( !canTrain.Accepted )
-                {
-                    text = text + "\n\n" + canTrain.Reason;
-                }
-                else if ( !td.prerequisites.NullOrEmpty<TrainableDef>() )
-                {
-                    text += "\n";
-                    for ( int i = 0; i < td.prerequisites.Count; i++ )
-                    {
-                        if ( !pawn.training.HasLearned( td.prerequisites[i] ) )
-                        {
-                            text = text + "\n" + "TrainingNeedsPrerequisite".Translate( td.prerequisites[i].LabelCap );
-                        }
-                    }
-                }
-                if ( completed && steps.min == steps.max )
-                {
-                    text += "\n" + "Fluffy.AnimalTab.XHasMasteredY".Translate( pawn.Name.ToStringShort, td.LabelCap );
-                }
-                if ( wanted && !completed )
-                {
-                    text += "\n" + "Fluffy.AnimalTab.XHasLearnedYOutOfZ".Translate( pawn.Name.ToStringShort, steps.min,
-                                steps.max );
-                }
-                if ( completed && steps.min < steps.max )
-                {
-                    text += "\n" + "Fluffy.AnimalTab.XHasForgottenYOutOfZ".Translate( pawn.Name.ToStringShort,
-                                steps.max - steps.min, steps.max );
-                }
-                if ( wanted )
-                {
-                    text += "\n" + "Fluffy.AnimalTab.XIsDesignatedTrainY".Translate( pawn.Name.ToStringShort,
-                                td.LabelCap );
-                }
-                else if ( completed || steps.min > 0 )
-                {
-                    text += "\n" + "Fluffy.AnimalTab.XIsNotDesignatedTrainY".Translate( pawn.Name.ToStringShort,
-                                td.LabelCap );
-                }
+            TooltipHandler.TipRegion(rect, () =>
+           {
+               string text = td.LabelCap + "\n\n" + td.description;
+               if (!canTrain.Accepted)
+               {
+                   text = text + "\n\n" + canTrain.Reason;
+               }
+               else if (!td.prerequisites.NullOrEmpty<TrainableDef>())
+               {
+                   text += "\n";
+                   for (int i = 0; i < td.prerequisites.Count; i++)
+                   {
+                       if (!pawn.training.HasLearned(td.prerequisites[i]))
+                       {
+                           text = text + "\n" + "TrainingNeedsPrerequisite".Translate(td.prerequisites[i].LabelCap);
+                       }
+                   }
+               }
+               if (completed && steps.min == steps.max)
+               {
+                   text += "\n" + "Fluffy.AnimalTab.XHasMasteredY".Translate(pawn.Name.ToStringShort, td.LabelCap);
+               }
+               if (wanted && !completed)
+               {
+                   text += "\n" + "Fluffy.AnimalTab.XHasLearnedYOutOfZ".Translate(pawn.Name.ToStringShort, steps.min,
+                               steps.max);
+               }
+               if (completed && steps.min < steps.max)
+               {
+                   text += "\n" + "Fluffy.AnimalTab.XHasForgottenYOutOfZ".Translate(pawn.Name.ToStringShort,
+                               steps.max - steps.min, steps.max);
+               }
+               if (wanted)
+               {
+                   text += "\n" + "Fluffy.AnimalTab.XIsDesignatedTrainY".Translate(pawn.Name.ToStringShort,
+                               td.LabelCap);
+               }
+               else if (completed || steps.min > 0)
+               {
+                   text += "\n" + "Fluffy.AnimalTab.XIsNotDesignatedTrainY".Translate(pawn.Name.ToStringShort,
+                               td.LabelCap);
+               }
 
-                return text;
-            }, (int) ( rect.y * 612 + rect.x ) );
+               return text;
+           }, (int)(rect.y * 612 + rect.x));
         }
     }
 }

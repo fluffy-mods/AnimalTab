@@ -17,6 +17,8 @@ namespace AnimalTab
         public static PawnColumnDef FollowFieldwork;
         public static PawnColumnDef GapTiny;
         public static PawnColumnDef Slaughter;
+
+        public static PawnColumnDef ReleaseToWild;
         public static PawnColumnDef Wool;
         public static PawnColumnDef Milk;
         public static PawnColumnDef Meat;
