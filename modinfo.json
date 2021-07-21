@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 0,
-        "build": 283
+        "build": 286
     },
     "author": {
         "name": "Fluffy",
@@ -18,7 +18,30 @@
         "repo": "AnimalTab",
         "url": "https://github.com/fluffy-mods/AnimalTab"
     },
+    "attributions": [
+        "Icons by Freepik, https://www.freepik.com, from Flaticon, https://www.flaticon.com/",
+        "Icons by SimpleIcon",
+        "Icons by Dave Gandy, http://fontawesome.io/"
+    ],
     "changelog": [
+        {
+            "date": "2021-07-21T20:12:52.000Z",
+            "message": "increase header icon sizes",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "0731d378a2c63187427c03b55ed55a7f8ac3895c"
+        },
+        {
+            "date": "2021-07-21T19:46:58.000Z",
+            "message": "add auto-slaughter and rancher label",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "62a0c5bf4571ef61d29dc6ac99d76451702ca207"
+        },
         {
             "date": "2021-07-21T18:12:52.000Z",
             "message": "fix red squiglies",

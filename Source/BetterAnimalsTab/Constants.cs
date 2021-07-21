@@ -7,7 +7,7 @@ namespace AnimalTab
 {
     public class Constants
     {
-        public static readonly Vector2 HeaderIconSize = new Vector2(24, 24);
+        public static readonly Vector2 HeaderIconSize = new Vector2(20, 20);
         public static readonly Color DarkGrey = new Color(.4f, .4f, .4f, 1f);
         public static readonly Color DarkRed = new Color(.6f, 0f, 0f, 1f);
         public const float CheckBoxSize = 16;

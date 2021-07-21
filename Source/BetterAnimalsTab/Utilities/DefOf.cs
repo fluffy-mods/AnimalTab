@@ -17,8 +17,7 @@ namespace AnimalTab
         public static PawnColumnDef FollowFieldwork;
         public static PawnColumnDef GapTiny;
         public static PawnColumnDef Slaughter;
-
-        public static PawnColumnDef ReleaseToWild;
+        public static PawnColumnDef ReleaseAnimalToWild;
         public static PawnColumnDef Wool;
         public static PawnColumnDef Milk;
         public static PawnColumnDef Meat;
@@ -28,6 +27,7 @@ namespace AnimalTab
         public static PawnColumnDef LifeStage;
         public static PawnColumnDef Handler;
         public static PawnColumnDef Bond;
+        public static PawnColumnDef MedicalCare;
     }
 
     [DefOf]
