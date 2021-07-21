@@ -9,7 +9,7 @@ namespace AnimalTab
 {
     public class PawnColumnWorker_FollowFieldwork : RimWorld.PawnColumnWorker_FollowFieldwork
     {
-        public override void DoCell( Rect rect, Pawn pawn, PawnTable table )
+        public override void DoCell(Rect rect, Pawn pawn, PawnTable table)
         {
             if (!HasCheckbox(pawn))
                 return;
@@ -18,10 +18,10 @@ namespace AnimalTab
             bool value = GetValue(pawn);
             bool flag = value;
 
-            Utilities.DoCheckbox(checkboxRect, ref value );
+            Utilities.DoCheckbox(checkboxRect, ref value);
 
             if (flag != value)
-                SetValue(pawn, value);
+                SetValue(pawn, value, table);
         }
     }
 }

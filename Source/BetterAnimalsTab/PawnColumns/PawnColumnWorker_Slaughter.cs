@@ -13,20 +13,20 @@ namespace AnimalTab
         {
             if (!HasCheckbox(pawn))
                 return;
-            
-            Rect checkboxRect = Utilities.GetCheckboxRect( rect );
+
+            Rect checkboxRect = Utilities.GetCheckboxRect(rect);
             bool value = GetValue(pawn);
             bool flag = value;
 
-            Utilities.DoCheckbox(checkboxRect, ref value, () => GetTip( pawn ), backgroundTexture: IsBonded( pawn ) ? Resources.Background_Danger : null );
+            Utilities.DoCheckbox(checkboxRect, ref value, () => GetTip(pawn), backgroundTexture: IsBonded(pawn) ? Resources.Background_Danger : null);
 
-            if ( flag != value )
-                SetValue( pawn, value );
+            if (flag != value)
+                SetValue(pawn, value, table);
         }
 
-        public bool IsBonded( Pawn pawn )
+        public bool IsBonded(Pawn pawn)
         {
-            if ( !pawn.RaceProps.IsFlesh )
+            if (!pawn.RaceProps.IsFlesh)
                 return false;
 
             return pawn.relations.GetFirstDirectRelationPawn(PawnRelationDefOf.Bond) != null;
