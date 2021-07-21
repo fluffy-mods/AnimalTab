@@ -5,7 +5,7 @@
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
         "major": 5,
-        "minor": 0,
+        "minor": 1,
         "build": 293
     },
     "author": {
@@ -24,6 +24,15 @@
         "Icons by Dave Gandy, http://fontawesome.io/"
     ],
     "changelog": [
+        {
+            "date": "2021-07-21T21:21:40.000Z",
+            "message": "use themed checkboxes for release, highlight bonded",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "27924181ba100eea717749c7199962391a570391"
+        },
         {
             "date": "2021-07-21T21:09:54.000Z",
             "message": "fix build script, I need better icons",
