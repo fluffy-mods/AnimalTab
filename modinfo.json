@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 0,
-        "build": 286
+        "build": 292
     },
     "author": {
         "name": "Fluffy",
@@ -24,6 +24,24 @@
         "Icons by Dave Gandy, http://fontawesome.io/"
     ],
     "changelog": [
+        {
+            "date": "2021-07-21T20:53:05.000Z",
+            "message": "increase icon size and replace some icons",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "8bbf7f00eff7f737d96cc1f2fc972131fdafea14"
+        },
+        {
+            "date": "2021-07-21T20:53:05.000Z",
+            "message": "increase icon size and replace some icons",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "3617116894e22a420f5b7b9c30d65991dbe51a15"
+        },
         {
             "date": "2021-07-21T20:12:52.000Z",
             "message": "increase header icon sizes",
