@@ -16,22 +16,24 @@ namespace AnimalTab
                                 Filter,
                                 Pregnant,
                                 Egg,
-                                Handling;
+                                Handling,
+                                Slaughter;
 
         public static Color Dark, Danger;
 
         static Resources()
         {
-            Dark = new Color( 0f, 0f, 0f, .2f );
-            Danger = new Color( 0.8f, 0f, 0f, .2f );
+            Dark = new Color(0f, 0f, 0f, .2f);
+            Danger = new Color(0.8f, 0f, 0f, .2f);
 
-            Background_Dark = SolidColorMaterials.NewSolidColorTexture( Dark );
-            Background_Danger = SolidColorMaterials.NewSolidColorTexture( Danger );
+            Background_Dark = SolidColorMaterials.NewSolidColorTexture(Dark);
+            Background_Danger = SolidColorMaterials.NewSolidColorTexture(Danger);
             CheckOnWhite = ContentFinder<Texture2D>.Get("UI/Icons/Animal/CheckOnWhite");
-            Filter = ContentFinder<Texture2D>.Get( "UI/Icons/Filters/Filter" );
+            Filter = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Filter");
             Pregnant = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Pregnant");
-            Handling = ContentFinder<Texture2D>.Get( "UI/Icons/Filters/Training" );
-            Egg = ContentFinder<Texture2D>.Get( "UI/Icons/Animal/Egg" );
+            Handling = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Training");
+            Egg = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Egg");
+            Slaughter = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Slaughter");
         }
     }
 }
