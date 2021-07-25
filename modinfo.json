@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 6,
-        "build": 293
+        "build": 295
     },
     "author": {
         "name": "Fluffy",
@@ -24,6 +24,15 @@
         "Icons by Dave Gandy, http://fontawesome.io/"
     ],
     "changelog": [
+        {
+            "date": "2021-07-24T22:38:10.000Z",
+            "message": "release v5.6.293",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "2544941e5ff356bd692b84d6ffaf6c32ccab13cd"
+        },
         {
             "date": "2021-07-21T22:50:18.000Z",
             "message": "release v5.5.293",
@@ -1124,6 +1133,78 @@
                 "minor": 13,
                 "build": 0
             }
+        }
+    ],
+    "contributions": [
+        {
+            "hash": "9b7271754e9226fb9934108946ea13c136c61cb4",
+            "author": "maarxx",
+            "description": "Mass Assign Bonded Doesnt Need to Check Handle Skill Anymore"
+        },
+        {
+            "hash": "99d99424405ad9f83eaba77a272bf8e217b9daf0",
+            "author": "maarxx",
+            "description": "Change Age Filter to Mimic Race Filter (#57)"
+        },
+        {
+            "hash": "15437daf788e2dfefd4e506a16c554b323162cbb",
+            "author": "Han Yaodong",
+            "description": "Add Chinese translation (#53)"
+        },
+        {
+            "hash": "b13abf5d369d02787cc3497a9860b6a99f63917b",
+            "author": "okradonkey",
+            "description": "Fix string error (#45)"
+        },
+        {
+            "hash": "4104ae02501a4cc16ed2d480edd39f8ffdf27fce",
+            "author": "Bryan Aldrich",
+            "description": "add sorting capabilities"
+        },
+        {
+            "hash": "3188244f2ce7a282b74f364077a201556847b040",
+            "author": "Bryan Aldrich",
+            "description": "Add egg laying progress + fertilized / non-fertilized status"
+        },
+        {
+            "hash": "912a7ada90c45e272c7ce7400e67282fa2d54540",
+            "author": "Jorge Martínez",
+            "description": "Added Spanish and Latin Spanish translations (#44)"
+        },
+        {
+            "hash": "3aee380931e13b4bded46a3e06251cfe5f5eeb87",
+            "author": "BlakkM9",
+            "description": "added german translation for age column header tip"
+        },
+        {
+            "hash": "1e32cedd6592852bc3ae2d71cf603f800b4e7f07",
+            "author": "BlakkM9",
+            "description": "added age column reworked wool/shearable icon added age icon"
+        },
+        {
+            "hash": "24c851f734b9c1ca44c2b4e417b7aa9fd993f3e6",
+            "author": "rw-chaos",
+            "description": "German translation (#36)"
+        },
+        {
+            "hash": "98c6df6c5c07b8223a54d14afa4260ca0cd865a8",
+            "author": "Suh. Junmin",
+            "description": "Add korean translation (#35)"
+        },
+        {
+            "hash": "fb8f48f05b629c851f75e5006abd282077a9caa3",
+            "author": "frenchiveruti",
+            "description": "Updated URL (#14)"
+        },
+        {
+            "hash": "2d10095ad9e2e920aab47d021398a49811ca4e08",
+            "author": "duduluu",
+            "description": "Add Chinese Translation"
+        },
+        {
+            "hash": "4475734f167eabd0d1f5b1b6d9b3a12530b2d786",
+            "author": "urty5656",
+            "description": "Animal training gauge, translation support, Korean translation"
         }
     ]
 }

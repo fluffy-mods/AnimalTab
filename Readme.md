@@ -25,18 +25,18 @@ Filter by race, and a variety of attributes.
 Rename (named) pets. Don't like the name Buttercup for your Warg? Change it!
 Mass assign masters, or assign all to bonded masters.
 
-
 ![Contributors](https://banners.karel-kroeze.nl/title/Contributors.png)
- - duduluu:	Chinese translations
- - Latta:	Introduction to the magic of reflection & translations, Korean translation
- - rgponce:	Brazilian Portuguese translation
- - Suh. Junmin:	Korean translation (update)
- - rw-chaos:	German translation
- - BlakkM9:	Age column
- - Jorge Martínez:	Spanish and Latin Spanish translations
- - Bryan Aldrich:	Add egg progress to pregnancy column
- - okradonkey:	Fix a translation error
- - Han Yaodong:	Simplified Chinese translation
+
+- duduluu: Chinese translations
+- Latta: Introduction to the magic of reflection & translations, Korean translation
+- rgponce: Brazilian Portuguese translation
+- Suh. Junmin: Korean translation (update)
+- rw-chaos: German translation
+- BlakkM9: Age column
+- Jorge Martínez: Spanish and Latin Spanish translations
+- Bryan Aldrich: Add egg progress to pregnancy column
+- okradonkey: Fix a translation error
+- Han Yaodong: Simplified Chinese translation
 
 ![Think you found a bug?](https://banners.karel-kroeze.nl/title/Think%20you%20found%20a%20bug%3F.png)  
 Please read [this guide](http://steamcommunity.com/sharedfiles/filedetails/?id=725234314) before creating a bug report,
@@ -59,7 +59,6 @@ Become a supporter and show your appreciation by buying me a coffee (or contribu
 [![Buy Me a Coffee](http://i.imgur.com/EjWiUwx.gif)](https://ko-fi.com/fluffymods)
 
 [![I Have a Black Dog](https://i.ibb.co/ss59Rwy/New-Project-2.png)](https://www.youtube.com/watch?v=XiCrniLQGYc)
-
 
 ![Version](https://banners.karel-kroeze.nl/title/Version.png)  
 This is version 4.7.277, for RimWorld 1.2.2753.
