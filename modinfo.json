@@ -5,8 +5,8 @@
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
         "major": 5,
-        "minor": 6,
-        "build": 295
+        "minor": 7,
+        "build": 298
     },
     "author": {
         "name": "Fluffy",
@@ -24,6 +24,15 @@
         "Icons by Dave Gandy, http://fontawesome.io/"
     ],
     "changelog": [
+        {
+            "date": "2021-07-25T22:59:47.000Z",
+            "message": "update harmomny, fix descriptions",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "b69e608824c4d29593dbb86156f2c5f6179bba76"
+        },
         {
             "date": "2021-07-24T22:38:10.000Z",
             "message": "release v5.6.293",
