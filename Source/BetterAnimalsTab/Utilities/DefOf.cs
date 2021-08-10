@@ -1,13 +1,11 @@
-﻿// DefOf.cs
+// DefOf.cs
 // Copyright Karel Kroeze, 2017-2017
 
 using RimWorld;
 
-namespace AnimalTab
-{
+namespace AnimalTab {
     [DefOf]
-    public static class PawnColumnDefOf
-    {
+    public static class PawnColumnDefOf {
         public static PawnColumnDef Master;
         public static PawnColumnDef Label;
         public static PawnColumnDef AnimalTabLabel;
@@ -31,8 +29,7 @@ namespace AnimalTab
     }
 
     [DefOf]
-    public static class MainButtonDefOf
-    {
+    public static class MainButtonDefOf {
         public static MainButtonDef Animals;
     }
 }

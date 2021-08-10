@@ -1,27 +1,23 @@
-﻿// Dialog_RenameAnimal.cs
+// Dialog_RenameAnimal.cs
 // Copyright Karel Kroeze, 2017-2017
 
 using RimWorld;
 using Verse;
 
-namespace AnimalTab
-{
-    public class Dialog_RenameAnimal : Dialog_Rename
-    {
-        private Pawn animal;
-        private string oldName;
+namespace AnimalTab {
+    public class Dialog_RenameAnimal: Dialog_Rename {
+        private readonly Pawn animal;
+        private readonly string oldName;
 
-        public Dialog_RenameAnimal( Pawn animal )
-        {
+        public Dialog_RenameAnimal(Pawn animal) {
             this.animal = animal;
             curName = animal.Name.ToString();
             oldName = curName;
         }
 
-        protected override void SetName( string name )
-        {
-            animal.Name = new NameSingle( curName );
-            Messages.Message( "AnimalTab.AnimalRenamed".Translate( oldName, curName ), MessageTypeDefOf.SilentInput );
+        protected override void SetName(string name) {
+            animal.Name = new NameSingle(curName);
+            Messages.Message("AnimalTab.AnimalRenamed".Translate(oldName, curName), MessageTypeDefOf.SilentInput);
         }
     }
 }

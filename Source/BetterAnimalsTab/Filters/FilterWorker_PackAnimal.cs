@@ -1,17 +1,13 @@
-﻿// FilterWorker_CaravanCarryingCapacity.cs
+// FilterWorker_CaravanCarryingCapacity.cs
 // Copyright Karel Kroeze, 2018-2018
 
 using Verse;
 
-namespace AnimalTab
-{
-    public class FilterWorker_PackAnimal: FilterWorker
-    {
-        public override bool Allows( Pawn pawn )
-        {
-            var packAnimal = pawn.RaceProps.packAnimal;
-            switch ( State )
-            {
+namespace AnimalTab {
+    public class FilterWorker_PackAnimal: FilterWorker {
+        public override bool Allows(Pawn pawn) {
+            bool packAnimal = pawn.RaceProps.packAnimal;
+            switch (State) {
                 case FilterState.Inactive:
                 case FilterState.Exclusive when !packAnimal:
                 case FilterState.Inclusive when packAnimal:

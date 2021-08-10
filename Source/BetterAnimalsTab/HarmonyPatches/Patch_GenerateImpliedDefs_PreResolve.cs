@@ -1,36 +1,33 @@
-﻿// Patch_GenerateImpliedDefs_PreResolve.cs
+// Patch_GenerateImpliedDefs_PreResolve.cs
 // Copyright Karel Kroeze, 2017-2017
 
 using System.Linq;
 using HarmonyLib;
 using RimWorld;
-using static AnimalTab.PawnColumnDefOf;
 using static AnimalTab.Constants;
+using static AnimalTab.PawnColumnDefOf;
 
-namespace AnimalTab
-{
+namespace AnimalTab {
     [HarmonyPatch(typeof(DefGenerator), "GenerateImpliedDefs_PreResolve")]
-    public class Patch_GenerateImpliedDefs_PreResolve
-    {
-        public static void Postfix()
-        {
-            var animalTable = PawnTableDefOf.Animals;
-            var columns = animalTable.columns;
+    public class Patch_GenerateImpliedDefs_PreResolve {
+        public static void Postfix() {
+            PawnTableDef animalTable = PawnTableDefOf.Animals;
+            System.Collections.Generic.List<PawnColumnDef> columns = animalTable.columns;
 
             // remove all gaps, we'll insert new ones at appropriate places
             columns.RemoveAll(c => c == GapTiny);
 
             // replace label column
             // NOTE: We can't simply replace the workerType, as these columns are used in multiple tabs.
-            var labelIndex = columns.IndexOf(Label);
+            int labelIndex = columns.IndexOf(Label);
             columns.RemoveAt(labelIndex);
             columns.Insert(labelIndex, AnimalTabLabel);
-            var areaIndex = columns.IndexOf(AllowedAreaWide);
+            int areaIndex = columns.IndexOf(AllowedAreaWide);
             columns.RemoveAt(areaIndex);
             columns.Insert(areaIndex, AnimalTabAllowedArea);
 
             // move pregnant, master, bond and follow columns after lifestage
-            var lifeStageIndex = columns.IndexOf(LifeStage);
+            int lifeStageIndex = columns.IndexOf(LifeStage);
             columns.Remove(Pregnant);
             columns.Insert(lifeStageIndex + 1, Pregnant);
             columns.Remove(Master);
@@ -47,17 +44,17 @@ namespace AnimalTab
             columns.Insert(columns.IndexOf(FollowFieldwork) + 1, GapTiny);
 
             // insert wool, milk & meat columns before slaughter
-            var slaughterIndex = columns.IndexOf(Slaughter);
+            int slaughterIndex = columns.IndexOf(Slaughter);
             columns.Insert(slaughterIndex, Meat);
             columns.Insert(slaughterIndex, Milk);
             columns.Insert(slaughterIndex, Wool);
 
             // insert handler column before trainables
-            var handlerIndex = columns.FindIndex(c => c.workerClass == typeof(RimWorld.PawnColumnWorker_Trainable));
-            columns.Insert(handlerIndex, PawnColumnDefOf.Handler);
+            int handlerIndex = columns.FindIndex(c => c.workerClass == typeof(RimWorld.PawnColumnWorker_Trainable));
+            columns.Insert(handlerIndex, Handler);
 
             // swam medical and release
-            var medicalIndex = columns.IndexOf(MedicalCare);
+            int medicalIndex = columns.IndexOf(MedicalCare);
             columns.Remove(ReleaseAnimalToWild);
             columns.Insert(medicalIndex, ReleaseAnimalToWild);
 
@@ -67,8 +64,9 @@ namespace AnimalTab
             Pregnant.headerTip = "Pregnant";
 
             // make all icons the same size.
-            foreach (var column in columns)
+            foreach (PawnColumnDef column in columns) {
                 column.headerIconSize = HeaderIconSize;
+            }
 
             // set new worker for master, slaughter and follow columns
             Pregnant.sortable = true;
@@ -80,21 +78,24 @@ namespace AnimalTab
             ReleaseAnimalToWild.workerClass = typeof(PawnColumnWorker_Release);
 
             // set new workers for trainable columns
-            foreach (var column in columns.Where(c => c.workerClass == typeof(RimWorld.PawnColumnWorker_Trainable)))
+            foreach (PawnColumnDef column in columns.Where(c => c.workerClass == typeof(RimWorld.PawnColumnWorker_Trainable))) {
                 column.workerClass = typeof(PawnColumnWorker_Trainable);
+            }
 
             // insert gap after trainables
             columns.Insert(columns.FindLastIndex(c => c.workerClass == typeof(PawnColumnWorker_Trainable)) + 1, GapTiny);
 
             // reset all workers to make sure they are resolved to the new type
             // NOTE: Vanilla inserts columns by checking for 'Worker', which resolves some workers - we need to reset that.
-            var workerField = AccessTools.Field(typeof(PawnColumnDef), "workerInt");
-            foreach (var column in columns)
+            System.Reflection.FieldInfo workerField = AccessTools.Field(typeof(PawnColumnDef), "workerInt");
+            foreach (PawnColumnDef column in columns) {
                 workerField.SetValue(column, null);
+            }
 
-            foreach (var column in columns)
+            foreach (PawnColumnDef column in columns) {
                 Logger.Debug(
                     $"{column.defName} <{column.workerClass.FullName}> | <{column.Worker?.GetType().FullName ?? "NULL"}>");
+            }
 
             // add handler column to Wildlife tab
             PawnTableDefOf.Wildlife.columns.Add(Handler);

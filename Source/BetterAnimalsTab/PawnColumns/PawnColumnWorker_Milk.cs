@@ -1,25 +1,20 @@
-﻿// PawnColumnWorker_Wool.cs
+// PawnColumnWorker_Wool.cs
 // Copyright Karel Kroeze, 2017-2017
 
 using Verse;
 
-namespace AnimalTab
-{
-    public class PawnColumnWorker_Milk : PawnColumnWorker_Progress
-    {
-        public override bool ShouldDraw( Pawn pawn )
-        {
+namespace AnimalTab {
+    public class PawnColumnWorker_Milk: PawnColumnWorker_Progress {
+        public override bool ShouldDraw(Pawn pawn) {
             return pawn.Milkable();
         }
 
-        public override float GetProgress( Pawn pawn )
-        {
+        public override float GetProgress(Pawn pawn) {
             return pawn.CompMilkable().Fullness;
         }
 
-        public override string GetTip(Pawn pawn)
-        {
-            return "AnimalTab.GatherableTip".Translate( pawn.CompMilkable().Props.milkDef.LabelCap, pawn.CompMilkable().Props.milkAmount );
+        public override string GetTip(Pawn pawn) {
+            return "AnimalTab.GatherableTip".Translate(pawn.CompMilkable().Props.milkDef.LabelCap, pawn.CompMilkable().Props.milkAmount);
         }
     }
 }

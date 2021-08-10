@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 7,
-        "build": 298
+        "build": 301
     },
     "author": {
         "name": "Fluffy",
@@ -19,9 +19,30 @@
         "url": "https://github.com/fluffy-mods/AnimalTab"
     },
     "attributions": [
-        "Icons by Freepik, https://www.freepik.com, from Flaticon, https://www.flaticon.com/",
-        "Icons by SimpleIcon",
-        "Icons by Dave Gandy, http://fontawesome.io/"
+        {
+            "description": "icons",
+            "owner": "Freepik/Flaticon",
+            "url": "http://www.flaticon.com/authors/freepik",
+            "license": "BY-NC"
+        },
+        {
+            "description": "icons",
+            "owner": "SimpleIcon",
+            "url": "https://simpleicons.org/",
+            "license": "CC0"
+        },
+        {
+            "description": "icons",
+            "owner": "Dave Gandy/FontAwesome",
+            "url": "http://fontawesome.io/",
+            "license": "BY"
+        },
+        {
+            "description": "preview animal art",
+            "author": "macrovector",
+            "license": "BY-NC",
+            "url": "https://www.freepik.com/macrovector"
+        }
     ],
     "changelog": [
         {
@@ -1215,5 +1236,99 @@
             "author": "urty5656",
             "description": "Animal training gauge, translation support, Korean translation"
         }
-    ]
+    ],
+    "contributors": {
+        "maarxx": [
+            {
+                "hash": "9b72717",
+                "author": "maarxx",
+                "description": "Mass Assign Bonded Doesnt Need to Check Handle Skill Anymore"
+            },
+            {
+                "hash": "99d9942",
+                "author": "maarxx",
+                "description": "Change Age Filter to Mimic Race Filter (#57)"
+            }
+        ],
+        "Han Yaodong": [
+            {
+                "hash": "15437da",
+                "author": "Han Yaodong",
+                "description": "Add Chinese translation (#53)"
+            }
+        ],
+        "okradonkey": [
+            {
+                "hash": "b13abf5",
+                "author": "okradonkey",
+                "description": "Fix string error (#45)"
+            }
+        ],
+        "Bryan Aldrich": [
+            {
+                "hash": "4104ae0",
+                "author": "Bryan Aldrich",
+                "description": "add sorting capabilities"
+            },
+            {
+                "hash": "3188244",
+                "author": "Bryan Aldrich",
+                "description": "Add egg laying progress + fertilized / non-fertilized status"
+            }
+        ],
+        "Jorge Martínez": [
+            {
+                "hash": "912a7ad",
+                "author": "Jorge Martínez",
+                "description": "Added Spanish and Latin Spanish translations (#44)"
+            }
+        ],
+        "BlakkM9": [
+            {
+                "hash": "3aee380",
+                "author": "BlakkM9",
+                "description": "added german translation for age column header tip"
+            },
+            {
+                "hash": "1e32ced",
+                "author": "BlakkM9",
+                "description": "added age column reworked wool/shearable icon added age icon"
+            }
+        ],
+        "rw-chaos": [
+            {
+                "hash": "24c851f",
+                "author": "rw-chaos",
+                "description": "German translation (#36)"
+            }
+        ],
+        "Suh. Junmin": [
+            {
+                "hash": "98c6df6",
+                "author": "Suh. Junmin",
+                "description": "Add korean translation (#35)"
+            }
+        ],
+        "frenchiveruti": [
+            {
+                "hash": "fb8f48f",
+                "author": "frenchiveruti",
+                "description": "Updated URL (#14)"
+            }
+        ],
+        "duduluu": [
+            {
+                "hash": "2d10095",
+                "author": "duduluu",
+                "description": "Add Chinese Translation"
+            }
+        ],
+        "urty5656": [
+            {
+                "hash": "4475734",
+                "author": "urty5656",
+                "description": "Animal training gauge, translation support, Korean translation"
+            }
+        ]
+    }
 }

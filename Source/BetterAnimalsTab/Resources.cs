@@ -1,14 +1,12 @@
-﻿// Resources.cs
+// Resources.cs
 // Copyright Karel Kroeze, 2017-2017
 
 using UnityEngine;
 using Verse;
 
-namespace AnimalTab
-{
+namespace AnimalTab {
     [StaticConstructorOnStartup]
-    public static class Resources
-    {
+    public static class Resources {
         public static Texture2D Background_Dark,
                                 Background_Danger,
                                 CheckOnWhite,
@@ -20,8 +18,7 @@ namespace AnimalTab
 
         public static Color Dark, Danger;
 
-        static Resources()
-        {
+        static Resources() {
             Dark = new Color(0f, 0f, 0f, .2f);
             Danger = new Color(0.8f, 0f, 0f, .2f);
 

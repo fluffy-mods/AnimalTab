@@ -1,11 +1,9 @@
-﻿
+
 using System.Diagnostics;
 using Verse;
 
-namespace AnimalTab
-{
-    public static class Logger
-    {
+namespace AnimalTab {
+    public static class Logger {
         public static string Identifier => "AnimalTab";
 
         public static string FormatMessage(string msg) { return Identifier + " :: " + msg; }
@@ -16,8 +14,7 @@ namespace AnimalTab
         [Conditional("TRACE")]
         public static void Trace(string msg) { Log.Error(FormatMessage(msg)); }
 
-        public static void Error(string msg)
-        {
+        public static void Error(string msg) {
             Log.Error(FormatMessage(msg));
         }
 

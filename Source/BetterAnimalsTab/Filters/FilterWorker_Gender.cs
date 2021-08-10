@@ -1,29 +1,19 @@
-﻿using Verse;
+using Verse;
 
-namespace AnimalTab
-{
-    public class FilterWorker_Gender : FilterWorker
-    {
-        public Gender GenderState
-        {
-            get
-            {
-                switch ( State )
-                {
-                    case FilterState.Inclusive:
-                        return Gender.Female;
-                    case FilterState.Exclusive:
-                        return Gender.Male;
-                    default:
-                        return Gender.None;
-                }
-            }
-        }
+namespace AnimalTab {
+    public class FilterWorker_Gender: FilterWorker {
+        public Gender GenderState => State switch {
+            FilterState.Inclusive => Gender.Female,
+            FilterState.Exclusive => Gender.Male,
+            FilterState.Inactive => throw new System.NotImplementedException(),
+            _ => Gender.None,
+        };
 
-        public override bool Allows( Pawn pawn )
-        {
-            if ( GenderState == Gender.None )
+        public override bool Allows(Pawn pawn) {
+            if (GenderState == Gender.None) {
                 return true;
+            }
+
             return pawn.gender == GenderState;
         }
     }
