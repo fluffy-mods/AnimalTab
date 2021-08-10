@@ -46,6 +46,15 @@
     ],
     "changelog": [
         {
+            "date": "2021-08-10T22:28:53.000Z",
+            "message": "actually render preview, set correct size",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "c2e2f0320a7d60b41f3f15560e4d32a901429739"
+        },
+        {
             "date": "2021-08-10T22:19:26.000Z",
             "message": "migrate to sdk project, add preview image",
             "author": {
