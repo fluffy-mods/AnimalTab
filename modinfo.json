@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 10,
-        "build": 324
+        "build": 325
     },
     "author": {
         "name": "Fluffy",
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2021-08-12T21:20:18.000Z",
+            "message": "release v5.10.324",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "184025aa1ef8e35a0f96f83a5178d4c5615ee183"
+        },
         {
             "date": "2021-08-12T21:10:17.000Z",
             "message": "release v5.10.323",
