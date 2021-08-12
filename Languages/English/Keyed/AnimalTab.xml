@@ -16,9 +16,19 @@
     <AnimalTab.Not>not {0}</AnimalTab.Not>
     <AnimalTab.Any>any</AnimalTab.Any>
     <AnimalTab.All>All</AnimalTab.All>
+
+    <!-- deprecated list strings -->
     <AnimalTab.And>and</AnimalTab.And>
     <AnimalTab.Or>or</AnimalTab.Or>
     <AnimalTab.Comma>,</AnimalTab.Comma>
+
+    <!-- new list strings, includes whitespace.
+    It looks like the original translations had whitespace,
+    but that it was dropped at some point.
+    -->
+    <AnimalTab.List.Comma>, </AnimalTab.List.Comma>
+    <AnimalTab.List.And> and </AnimalTab.List.And>
+    <AnimalTab.List.Or> or </AnimalTab.List.Or>
 
     <AnimalTab.FilterTip>Showing {0} animals\n\nClick to show {1} animals</AnimalTab.FilterTip>
     <AnimalTab.TrainableFilterTip>Showing animals trained in {0}\n\nClick to change filter</AnimalTab.TrainableFilterTip>
@@ -26,6 +36,12 @@
     <AnimalTab.PawnKindFilterTip>Showing {0}\n\nClick to change filter</AnimalTab.PawnKindFilterTip>
     <AnimalTab.FilterInactiveTip>Showing all animals\n\nClick to change filter</AnimalTab.FilterInactiveTip>
     <AnimalTab.XofYShown>{0} of {1} animals shown</AnimalTab.XofYShown>
+    <AnimalTab.BondedFilterTip.ShowBondedWithX>Showing animals bonded with {0}\n\nClick to change filter</AnimalTab.BondedFilterTip.ShowBondedWithX>
+    <AnimalTab.BondedFilterTip.HideBondedWithX>Hiding animals bonded with {0}\n\nClick to change filter</AnimalTab.BondedFilterTip.HideBondedWithX>
+    <AnimalTab.ShowBonded>Show bonded animals</AnimalTab.ShowBonded>
+    <AnimalTab.HideBonded>Hide bonded animals</AnimalTab.HideBonded>
+    <AnimalTab.BondedWithX>Bonded with {0}</AnimalTab.BondedWithX>
+    <AnimalTab.ClearFilter>Clear filter</AnimalTab.ClearFilter>
 
     <!-- Because for some odd reason, TrainableIntelligendeDefs have their labels defined with keyed translations
     and vanilla doesn't define the label for 'Super Advanced', presumably because it is not used. -->

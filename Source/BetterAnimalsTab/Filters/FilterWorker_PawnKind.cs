@@ -63,7 +63,7 @@ namespace AnimalTab {
                 }
             }
 
-            return "AnimalTab.PawnKindFilterTip".Translate(_allowed.ToStringList("AnimalTab.Or".Translate()));
+            return "AnimalTab.PawnKindFilterTip".Translate(_allowed.ToStringList("AnimalTab.List.Or".Translate()));
         }
     }
 }

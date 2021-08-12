@@ -67,7 +67,7 @@ namespace AnimalTab {
             }
 
             List<string> _allowed = ( from trainable in Trainables where allowed[trainable] select trainable.label ).ToList();
-            return "AnimalTab.TrainableFilterTip".Translate(_allowed.ToStringList("AnimalTab.Or".Translate()));
+            return "AnimalTab.TrainableFilterTip".Translate(_allowed.ToStringList("AnimalTab.List.Or".Translate()));
         }
     }
 }

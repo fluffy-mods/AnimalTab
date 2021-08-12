@@ -75,7 +75,7 @@ namespace AnimalTab {
             List<string> allowed = ( from intelligence in Trainabilities
                                      where _allowed[intelligence]
                                      select intelligence.label ).ToList();
-            return "AnimalTab.IntelligenceFilterTip".Translate(allowed.ToStringList("AnimalTab.Or".Translate()));
+            return "AnimalTab.IntelligenceFilterTip".Translate(allowed.ToStringList("AnimalTab.List.Or".Translate()));
         }
     }
 }

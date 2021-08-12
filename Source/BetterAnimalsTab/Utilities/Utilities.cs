@@ -27,11 +27,11 @@ namespace AnimalTab {
         }
 
         public static bool IsBonded(this Pawn pawn) {
-            if (!pawn.RaceProps.IsFlesh) {
-                return false;
-            }
+            return pawn.BondedPawn() != null;
+        }
 
-            return pawn.relations.GetFirstDirectRelationPawn(PawnRelationDefOf.Bond) != null;
+        public static Pawn BondedPawn(this Pawn pawn) {
+            return pawn.relations.GetFirstDirectRelationPawn(PawnRelationDefOf.Bond);
         }
 
         public static void DoCheckbox(Rect rect, ref bool value, Func<string> tipGetter = null, bool background = true,

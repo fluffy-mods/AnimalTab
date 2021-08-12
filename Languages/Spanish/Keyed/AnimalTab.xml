@@ -8,16 +8,16 @@
     <AnimalTab.AllowedAreaTip>Shift + click: restringir área permitida en masa\nCtrl + click: gestionar áreas</AnimalTab.AllowedAreaTip>
     <AnimalTab.MasterHeaderTip>Shift + click: asignar dueño en masa</AnimalTab.MasterHeaderTip>
     <AnimalTab.MassAssignMasterNone>Desasignar todo</AnimalTab.MassAssignMasterNone>
-	<AnimalTab.MassAssignMasterBonded>Asignar a colonos con vínculo</AnimalTab.MassAssignMasterBonded>
-	<AnimalTab.MassAssignMaster>Asignar todos a {0} (Habilidad {1}, {2}/{3} puede ser asignada )</AnimalTab.MassAssignMaster>
-	<AnimalTab.NoObedientAnimals>No hay animales obedientes para asignar</AnimalTab.NoObedientAnimals>
+    <AnimalTab.MassAssignMasterBonded>Asignar a colonos con vínculo</AnimalTab.MassAssignMasterBonded>
+    <AnimalTab.MassAssignMaster>Asignar todos a {0} (Habilidad {1}, {2}/{3} puede ser asignada )</AnimalTab.MassAssignMaster>
+    <AnimalTab.NoObedientAnimals>No hay animales obedientes para asignar</AnimalTab.NoObedientAnimals>
 
     <AnimalTab.Not>no {0}</AnimalTab.Not>
     <AnimalTab.Any>cualquiera</AnimalTab.Any>
     <AnimalTab.All>Todos</AnimalTab.All>
-    <AnimalTab.And> y </AnimalTab.And>
-    <AnimalTab.Or> o </AnimalTab.Or>
-    <AnimalTab.Comma>, </AnimalTab.Comma>
+    <AnimalTab.List.And> y </AnimalTab.List.And>
+    <AnimalTab.List.Or> o </AnimalTab.List.Or>
+    <AnimalTab.List.Comma>, </AnimalTab.List.Comma>
 
     <AnimalTab.FilterTip>Mostrando {0} animales\n\nClick para mostrar {1} animales</AnimalTab.FilterTip>
     <AnimalTab.TrainableFilterTip>Mostrando animales entrenados en {0}\n\nClick para cambiar el filtro</AnimalTab.TrainableFilterTip>
@@ -25,7 +25,7 @@
     <AnimalTab.PawnKindFilterTip>Mostrando {0}\n\nClick para cambiar el filtro</AnimalTab.PawnKindFilterTip>
     <AnimalTab.FilterInactiveTip>Mostrando todos los animales\n\nClick para cambiar el filtro</AnimalTab.FilterInactiveTip>
     <AnimalTab.XofYShown>{0} of {1} animals shown</AnimalTab.XofYShown>
-    
+
     <!-- Because for some odd reason, TrainableIntelligendeDefs have their labels defined with keyed translations
     and vanilla doesn't define the label for 'Super Advanced', presumably because it is not used. -->
     <TrainableIntelligence_SuperAdvanced>super avanzado</TrainableIntelligence_SuperAdvanced>
@@ -56,7 +56,7 @@
 
     <Fluffy.AnimalTab.NoHandlerInRange>Domador no válido</Fluffy.AnimalTab.NoHandlerInRange>
     <Fluffy.AnimalTab.NoHandlerInRange.Tip>No hay domadores con una habilidad en el rango establecido para:\n\n    {0}\n\nEs posible que desee cambiar las restricciones de los domadores.</Fluffy.AnimalTab.NoHandlerInRange.Tip>
- 
+
     <Fluffy.AnimalTab.InvalidHandlers>Domador no válido</Fluffy.AnimalTab.InvalidHandlers>
     <Fluffy.AnimalTab.InvalidHandlers.Tip>Los domadores asignados a estos animales no pueden realizar el trabajo:\n\n    {0}\n\nEs posible que desee asignar domadores más capaces y habilitar el trabajo de doma.</Fluffy.AnimalTab.InvalidHandlers.Tip>
 </LanguageData>

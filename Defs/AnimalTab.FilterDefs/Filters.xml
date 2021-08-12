@@ -27,7 +27,7 @@
         <workerClass>AnimalTab.FilterWorker_Age</workerClass>
         <icon>UI/Icons/Filters/Age</icon>
     </AnimalTab.FilterDef>
-    
+
     <AnimalTab.FilterDef>
         <defName>Filter_Gender</defName>
         <label>gender</label>
@@ -36,14 +36,14 @@
         <exclusiveAdjective>male</exclusiveAdjective>
         <icon>UI/Icons/Filters/Gender</icon>
     </AnimalTab.FilterDef>
-    
+
     <AnimalTab.FilterDef>
         <defName>Filter_Milkable</defName>
         <label>milkable</label>
         <workerClass>AnimalTab.FilterWorker_Milkable</workerClass>
         <icon>UI/Icons/Filters/Milkable</icon>
     </AnimalTab.FilterDef>
-    
+
     <AnimalTab.FilterDef>
         <defName>Filter_Shearable</defName>
         <label>shearable</label>
@@ -57,7 +57,7 @@
         <workerClass>AnimalTab.FilterWorker_Reproductive</workerClass>
         <icon>UI/Icons/Filters/Reproductive</icon>
     </AnimalTab.FilterDef>
-    
+
     <AnimalTab.FilterDef>
         <defName>Filter_Pregnant</defName>
         <label>pregnant</label>
@@ -71,5 +71,12 @@
         <workerClass>AnimalTab.FilterWorker_PackAnimal</workerClass>
         <icon>UI/Icons/Filters/PackAnimal</icon>
     </AnimalTab.FilterDef>
-        
+
+    <AnimalTab.FilterDef>
+        <defName>Filter_Bonded</defName>
+        <label>bonded</label>
+        <workerClass>AnimalTab.FilterWorker_Bonded</workerClass>
+        <icon>UI/Icons/Filters/OverlappingHearts</icon>
+    </AnimalTab.FilterDef>
+
 </Defs>

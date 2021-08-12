@@ -8,7 +8,7 @@
         <Product>BetterAnimalsTab</Product>
         <Copyright>Copyright © 2015-2021</Copyright>
         <OutputPath>..\..\Assemblies\</OutputPath>
-        <LangVersion>8</LangVersion>
+        <LangVersion>9</LangVersion>
         <DebugType>portable</DebugType>
         <PostBuildEvent>mod update</PostBuildEvent>
     </PropertyGroup>

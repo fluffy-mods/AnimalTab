@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 8,
-        "build": 305
+        "build": 323
     },
     "author": {
         "name": "Fluffy",
@@ -21,19 +21,13 @@
     "attributions": [
         {
             "description": "icons",
-            "owner": "Freepik/Flaticon",
-            "url": "http://www.flaticon.com/authors/freepik",
-            "license": "BY-NC"
-        },
-        {
-            "description": "icons",
-            "owner": "SimpleIcon",
+            "author": "SimpleIcon",
             "url": "https://simpleicons.org/",
             "license": "CC0"
         },
         {
             "description": "icons",
-            "owner": "Dave Gandy/FontAwesome",
+            "author": "Dave Gandy/FontAwesome",
             "url": "http://fontawesome.io/",
             "license": "BY"
         },
@@ -42,9 +36,33 @@
             "author": "macrovector",
             "license": "BY-NC",
             "url": "https://www.freepik.com/macrovector"
+        },
+        {
+            "description": "various icons",
+            "author": "Freepik",
+            "license": "BY-NC",
+            "url": "http://www.flaticon.com/authors/freepik"
         }
     ],
     "changelog": [
+        {
+            "date": "2021-08-12T14:43:59.000Z",
+            "message": "do not show allowed area selector for roaming animals",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "88fd529ce016ce15abf2757f95b16716326bb732"
+        },
+        {
+            "date": "2021-08-12T14:31:35.000Z",
+            "message": "fix more auto-format introduced exceptions",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "cc6421ed2ca98b879aeddb3c1feb9491294843f6"
+        },
         {
             "date": "2021-08-12T14:20:08.000Z",
             "message": "fix extra switch state introduced by auto-format, closes #64",

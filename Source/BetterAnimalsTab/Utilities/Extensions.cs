@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -136,13 +137,14 @@ namespace AnimalTab {
             return pawn.kindDef.Shearable() && ShearableCompActive(pawn);
         }
 
-        public static string ToStringList(this List<string> list, string and) {
+
+        public static string ToStringList(this List<string> list, string and, bool oxfordComma = true) {
             string str = "";
             int n = list.Count;
             for (int i = 0; i < n; i++) {
                 str += list[i];
-                if (i < n - 2) {
-                    str += "AnimalTab.Comma".Translate();
+                if (i < n - (oxfordComma ? 1 : 2)) {
+                    str += "AnimalTab.List.Comma".Translate();
                 }
 
                 if (i == n - 2) {
@@ -150,6 +152,10 @@ namespace AnimalTab {
                 }
             }
             return str;
+        }
+
+        public static string ToStringList(this IEnumerable<string> list, string and) {
+            return list.ToList().ToStringList(and);
         }
 
         public static CompMilkable CompMilkable(this Pawn pawn) {

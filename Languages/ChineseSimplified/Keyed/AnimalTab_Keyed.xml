@@ -19,6 +19,9 @@
     <AnimalTab.And>且</AnimalTab.And>
     <AnimalTab.Or>或</AnimalTab.Or>
     <AnimalTab.Comma>，</AnimalTab.Comma>
+    <AnimalTab.List.And>且</AnimalTab.List.And>
+    <AnimalTab.List.Or>或</AnimalTab.List.Or>
+    <AnimalTab.List.Comma>，</AnimalTab.List.Comma>
 
     <AnimalTab.FilterTip>显示{0}动物\n\n单击显示{1}动物</AnimalTab.FilterTip>
     <AnimalTab.TrainableFilterTip>显示在训练{0}的动物\n\n单击：改变过滤</AnimalTab.TrainableFilterTip>

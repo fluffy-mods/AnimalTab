@@ -90,8 +90,9 @@ namespace AnimalTab {
             // don't give a damn about this part.
             base.SetInitialSizeAndPosition();
 
-            // cache our pawn lists.
-            RecachePawns();
+            // clear our pawn list caches
+            _allPawns = null;
+            _filteredPawns = null;
         }
 
         public void RecachePawns() {
