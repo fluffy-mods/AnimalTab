@@ -55,7 +55,7 @@ namespace AnimalTab {
             return shearable;
         }
 
-        private static bool _milkableCompActive(Pawn pawn) {
+        private static bool MilkableCompActive(Pawn pawn) {
             if (_milkableCompActiveMethodInfo == null) {
                 _milkableCompActiveMethodInfo = AccessTools.Property(typeof(CompMilkable), "Active")
                     .GetGetMethod(true);
@@ -75,7 +75,7 @@ namespace AnimalTab {
             return (bool) _milkableCompActiveMethodInfo.Invoke(comp, null);
         }
 
-        private static bool _shearableCompActive(Pawn pawn) {
+        private static bool ShearableCompActive(Pawn pawn) {
             if (_shearableCompActiveMethodInfo == null) {
                 _shearableCompActiveMethodInfo = AccessTools.Property(typeof(CompShearable), "Active")
                     .GetGetMethod(true);
@@ -129,11 +129,11 @@ namespace AnimalTab {
         }
 
         public static bool Milkable(this Pawn pawn) {
-            return pawn.kindDef.Milkable() && _milkableCompActive(pawn);
+            return pawn.kindDef.Milkable() && MilkableCompActive(pawn);
         }
 
         public static bool Shearable(this Pawn pawn) {
-            return pawn.kindDef.Shearable() && _shearableCompActive(pawn);
+            return pawn.kindDef.Shearable() && ShearableCompActive(pawn);
         }
 
         public static string ToStringList(this List<string> list, string and) {

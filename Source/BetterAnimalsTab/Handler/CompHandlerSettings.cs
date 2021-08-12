@@ -101,7 +101,7 @@ namespace AnimalTab {
     }
 
     public static class CompHandlerSettingsExtensions {
-        public static CompHandlerSettings handlerSettings(this Pawn pawn) {
+        public static CompHandlerSettings HandlerSettings(this Pawn pawn) {
             CompHandlerSettings handler = pawn.GetComp<CompHandlerSettings>();
             if (handler == null) {
                 throw new InvalidOperationException($"tried to get handlerSettings for {pawn.LabelShort}, who has none.");

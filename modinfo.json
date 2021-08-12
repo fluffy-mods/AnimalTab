@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 8,
-        "build": 301
+        "build": 304
     },
     "author": {
         "name": "Fluffy",
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2021-08-10T22:29:49.000Z",
+            "message": "release v5.8.301",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "9d581b7d183532bf3b336010fcda0e67573cd03e"
+        },
         {
             "date": "2021-08-10T22:28:53.000Z",
             "message": "actually render preview, set correct size",

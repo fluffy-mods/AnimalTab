@@ -43,7 +43,7 @@ namespace AnimalTab {
         public virtual Color Colour => State switch {
             FilterState.Inclusive => GenUI.MouseoverColor,
             FilterState.Exclusive => Constants.DarkRed,
-            FilterState.Inactive => throw new NotImplementedException(),
+            FilterState.Inactive => Color.grey,
             _ => Color.grey,
         };
 

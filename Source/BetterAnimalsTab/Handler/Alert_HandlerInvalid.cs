@@ -8,11 +8,11 @@ using Verse;
 
 namespace AnimalTab {
     public class Alert_HandlerInvalid: Alert {
-        public IEnumerable<Pawn> invalidHandlers {
+        public IEnumerable<Pawn> InvalidHandlers {
             get {
                 foreach (Map map in Find.Maps.Where(m => m.IsPlayerHome)) {
                     foreach (Pawn pawn in map.mapPawns.AllPawns) {
-                        CompHandlerSettings settings = pawn.handlerSettings();
+                        CompHandlerSettings settings = pawn.HandlerSettings();
                         if (settings?.Mode == HandlerMode.Specific &&
                              (settings.Handler.workSettings.GetPriority(WorkTypeDefOf.Handling) == 0 ||
                                settings.Handler.skills.GetSkill(SkillDefOf.Animals).Level < TrainableUtility.MinimumHandlingSkill(pawn))) {
@@ -24,7 +24,7 @@ namespace AnimalTab {
         }
 
         public override AlertReport GetReport() {
-            return AlertReport.CulpritsAre(invalidHandlers.ToList());
+            return AlertReport.CulpritsAre(InvalidHandlers.ToList());
         }
 
         public override string GetLabel() {
@@ -33,7 +33,7 @@ namespace AnimalTab {
 
         public override TaggedString GetExplanation() {
             return "Fluffy.AnimalTab.InvalidHandlers.Tip".Translate(
-                string.Join("\n    ", invalidHandlers.Select(p => p.LabelShort).ToArray()));
+                string.Join("\n    ", InvalidHandlers.Select(p => p.LabelShort).ToArray()));
         }
 
         public override AlertPriority Priority => AlertPriority.Medium;

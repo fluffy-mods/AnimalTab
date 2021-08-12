@@ -19,7 +19,7 @@ namespace AnimalTab {
         }
 
         public override void DoCell(Rect rect, Pawn target, PawnTable table) {
-            CompHandlerSettings settings = target.handlerSettings();
+            CompHandlerSettings settings = target.HandlerSettings();
 
             if (settings.Mode == HandlerMode.Level) {
                 if (Mouse.IsOver(rect) && Input.GetMouseButtonDown(1)) {
@@ -50,7 +50,7 @@ namespace AnimalTab {
         }
 
         private void DoHandlerFloatMenu(Pawn target) {
-            CompHandlerSettings settings = target.handlerSettings();
+            CompHandlerSettings settings = target.HandlerSettings();
             int minSkill = TrainableUtility.MinimumHandlingSkill( target );
             List<FloatMenuOption> options = new List<FloatMenuOption> {
                 new FloatMenuOption(HandlerMode.Any.Label(), () => settings.Mode = HandlerMode.Any),
@@ -67,20 +67,20 @@ namespace AnimalTab {
 
         private void DoMassHandlerFloatMenu(List<Pawn> targets, Map map) {
             List<FloatMenuOption> options = new List<FloatMenuOption> {
-                new FloatMenuOption(HandlerMode.Any.Label(), () => targets.ForEach(t => t.handlerSettings().Mode = HandlerMode.Any)),
-                new FloatMenuOption(HandlerMode.Level.Label(), () => targets.ForEach(t => t.handlerSettings().Mode = HandlerMode.Level))
+                new FloatMenuOption(HandlerMode.Any.Label(), () => targets.ForEach(t => t.HandlerSettings().Mode = HandlerMode.Any)),
+                new FloatMenuOption(HandlerMode.Level.Label(), () => targets.ForEach(t => t.HandlerSettings().Mode = HandlerMode.Level))
             };
 
             foreach (Pawn handler in HandlerUtility.HandlersOrdered(map)) {
-                options.Add(new FloatMenuOption(HandlerUtility.HandlerLabel(handler), () => targets.ForEach(t => t.handlerSettings().Handler = handler)));
+                options.Add(new FloatMenuOption(HandlerUtility.HandlerLabel(handler), () => targets.ForEach(t => t.HandlerSettings().Handler = handler)));
             }
 
             Find.WindowStack.Add(new FloatMenu(options));
         }
 
         public override int Compare(Pawn a, Pawn b) {
-            CompHandlerSettings settingsA = a.handlerSettings();
-            CompHandlerSettings settingsB = b.handlerSettings();
+            CompHandlerSettings settingsA = a.HandlerSettings();
+            CompHandlerSettings settingsB = b.HandlerSettings();
             if (settingsA.Mode != settingsB.Mode) {
                 return settingsA.Mode.CompareTo(settingsB.Mode);
             }
@@ -105,7 +105,7 @@ namespace AnimalTab {
         public override void DoHeader(Rect rect, PawnTable table) {
             List<Pawn> targets = table.PawnsListForReading;
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
-                if (targets.Any() && targets.All(p => p.handlerSettings()?.Mode == HandlerMode.Level)) {
+                if (targets.Any() && targets.All(p => p.HandlerSettings()?.Mode == HandlerMode.Level)) {
                     if (Mouse.IsOver(rect) && Input.GetMouseButtonDown(1)) {
                         DoMassHandlerFloatMenu(targets, Find.CurrentMap);
                     }
@@ -117,12 +117,12 @@ namespace AnimalTab {
                             rect.height * 2f / 3f )
                        .CenteredOnYIn( rect );
 
-                    IntRange level = targets.First().handlerSettings().Level;
+                    IntRange level = targets.First().HandlerSettings().Level;
                     IntRange _level = level;
                     Widgets.IntRange(sliderRect, 24, ref level, 0, 20);
                     if (level != _level) {
                         foreach (Pawn target in targets) {
-                            target.handlerSettings().Level = level.Clamp(target);
+                            target.HandlerSettings().Level = level.Clamp(target);
                         }
                     }
 
