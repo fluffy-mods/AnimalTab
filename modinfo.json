@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 10,
-        "build": 323
+        "build": 324
     },
     "author": {
         "name": "Fluffy",
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2021-08-12T21:10:17.000Z",
+            "message": "release v5.10.323",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "9d09e74eb9f4c9a2e03ae79566dc226f2e2f2b89"
+        },
         {
             "date": "2021-08-12T21:03:02.000Z",
             "message": "add bonded filter, clean up translations",
