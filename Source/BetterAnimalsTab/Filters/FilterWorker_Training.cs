@@ -1,7 +1,6 @@
 // FilterWorker_Training.cs
 // Copyright Karel Kroeze, 2017-2017
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -13,10 +12,7 @@ namespace AnimalTab {
         private readonly DefMap<TrainableDef, bool> allowed = new DefMap<TrainableDef, bool>();
         private IEnumerable<TrainableDef> Trainables => DefDatabase<TrainableDef>.AllDefsListForReading;
 
-        public override FilterState State {
-            get => allowed.Values().Any(v => v) ? FilterState.Inclusive : FilterState.Inactive;
-            set => throw new InvalidOperationException("FilterWorker_Training.set_State() should never be called");
-        }
+        public override FilterState State => allowed.Values().Any(v => v) ? FilterState.Inclusive : FilterState.Inactive;
 
         public override bool Allows(Pawn pawn) {
             if (State == FilterState.Inactive) {

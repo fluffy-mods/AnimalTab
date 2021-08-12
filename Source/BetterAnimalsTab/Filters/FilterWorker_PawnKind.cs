@@ -1,7 +1,6 @@
 // FilterWorker_PawnKind.cs
 // Copyright Karel Kroeze, 2017-2017
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,10 +11,7 @@ namespace AnimalTab {
         private readonly DefMap<PawnKindDef, bool> allowed = new DefMap<PawnKindDef, bool>();
         private IEnumerable<PawnKindDef> PawnKinds => MainTabWindow_Animals.Instance.AllPawns.Select(p => p.kindDef).Distinct();
 
-        public override FilterState State {
-            get => allowed.Values().Any(v => v) ? FilterState.Inclusive : FilterState.Inactive;
-            set => throw new InvalidOperationException("FilterWorker_PawnKind.set_State() should never be called");
-        }
+        public override FilterState State => allowed.Values().Any(v => v) ? FilterState.Inclusive : FilterState.Inactive;
 
         public override bool Allows(Pawn pawn) {
             if (State == FilterState.Inactive) {

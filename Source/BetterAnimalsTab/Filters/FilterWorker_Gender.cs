@@ -5,7 +5,6 @@ namespace AnimalTab {
         public Gender GenderState => State switch {
             FilterState.Inclusive => Gender.Female,
             FilterState.Exclusive => Gender.Male,
-            FilterState.Inactive => throw new System.NotImplementedException(),
             _ => Gender.None,
         };
 

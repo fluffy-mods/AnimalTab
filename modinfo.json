@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 8,
-        "build": 304
+        "build": 305
     },
     "author": {
         "name": "Fluffy",
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2021-08-12T14:20:08.000Z",
+            "message": "fix extra switch state introduced by auto-format, closes #64",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "7ed96812baa8cab943c705e890dd0b8af6347ed2"
+        },
         {
             "date": "2021-08-10T22:29:49.000Z",
             "message": "release v5.8.301",

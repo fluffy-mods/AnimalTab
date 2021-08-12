@@ -12,17 +12,12 @@ namespace AnimalTab {
 
         public virtual string Adjective(FilterState state) {
             return state switch {
-                FilterState.Inclusive => !def.inclusiveAdjective.NullOrEmpty()
-     ? def.inclusiveAdjective
-     : def.label,
-                FilterState.Exclusive => !def.exclusiveAdjective.NullOrEmpty()
-        ? def.exclusiveAdjective
-        : "AnimalTab.Not".Translate(Adjective(FilterState.Inclusive)).Resolve(),
-                FilterState.Inactive => throw new NotImplementedException(),
-                _ => !def.inactiveAdjective.NullOrEmpty()
-// I apologize if any translators hate my built-in space.
-? "AnimalTab.Any".Translate() + " " + def.inactiveAdjective
-: "AnimalTab.Any".Translate(),
+                FilterState.Inclusive when !def.inclusiveAdjective.NullOrEmpty() => def.inclusiveAdjective,
+                FilterState.Inclusive => def.label,
+                FilterState.Exclusive when !def.exclusiveAdjective.NullOrEmpty() => def.exclusiveAdjective,
+                FilterState.Exclusive => "AnimalTab.Not".Translate(Adjective(FilterState.Inclusive)).Resolve(),
+                _ when !def.inactiveAdjective.NullOrEmpty() => "AnimalTab.Any".Translate() + " " + def.inactiveAdjective,
+                _ => "AnimalTab.Any".Translate()
             };
         }
 
@@ -43,7 +38,6 @@ namespace AnimalTab {
         public virtual Color Colour => State switch {
             FilterState.Inclusive => GenUI.MouseoverColor,
             FilterState.Exclusive => Constants.DarkRed,
-            FilterState.Inactive => Color.grey,
             _ => Color.grey,
         };
 

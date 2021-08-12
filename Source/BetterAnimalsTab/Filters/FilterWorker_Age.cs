@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -10,10 +9,7 @@ namespace AnimalTab {
         private readonly DefMap<LifeStageDef, bool> allowed = new DefMap<LifeStageDef, bool>();
         private IEnumerable<LifeStageDef> LifeStages => MainTabWindow_Animals.Instance.AllPawns.Select(p => p.ageTracker.CurLifeStage).Distinct();
 
-        public override FilterState State {
-            get => allowed.Values().Any(v => v) ? FilterState.Inclusive : FilterState.Inactive;
-            set => throw new InvalidOperationException("FilterWorker_Age.set_State() should never be called");
-        }
+        public override FilterState State => allowed.Values().Any(v => v) ? FilterState.Inclusive : FilterState.Inactive;
 
         public override bool Allows(Pawn pawn) {
             if (State == FilterState.Inactive) {

@@ -39,7 +39,6 @@ namespace AnimalTab {
         public override int Compare(Pawn a, Pawn b) {
             return sortMode switch {
                 SortMode.PawnKind => string.Compare(a.KindLabel, b.KindLabel, StringComparison.CurrentCultureIgnoreCase),
-                SortMode.Name => throw new NotImplementedException(),
                 _ => string.Compare(a.Name.ToStringShort, b.Name.ToStringShort, StringComparison.CurrentCultureIgnoreCase),
             };
         }
