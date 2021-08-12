@@ -5,7 +5,7 @@
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
         "major": 5,
-        "minor": 8,
+        "minor": 9,
         "build": 323
     },
     "author": {
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2021-08-12T21:03:02.000Z",
+            "message": "add bonded filter, clean up translations",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "3f4259aae3ec121ae93b818aa3feea0d4b948ff6"
+        },
         {
             "date": "2021-08-12T14:43:59.000Z",
             "message": "do not show allowed area selector for roaming animals",

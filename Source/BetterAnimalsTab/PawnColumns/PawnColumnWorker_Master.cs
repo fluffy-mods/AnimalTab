@@ -1,7 +1,6 @@
 // PawnColumnWorker_Master.cs
 // Copyright Karel Kroeze, 2017-2017
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -66,7 +65,7 @@ namespace AnimalTab {
             return new FloatMenuOption(
                 "AnimalTab.MassAssignMaster".Translate(colonist.Name.ToStringShort, skill, eligibleAnimals.Count(),
                     animals.Count()),
-                eligibleAnimals.Any() ? (Action) action : null);
+                eligibleAnimals.Any() ? action : null);
         }
 
         private static void MassAssignMaster(Pawn pawn, IEnumerable<Pawn> animals) {
