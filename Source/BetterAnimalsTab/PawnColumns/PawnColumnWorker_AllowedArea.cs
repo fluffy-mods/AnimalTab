@@ -8,20 +8,8 @@ using Verse;
 using Verse.Sound;
 
 namespace AnimalTab {
-    public class PawnColumnWorker_AllowedArea: PawnColumnWorker {
+    public class PawnColumnWorker_AllowedArea: RimWorld.PawnColumnWorker_AllowedArea {
         protected override GameFont DefaultHeaderFont => GameFont.Tiny;
-
-        public override int GetMinWidth(PawnTable table) {
-            return Mathf.Max(base.GetMinWidth(table), 200);
-        }
-
-        public override int GetMinHeaderHeight(PawnTable table) {
-            return Mathf.Max(32, base.GetMinHeaderHeight(table));
-        }
-
-        public override int GetOptimalWidth(PawnTable table) {
-            return Mathf.Clamp(273, GetMinWidth(table), GetMaxWidth(table));
-        }
 
         public override void DoHeader(Rect rect, PawnTable table) {
             if (Event.current.shift) {
@@ -31,10 +19,6 @@ namespace AnimalTab {
             }
         }
 
-        public override int Compare(Pawn a, Pawn b) {
-            return GetValueToCompare(a).CompareTo(GetValueToCompare(b));
-        }
-
         private int GetValueToCompare(Pawn pawn) {
             if (pawn.Faction != Faction.OfPlayer) {
                 return int.MinValue;
@@ -42,14 +26,6 @@ namespace AnimalTab {
 
             Area areaRestriction = pawn.playerSettings.AreaRestriction;
             return areaRestriction?.ID ?? int.MinValue;
-        }
-
-        public override void DoCell(Rect rect, Pawn pawn, PawnTable table) {
-            if (pawn.Faction != Faction.OfPlayer) {
-                return;
-            }
-
-            AreaAllowedGUI.DoAllowedAreaSelectors(rect, pawn);
         }
 
         protected override string GetHeaderTip(PawnTable table) {
@@ -92,7 +68,7 @@ namespace AnimalTab {
         }
 
         private void RestrictAllTo(Area area, PawnTable table) {
-            foreach (Pawn pawn in table.PawnsListForReading) {
+            foreach (Pawn pawn in table.PawnsListForReading.Where(p => p.playerSettings.SupportsAllowedAreas)) {
                 pawn.playerSettings.AreaRestriction = area;
             }
         }
