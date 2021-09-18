@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <RootNamespace>AnimalTab</RootNamespace>
         <AssemblyName>AnimalTab</AssemblyName>
         <TargetFramework>net472</TargetFramework>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AssemblyTitle>BetterAnimalsTab</AssemblyTitle>
-        <Product>BetterAnimalsTab</Product>
+        <AssemblyTitle>AnimalTab</AssemblyTitle>
+        <Product>AnimalTab</Product>
         <Copyright>Copyright © 2015-2021</Copyright>
         <OutputPath>..\..\Assemblies\</OutputPath>
         <LangVersion>9</LangVersion>
