@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 10,
-        "build": 326
+        "build": 332
     },
     "author": {
         "name": "Fluffy",
@@ -45,6 +45,33 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2021-09-18T21:22:26.000Z",
+            "message": "rename solution and project files",
+            "author": {
+                "name": "Fluffy",
+                "email": "karel.kroeze@gmail.com"
+            },
+            "hash": "218f45f942bd43ac33b404bb80e9b7da3aee4ca6"
+        },
+        {
+            "date": "2021-09-18T20:25:10.000Z",
+            "message": "update source folder structure",
+            "author": {
+                "name": "Fluffy",
+                "email": "karel.kroeze@gmail.com"
+            },
+            "hash": "64ccfe8b4979f7398a5343afb6e4090b90ef46b9"
+        },
+        {
+            "date": "2021-08-13T08:08:40.000Z",
+            "message": "release v5.10.326",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "cea97ad7c9a35fdde6a1e0b77252e8b3176362ad"
+        },
         {
             "date": "2021-08-12T21:20:18.000Z",
             "message": "release v5.10.324",

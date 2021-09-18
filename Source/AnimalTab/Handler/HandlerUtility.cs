@@ -19,7 +19,16 @@ namespace AnimalTab {
                 return _handlerModes;
             }
         }
-
+        public static void Notify_PawnDied(Pawn pawn) {
+            foreach (Map map in Find.Maps.Where(m => m.IsPlayerHome)) {
+                foreach (Pawn target in map.mapPawns.AllPawnsSpawned) {
+                    CompHandlerSettings handler = target.HandlerSettings();
+                    if (handler is not null && handler.Mode == HandlerMode.Specific && handler.Handler == pawn) {
+                        handler.Notify_HandlerDied();
+                    }
+                }
+            }
+        }
         public static string Label(this HandlerMode mode) {
             return $"Fluffy.AnimalTab.HandlerMode.{mode}".Translate();
         }

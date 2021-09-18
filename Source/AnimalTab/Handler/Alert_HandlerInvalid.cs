@@ -12,10 +12,10 @@ namespace AnimalTab {
             get {
                 foreach (Map map in Find.Maps.Where(m => m.IsPlayerHome)) {
                     foreach (Pawn pawn in map.mapPawns.AllPawns) {
-                        CompHandlerSettings settings = pawn.HandlerSettings();
-                        if (settings?.Mode == HandlerMode.Specific &&
-                             (settings.Handler.workSettings.GetPriority(WorkTypeDefOf.Handling) == 0 ||
-                               settings.Handler.skills.GetSkill(SkillDefOf.Animals).Level < TrainableUtility.MinimumHandlingSkill(pawn))) {
+                        CompHandlerSettings handler = pawn?.HandlerSettings();
+                        if (handler is not null &&
+                            handler.Mode == HandlerMode.Specific &&
+                            !handler.IsValid) {
                             yield return pawn;
                         }
                     }

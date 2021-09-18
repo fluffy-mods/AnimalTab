@@ -77,6 +77,8 @@
     <Fluffy.AnimalTab.InvalidHandlers>Invalid handler</Fluffy.AnimalTab.InvalidHandlers>
     <Fluffy.AnimalTab.InvalidHandlers.Tip>The handlers assigned to these animals are not able to do the job:\n\n    {0}\n\nYou may want to assign more capable handlers, and enable the handling job.</Fluffy.AnimalTab.InvalidHandlers.Tip>
 
+    <Fluffy.AnimalTab.HandlerDied>{0} is no longer a valid handler for {1}</Fluffy.AnimalTab.HandlerDied>
+
     <!-- options -->
     <Fluffy.AnimalTab.HighContrast>Higher contrast checkboxes</Fluffy.AnimalTab.HighContrast>
     <Fluffy.AnimalTab.HighContrast.Tooltip>When enabled, checboxes will have a white square drawn around them so that they stand out more.</Fluffy.AnimalTab.HighContrast.Tooltip>

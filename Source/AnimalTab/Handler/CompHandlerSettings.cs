@@ -8,7 +8,7 @@ namespace AnimalTab {
     public class CompHandlerSettings: ThingComp {
         private HandlerMode _mode = HandlerMode.Any;
         private Pawn _handler = null;
-        private IntRange _level = new IntRange( 0, 20 );
+        private IntRange _level = new(0, 20);
 
         public Pawn Target => parent as Pawn;
 
@@ -98,15 +98,40 @@ namespace AnimalTab {
 
             return true;
         }
+
+        public bool IsValid {
+            get {
+                if (_mode != HandlerMode.Specific) {
+                    return true;
+                }
+
+                if (Handler.DestroyedOrNull()) {
+                    Notify_HandlerGone();
+                }
+
+                if (Handler.Dead) {
+                    Notify_HandlerDied();
+                }
+
+                return !Handler.Dead &&
+                    Handler.workSettings.GetPriority(WorkTypeDefOf.Handling) != 0 &&
+                    Handler.skills.GetSkill(SkillDefOf.Animals).Level >= TrainableUtility.MinimumHandlingSkill(Target);
+            }
+        }
+
+        public void Notify_HandlerDied() {
+            Messages.Message("Fluffy.AnimalTab.HandlerDied".Translate(Handler.NameShortColored.Resolve(), Target.NameShortColored.Resolve()), new List<Pawn> { Target, Handler }, MessageTypeDefOf.NegativeEvent);
+            Notify_HandlerGone();
+        }
+
+        public void Notify_HandlerGone() {
+            Mode = HandlerMode.Any;
+        }
     }
 
     public static class CompHandlerSettingsExtensions {
         public static CompHandlerSettings HandlerSettings(this Pawn pawn) {
             CompHandlerSettings handler = pawn.GetComp<CompHandlerSettings>();
-            if (handler == null) {
-                throw new InvalidOperationException($"tried to get handlerSettings for {pawn.LabelShort}, who has none.");
-            }
-
             return handler;
         }
     }
