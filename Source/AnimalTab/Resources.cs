@@ -14,7 +14,7 @@ namespace AnimalTab {
                                 Pregnant,
                                 Egg,
                                 Handling,
-                                Slaughter;
+                                Slaughter, Icon_AutoButcher, Icon_Filter;
 
         public static Color Dark, Danger;
 
@@ -30,6 +30,9 @@ namespace AnimalTab {
             Handling = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Training");
             Egg = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Egg");
             Slaughter = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Slaughter");
+
+            Icon_AutoButcher = ContentFinder<Texture2D>.Get("UI/Icons/cleaver");
+            Icon_Filter = ContentFinder<Texture2D>.Get("UI/Icons/filter");
         }
     }
 }

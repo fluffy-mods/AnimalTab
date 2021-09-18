@@ -106,7 +106,7 @@ namespace AnimalTab {
             Rect barRect = new Rect(buttonRect.xMin - Margin - barWidth, rect.yMax - Margin - ButtonSize, barWidth, ButtonSize);
             Rect countRect = new Rect(rect.xMin + Margin, barRect.yMin - Margin - (ButtonSize * 2 / 3f), rect.width - ButtonSize - (Margin * 3), ButtonSize * 2 / 3f);
 
-            if (Widgets.ButtonImage(buttonRect, Resources.Filter, Filter ? GenUI.MouseoverColor : Color.white,
+            if (Widgets.ButtonImage(buttonRect, Resources.Icon_Filter, Filter ? GenUI.MouseoverColor : Color.white,
                 Filter ? Color.white : GenUI.MouseoverColor)) {
                 Filter = !Filter;
             }
@@ -121,7 +121,7 @@ namespace AnimalTab {
             Rect buttonRect = new Rect(rect.xMin + Margin, rect.yMax - Margin - ButtonSize, ButtonSize, ButtonSize);
 
             TooltipHandler.TipRegion(buttonRect, "ManageAutoSlaughter".Translate());
-            if (Widgets.ButtonImage(buttonRect, Resources.Slaughter)) {
+            if (Widgets.ButtonImage(buttonRect, Resources.Icon_AutoButcher)) {
                 Find.WindowStack.Add(new Dialog_AutoSlaughter(Find.CurrentMap));
             }
 

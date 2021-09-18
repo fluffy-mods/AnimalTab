@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 10,
-        "build": 332
+        "build": 339
     },
     "author": {
         "name": "Fluffy",
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2021-09-18T22:35:15.000Z",
+            "message": "deal with assigned handlers dying or otherwise becoming unavailable",
+            "author": {
+                "name": "Fluffy",
+                "email": "karel.kroeze@gmail.com"
+            },
+            "hash": "8861b1759f4463865e94afa72928ffc79e21b47a"
+        },
         {
             "date": "2021-09-18T21:22:26.000Z",
             "message": "rename solution and project files",
