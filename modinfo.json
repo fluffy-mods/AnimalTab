@@ -5,7 +5,7 @@
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
         "major": 5,
-        "minor": 10,
+        "minor": 11,
         "build": 339
     },
     "author": {
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2021-09-18T23:35:50.000Z",
+            "message": "replace auto-butcher and filter icons",
+            "author": {
+                "name": "Fluffy",
+                "email": "karel.kroeze@gmail.com"
+            },
+            "hash": "f48f9b8d2ad21b07b5ad503647cf894de096353e"
+        },
         {
             "date": "2021-09-18T22:35:15.000Z",
             "message": "deal with assigned handlers dying or otherwise becoming unavailable",
