@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 11,
-        "build": 340
+        "build": 341
     },
     "author": {
         "name": "Fluffy",
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2022-02-26T16:11:55.000Z",
+            "message": "Update description",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "2b83b3e9f3db3d2c58eabc9225a306b15e07103d"
+        },
         {
             "date": "2021-09-18T23:35:50.000Z",
             "message": "replace auto-butcher and filter icons",
