@@ -12,6 +12,7 @@ namespace AnimalTab {
                                 CheckOnWhite,
                                 Filter,
                                 Pregnant,
+                                Red_X,
                                 Egg,
                                 Handling,
                                 Slaughter, Icon_AutoButcher, Icon_Filter;
@@ -27,6 +28,7 @@ namespace AnimalTab {
             CheckOnWhite = ContentFinder<Texture2D>.Get("UI/Icons/Animal/CheckOnWhite");
             Filter = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Filter");
             Pregnant = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Pregnant");
+            Red_X = ContentFinder<Texture2D>.Get("UI/Buttons/Delete");
             Handling = ContentFinder<Texture2D>.Get("UI/Icons/Filters/Training");
             Egg = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Egg");
             Slaughter = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Slaughter");
