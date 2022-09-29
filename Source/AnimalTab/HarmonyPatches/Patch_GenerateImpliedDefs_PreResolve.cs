@@ -1,9 +1,12 @@
 // Patch_GenerateImpliedDefs_PreResolve.cs
 // Copyright Karel Kroeze, 2017-2017
 
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
+using Verse;
 using static AnimalTab.Constants;
 using static AnimalTab.PawnColumnDefOf;
 
@@ -12,16 +15,24 @@ namespace AnimalTab {
     public class Patch_GenerateImpliedDefs_PreResolve {
         public static void Postfix() {
             PawnTableDef animalTable = PawnTableDefOf.Animals;
-            System.Collections.Generic.List<PawnColumnDef> columns = animalTable.columns;
+            List<PawnColumnDef> columns = animalTable.columns;
+
+#if DEBUG
+            int i = 0;
+            foreach (PawnColumnDef column in columns) {
+                Log.Message($"{i++}\t{column.defName}\t{column.workerClass}");
+            }
+#endif
 
             // remove all gaps, we'll insert new ones at appropriate places
             columns.RemoveAll(c => c == GapTiny);
 
             // replace label column
             // NOTE: We can't simply replace the workerType, as these columns are used in multiple tabs.
-            int labelIndex = columns.IndexOf(Label);
+            int labelIndex = columns.IndexOf(LabelWithIcon);
             columns.RemoveAt(labelIndex);
             columns.Insert(labelIndex, AnimalTabLabel);
+
             int areaIndex = columns.IndexOf(AllowedAreaWide);
             columns.RemoveAt(areaIndex);
             columns.Insert(areaIndex, AnimalTabAllowedArea);
@@ -53,13 +64,13 @@ namespace AnimalTab {
             int handlerIndex = columns.FindIndex(c => c.workerClass == typeof(RimWorld.PawnColumnWorker_Trainable));
             columns.Insert(handlerIndex, Handler);
 
-            // swam medical and release
+            // swap medical and release
             int medicalIndex = columns.IndexOf(MedicalCare);
             columns.Remove(ReleaseAnimalToWild);
             columns.Insert(medicalIndex, ReleaseAnimalToWild);
 
             // add header tips to gender, lifestage and pregnant
-            Gender.headerTip = "Gender";
+            PawnColumnDefOf.Gender.headerTip = "Gender";
             LifeStage.headerTip = "Lifestage";
             Pregnant.headerTip = "Pregnant";
 
@@ -87,7 +98,7 @@ namespace AnimalTab {
 
             // reset all workers to make sure they are resolved to the new type
             // NOTE: Vanilla inserts columns by checking for 'Worker', which resolves some workers - we need to reset that.
-            System.Reflection.FieldInfo workerField = AccessTools.Field(typeof(PawnColumnDef), "workerInt");
+            FieldInfo workerField = AccessTools.Field(typeof(PawnColumnDef), "workerInt");
             foreach (PawnColumnDef column in columns) {
                 workerField.SetValue(column, null);
             }
