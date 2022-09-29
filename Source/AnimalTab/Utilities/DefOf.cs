@@ -7,7 +7,7 @@ namespace AnimalTab {
     [DefOf]
     public static class PawnColumnDefOf {
         public static PawnColumnDef Master;
-        public static PawnColumnDef Label;
+        public static PawnColumnDef LabelWithIcon;
         public static PawnColumnDef AnimalTabLabel;
         public static PawnColumnDef AllowedAreaWide;
         public static PawnColumnDef AnimalTabAllowedArea;
