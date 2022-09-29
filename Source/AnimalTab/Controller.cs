@@ -14,8 +14,12 @@ namespace AnimalTab {
             Settings = GetSettings<Settings>();
 
             // execute them patches.
+#if DEBUG
+            Harmony.DEBUG = true;
+#endif
             Harmony harmony = new( "Fluffy.AnimalTab" );
             harmony.PatchAll(Assembly.GetExecutingAssembly());
+
         }
 
         public override string SettingsCategory() {
