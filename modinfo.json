@@ -5,7 +5,7 @@
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
         "major": 5,
-        "minor": 11,
+        "minor": 12,
         "build": 350
     },
     "author": {
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2022-10-14T19:30:47.000Z",
+            "message": "initial 1.4 compile, refactor source structure",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "cb2897dfb535d41086588c176e58d032c490d982"
+        },
         {
             "date": "2022-09-29T00:04:02.000Z",
             "message": "rebuild for mirage",
