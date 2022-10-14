@@ -6,13 +6,13 @@
         <AssemblyTitle>AnimalTab</AssemblyTitle>
         <Product>AnimalTab</Product>
         <Copyright>Copyright © 2015-2021</Copyright>
-        <OutputPath>..\..\Assemblies\</OutputPath>
+        <OutputPath>..\Assemblies\</OutputPath>
         <LangVersion>9</LangVersion>
         <DebugType>portable</DebugType>
         <PostBuildEvent>mod update</PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.3.3117" />
+        <PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3517-beta" />
         <PackageReference Include="Lib.Harmony" Version="2.2.2" ExcludeAssets="runtime" />
     </ItemGroup>
 </Project>
