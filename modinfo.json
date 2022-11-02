@@ -5,7 +5,7 @@
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
         "major": 5,
-        "minor": 12,
+        "minor": 13,
         "build": 353
     },
     "author": {
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2022-11-02T19:13:17.000Z",
+            "message": "Added Russian translation",
+            "author": {
+                "name": "SKONIKS",
+                "email": "skoniks@users.noreply.github.com"
+            },
+            "hash": "b2548b6b73db1e1d7c52357e51693bd0032f1de2"
+        },
         {
             "date": "2022-11-02T19:00:44.000Z",
             "message": "Merge branch 'pr/Alias44/67-2' into 1.4",
@@ -1498,6 +1507,11 @@
             "author": "Alias",
             "description": "Pregnancy and Sterilization",
             "suppressed": true
+        },
+        {
+            "hash": "b2548b6b73db1e1d7c52357e51693bd0032f1de2",
+            "author": "SKONIKS",
+            "description": "Added Russian translation"
         }
     ],
     "contributors": {
@@ -1598,6 +1612,13 @@
                 "hash": "90c7323",
                 "author": "Alias",
                 "description": "add sterilized icon and sort by pregnancy progress"
+            }
+        ],
+        "SKONIKS": [
+            {
+                "hash": "b2548b6",
+                "author": "SKONIKS",
+                "description": "Added Russian translation"
             }
         ]
     }
