@@ -12,7 +12,7 @@ namespace AnimalTab {
             bool aPregnant = IsPregnant(a);
             bool bPregnant = IsPregnant(b);
             if (aPregnant || bPregnant) {
-                return aPregnant.CompareTo(bPregnant);
+                return GetGestationProgress(a).CompareTo(GetGestationProgress(b));
             }
 
             float eggA = EggProgress( a );
@@ -20,8 +20,23 @@ namespace AnimalTab {
             return eggA.CompareTo(eggB);
         }
 
+        private static Hediff_Pregnant GetPregnantHediff(Pawn pawn) => (Hediff_Pregnant)pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Pregnant, true);
+
+        private static double GetGestationProgress(Pawn pawn)
+		{
+            double gestationProgress = GetPregnantHediff(pawn)?.GestationProgress ?? 0;
+            double gestationPeriod = pawn.RaceProps.gestationPeriodDays * 60000.0;
+
+            return gestationProgress / gestationPeriod;
+		}
+
         private static bool IsPregnant(Pawn p) {
             return p.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Pregnant)?.Visible ?? false;
+        }
+
+        private static bool IsSterilized(Pawn p) {
+            return p.health.hediffSet.HasHediff(HediffDefOf.Sterilized, true);
+
         }
 
         private static float EggProgress(Pawn p) {
@@ -29,14 +44,23 @@ namespace AnimalTab {
             if (egg != null) {
                 return Traverse.Create(egg).Field("eggProgress").GetValue<float>();
             }
+			if (IsSterilized(p))
+			{
+                return 0;
+			}
 
-            return 0;
+            return -1;
         }
 
         protected override Texture2D GetIconFor(Pawn pawn) {
             if (EggProgress(pawn) > 0) {
                 return Resources.Egg;
             }
+
+			if (IsSterilized(pawn) && !IsPregnant(pawn))
+			{
+                return Resources.Red_X;
+			}
 
             return base.GetIconFor(pawn);
         }
@@ -46,6 +70,12 @@ namespace AnimalTab {
             if (egg != null && EggProgress(pawn) > 0) {
                 return egg.CompInspectStringExtra();
             }
+            if(IsSterilized(pawn))
+			{
+                return HediffDefOf.Sterilized.LabelCap;
+
+            }
+
 
             return base.GetIconTip(pawn);
         }
