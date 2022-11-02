@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 12,
-        "build": 350
+        "build": 353
     },
     "author": {
         "name": "Fluffy",
@@ -46,6 +46,33 @@
     ],
     "changelog": [
         {
+            "date": "2022-11-02T19:00:44.000Z",
+            "message": "Merge branch 'pr/Alias44/67-2' into 1.4",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "b8590d35e5d2f21cb7c07e702f1062b662f220ba"
+        },
+        {
+            "date": "2022-10-14T19:32:02.000Z",
+            "message": "release v5.12.350",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "c1d0bc11f081084ed9c5058e0d286ff8ce4b646a"
+        },
+        {
+            "date": "2022-10-14T19:32:02.000Z",
+            "message": "release v5.12.350",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "80389905474aea173cea11a892a83f31d497b37a"
+        },
+        {
             "date": "2022-10-14T19:30:47.000Z",
             "message": "initial 1.4 compile, refactor source structure",
             "author": {
@@ -53,6 +80,15 @@
                 "email": "fluffy.l2032@gmail.com"
             },
             "hash": "cb2897dfb535d41086588c176e58d032c490d982"
+        },
+        {
+            "date": "2022-10-14T19:30:47.000Z",
+            "message": "initial 1.4 compile, refactor source structure",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "399657e4eff94d7c641349b5c1227d86f0f12d87"
         },
         {
             "date": "2022-09-29T00:04:02.000Z",
@@ -64,6 +100,15 @@
             "hash": "6ff296b4230fb23f5c9fe793643189808db97bac"
         },
         {
+            "date": "2022-09-29T00:04:02.000Z",
+            "message": "rebuild for mirage",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "6298a5765d4a84047d7e3cf5d1b6758b81da55c1"
+        },
+        {
             "date": "2022-09-29T00:03:48.000Z",
             "message": "update defName for Label => LabelWithIcon",
             "author": {
@@ -73,6 +118,15 @@
             "hash": "c5af810aab52cd77acb7cec4662fed842ea30758"
         },
         {
+            "date": "2022-09-29T00:03:48.000Z",
+            "message": "update defName for Label => LabelWithIcon",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "a56e3410da12843f5a8934167b711ac15b016956"
+        },
+        {
             "date": "2022-09-29T00:03:04.000Z",
             "message": "temporarily include harmony dll and use internal refs",
             "author": {
@@ -80,6 +134,33 @@
                 "email": "fluffy.l2032@gmail.com"
             },
             "hash": "a92b02ca1feddf8f4e29778a2d65018fb833997b"
+        },
+        {
+            "date": "2022-09-29T00:03:04.000Z",
+            "message": "temporarily include harmony dll and use internal refs",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "0e459dca6ef5eaaf474d57fdb086b71eb8d8c72f"
+        },
+        {
+            "date": "2022-07-30T22:31:56.000Z",
+            "message": "Pregnancy and Sterilization",
+            "author": {
+                "name": "Alias",
+                "email": "25497382+Alias44@users.noreply.github.com"
+            },
+            "hash": "90c73232ae94a5243d2da06c6f0232a1b26d7ee3"
+        },
+        {
+            "date": "2022-07-30T22:31:56.000Z",
+            "message": "Pregnancy and Sterilization",
+            "author": {
+                "name": "Alias",
+                "email": "25497382+Alias44@users.noreply.github.com"
+            },
+            "hash": "580b5bfdc3d029c6f34141ff681c82481db42476"
         },
         {
             "date": "2022-02-26T16:11:55.000Z",
@@ -1406,6 +1487,17 @@
             "hash": "4475734f167eabd0d1f5b1b6d9b3a12530b2d786",
             "author": "urty5656",
             "description": "Animal training gauge, translation support, Korean translation"
+        },
+        {
+            "hash": "90c73232ae94a5243d2da06c6f0232a1b26d7ee3",
+            "author": "Alias",
+            "description": "add sterilized icon and sort by pregnancy progress"
+        },
+        {
+            "hash": "580b5bfdc3d029c6f34141ff681c82481db42476",
+            "author": "Alias",
+            "description": "Pregnancy and Sterilization",
+            "suppressed": true
         }
     ],
     "contributors": {
@@ -1499,6 +1591,13 @@
                 "hash": "4475734",
                 "author": "urty5656",
                 "description": "Animal training gauge, translation support, Korean translation"
+            }
+        ],
+        "Alias": [
+            {
+                "hash": "90c7323",
+                "author": "Alias",
+                "description": "add sterilized icon and sort by pregnancy progress"
             }
         ]
     }
