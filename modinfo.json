@@ -4,8 +4,8 @@
     "targetDir": "AnimalTab",
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
-        "major": 5,
-        "minor": 13,
+        "major": 6,
+        "minor": 0,
         "build": 365
     },
     "author": {
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2024-03-14T19:22:31.000Z",
+            "message": "initial 1.5 update",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "d98c94982ef2676dac6ffec219cd734fc620d11b"
+        },
         {
             "date": "2022-11-02T19:28:51.000Z",
             "message": "release v5.13.353",
