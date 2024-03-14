@@ -51,7 +51,8 @@ namespace AnimalTab {
                  && Event.current.control
                  && Event.current.type == EventType.MouseDown
                  && Event.current.button == 0) {
-                Find.WindowStack.Add(new Dialog_RenameAnimal(pawn));
+
+                Find.WindowStack.Add(PawnNamingUtility.NamePawnDialog(pawn));
                 return;
             }
 

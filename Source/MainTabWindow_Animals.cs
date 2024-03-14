@@ -117,25 +117,14 @@ namespace AnimalTab {
             }
         }
 
+        private static readonly MemeDef MemeDef_Rancher = DefDatabase<MemeDef>.GetNamed("Rancher");
+
         private void DoSlaughterButton(Rect rect) {
             Rect buttonRect = new Rect(rect.xMin + Margin, rect.yMax - Margin - ButtonSize, ButtonSize, ButtonSize);
 
             TooltipHandler.TipRegion(buttonRect, "ManageAutoSlaughter".Translate());
             if (Widgets.ButtonImage(buttonRect, Resources.Icon_AutoButcher)) {
                 Find.WindowStack.Add(new Dialog_AutoSlaughter(Find.CurrentMap));
-            }
-
-            if (!ModLister.IdeologyInstalled) {
-                return;
-            }
-
-            if (Faction.OfPlayer.ideos?.AllIdeos.Any(i => i.memes.Contains(MemeDefOf.Rancher)) ?? false) {
-                Rect labelRect = new Rect(buttonRect.xMax + Margin, buttonRect.yMin, rect.width - ButtonSize - (Margin * 2), ButtonSize);
-                string timeAgo = (Find.TickManager.TicksGame - Faction.OfPlayer.ideos.LastAnimalSlaughterTick).ToStringTicksToPeriod();
-                TaggedString label = "LastAnimalSlaughter".Translate() + ": " + "TimeAgo".Translate(timeAgo);
-                Text.Anchor = TextAnchor.LowerLeft;
-                Widgets.Label(labelRect, label);
-                Text.Anchor = TextAnchor.UpperLeft;
             }
         }
 

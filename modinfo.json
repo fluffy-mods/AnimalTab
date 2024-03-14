@@ -6,7 +6,7 @@
     "version": {
         "major": 5,
         "minor": 13,
-        "build": 353
+        "build": 365
     },
     "author": {
         "name": "Fluffy",
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2022-11-02T19:28:51.000Z",
+            "message": "release v5.13.353",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "831d0e1246498a936b5de1763403c3ce1871c3d5"
+        },
         {
             "date": "2022-11-02T19:13:17.000Z",
             "message": "Added Russian translation",

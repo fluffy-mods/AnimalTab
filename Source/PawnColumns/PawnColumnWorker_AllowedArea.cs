@@ -24,7 +24,7 @@ namespace AnimalTab {
                 return int.MinValue;
             }
 
-            Area areaRestriction = pawn.playerSettings.AreaRestriction;
+            Area areaRestriction = pawn.playerSettings.AreaRestrictionInPawnCurrentMap;
             return areaRestriction?.ID ?? int.MinValue;
         }
 
@@ -69,7 +69,7 @@ namespace AnimalTab {
 
         private void RestrictAllTo(Area area, PawnTable table) {
             foreach (Pawn pawn in table.PawnsListForReading.Where(p => p.playerSettings.SupportsAllowedAreas)) {
-                pawn.playerSettings.AreaRestriction = area;
+                pawn.playerSettings.AreaRestrictionInPawnCurrentMap = area;
             }
         }
 
