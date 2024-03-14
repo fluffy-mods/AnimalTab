@@ -5,7 +5,7 @@
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
         "major": 8,
-        "minor": 0,
+        "minor": 1,
         "build": 365
     },
     "author": {
@@ -45,6 +45,24 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2024-03-14T21:44:16.000Z",
+            "message": "update preview image",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "04a30e86000bddfd8f18839dbac1e0c918f13b35"
+        },
+        {
+            "date": "2024-03-14T19:31:38.000Z",
+            "message": "release v8.0.365",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "e60b974f34a1e76735d82192865cec2124eda025"
+        },
         {
             "date": "2024-03-14T19:29:49.000Z",
             "message": "release v7.0.365",
