@@ -4,7 +4,7 @@
     "targetDir": "AnimalTab",
     "url": "https://github.com/fluffy-mods/AnimalTab",
     "version": {
-        "major": 7,
+        "major": 8,
         "minor": 0,
         "build": 365
     },
@@ -45,6 +45,15 @@
         }
     ],
     "changelog": [
+        {
+            "date": "2024-03-14T19:29:49.000Z",
+            "message": "release v7.0.365",
+            "author": {
+                "name": "Fluffy",
+                "email": "fluffy.l2032@gmail.com"
+            },
+            "hash": "2169fe2ed82d461cb19d2dfa532fc70542529440"
+        },
         {
             "date": "2024-03-14T19:23:38.000Z",
             "message": "release v6.0.365",
